@@ -1,0 +1,1052 @@
+/*
+Theme Name: ACT District CSO Child
+Theme URI: https://aacanberra.org/
+Description: Custom child theme for aacanberra.org based on Astra
+Author: Hamish Wright
+Template: astra
+Version: 1.0.0
+*/
+
+:root {
+  --aa-color-text: #222;
+  --aa-color-heading: #1f2937;
+  --aa-color-link: #2f6fa3;
+  --aa-color-link-hover: #1d557f;
+  --aa-color-border: #e5e7eb;
+  --aa-color-surface: #f8fafc;
+  --aa-color-surface-strong: #fff;
+  --aa-radius-card: 10px;
+  --aa-shadow-card: 0 8px 24px rgba(15, 23, 42, 0.05);
+  --aa-space-section: 56px;
+  --aa-space-card: 24px;
+}
+
+/* eb-garamond-700 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'EB Garamond';
+  font-style: normal;
+  font-weight: 700;
+  src: url('assets/fonts/eb-garamond-v32-latin-700.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+
+/*  -----------------------------------------------------
+                    BASE TYPOGRAPHY
+    ----------------------------------------------------- */
+
+body {
+  font-family: system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--aa-color-text);
+  background: #f7f7f7;
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  color: var(--aa-color-link);
+  text-decoration: none;
+}
+
+a:hover { text-decoration: underline; }
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.3;
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+h1 {
+    font-size: 1.75rem;
+}
+
+p {
+  line-height: 1.6;
+  margin: 0 0 1em 0;
+  font-size: 1rem;
+}
+
+
+/*  -----------------------------------------------------
+                    GLOBAL LAYOUT HELPERS
+    ----------------------------------------------------- */
+
+.site {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.container {
+  width: 90%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 5px;
+    margin: 8px;
+  }
+}
+
+
+/*  -----------------------------------------------------
+                    HEADER / NAVIGATION
+    ----------------------------------------------------- */
+
+.site-header nav,
+.aa-header-nav {
+  background: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  padding: 0.75rem 0;
+}
+
+.site-header nav .logo,
+.aa-header-nav .logo {
+  font-weight: bold;
+  font-size: 1.25rem;
+}
+
+.site-header nav .nav-links,
+.aa-header-nav .nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+}
+
+.site-header nav .nav-links li a,
+.aa-header-nav .nav-links li a {
+  text-decoration: none;
+  color: #333;
+}
+
+.aa-custom-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 100%;
+    text-decoration: none !important;
+}
+
+.aa-logo-mark,
+header .custom-logo-link img {
+    width: 70px;
+    height: 70px;
+    display: block;
+    flex: 0 0 70px;
+}
+
+.aa-logo-text {
+    display: flex;
+    flex-direction: column;
+    color: #000000;
+    font-family: 'EB Garamond', Georgia, 'Times New Roman', serif;
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    text-decoration: none !important;
+    font-size: clamp(11px, 2.2vw, 18px);
+}
+
+@media (max-width: 768px) {
+    .ast-primary-header-bar .ast-container,
+    .site-primary-header-wrap .ast-builder-grid-row {
+        padding-left: 18px;
+        padding-right: 18px;
+        box-sizing: border-box;
+    }
+
+    .site-header-primary-section-left,
+    .ast-builder-layout-element,
+    .ast-site-identity,
+    .site-branding,
+    .aa-custom-logo {
+        min-width: 0;
+    }
+
+    .site-header-primary-section-left,
+    .site-branding,
+    .ast-site-identity {
+        max-width: calc(100vw - 115px);
+        overflow: hidden;
+    }
+
+    .site-header-primary-section-right {
+        flex: 0 0 48px;
+        max-width: 48px;
+        justify-content: flex-end;
+    }
+
+    .aa-custom-logo {
+        width: 100%;
+        max-width: 100%;
+        gap: 8px;
+    }
+
+    .aa-logo-mark,
+    header .custom-logo-link img {
+        width: 50px;
+        height: 50px;
+        flex: 0 0 50px;
+    }
+
+    .aa-logo-text {
+        flex: 1 1 auto;
+        min-width: 0;
+        max-width: calc(100vw - 175px);
+        overflow: hidden;
+        white-space: nowrap;
+        font-size: clamp(9px, 2.35vw, 15px);
+        line-height: 1;
+    }
+}
+
+@media (max-width: 480px) {
+    .aa-logo-text {
+        font-size: clamp(10px, 2.4vw, 15px);
+        letter-spacing: 0;
+    }
+}
+
+@media (max-width: 420px) {
+    .aa-logo-mark,
+    header .custom-logo-link img {
+        width: 46px;
+        height: 46px;
+        flex-basis: 46px;
+    }
+
+    .aa-logo-text {
+        max-width: calc(100vw - 185px);
+        font-size: clamp(8.5px, 2.25vw, 13px);
+    }
+}
+
+
+/*  -----------------------------------------------------
+                    ASTRA / THEME OVERRIDES
+    ----------------------------------------------------- */
+
+/* Adjust Astra's mobile title spacing */
+@media (max-width: 768px) {
+  .ast-separate-container {
+    margin: 0 !important; /* tighten the gap */
+    padding: 0 !important;
+  }
+}
+
+/* Remove big gap between title and content */
+.page .entry-header {
+  margin: 0 0 15px 0 !important;
+  padding: 0 !important;
+}
+
+.page .entry-title {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+/* Opt custom layout wrappers out of Astra's default block padding. */
+.entry-content > .wp-block-group.aa-no-ast-padding,
+.entry-content > .wp-block-cover.aa-no-ast-padding,
+.entry-content > .wp-block-columns.aa-no-ast-padding,
+.entry-content > .wp-block-group.members-page-container,
+.entry-content > .wp-block-group.cso-notice-intro,
+.entry-content > .wp-block-group.cso-vacancy-list,
+.entry-content > .wp-block-group.cso-standing-box {
+  padding-top: 0;
+  margin: 0;
+  height: 100%;
+  width: 100%;
+}
+
+
+/*  -----------------------------------------------------
+                    HERO SECTIONS
+    ----------------------------------------------------- */
+
+.hero {
+    text-align: center;
+    padding-top: 50px;
+}
+
+.hero-overlay { position: relative; width: 100%; overflow: hidden; margin-bottom: 0px; }
+.hero-image-wrapper { position: relative; }
+.hero-image-wrapper img {
+  width: 100%;
+  height: auto;
+  display: block;
+  opacity: 0.9;
+}
+
+.hero-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  text-align: center;
+  color: #fff;
+  background-color: rgba(0,0,0,0.4);
+  padding: 40px 30px;
+  border-radius: 6px;
+  max-width: 90%;
+}
+
+.hero-text h1, .hero-text p { margin: 10px 0; }
+
+.hero-text .button {
+  display: inline-block;
+  margin-top: 20px;
+  background-color: #005c99;
+  color: #fff;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  text-decoration: none;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.hero-text .button:hover { background-color: #003d66; }
+
+@media (max-width: 768px) {
+  .hero-text { padding: 15px 20px; }
+  .hero-text h1 { font-size: 1.8rem; }
+  .hero-text p { font-size: 1rem; }
+}
+
+@media (max-width: 480px) {
+  .hero-image-wrapper img {
+    min-height: 300px;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .hero-text {
+    width: calc(100% - 32px);
+    max-width: 320px;
+    box-sizing: border-box;
+    padding: 14px 16px;
+  }
+
+  .hero-text h1 { font-size: 1.6rem; }
+  .hero-text p { font-size: 0.95rem; }
+}
+
+
+/*  -----------------------------------------------------
+                    PAGE LAYOUT / CONTENT
+    ----------------------------------------------------- */
+
+/* Page base */
+.aa-page {
+  background: #f9fafb;
+  color: #222;
+}
+
+.aa-page .ast-container {
+  max-width: 1100px;
+}
+
+.aa-page .entry-header {
+  color: #fff;
+  padding: 40px 30px;
+  margin-bottom: 30px;
+}
+
+.aa-page .entry-title {
+  margin: 0;
+  font-size: 28px;
+}
+
+/* Content */
+.aa-page-content {
+  padding: 50px 0;
+}
+
+/* Gutenberg content cleanup */
+.aa-page-content p {
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.aa-page-content h2 {
+  margin-top: 40px;
+  font-size: 22px;
+}
+
+.aa-page-content h3 {
+  margin-top: 25px;
+}
+
+/* --- Optional Section Wrapper --- */
+
+.content-section {
+    margin: 3rem 0;
+}
+
+.content-section h2 {
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+.content-section p.section-intro {
+    color: #6b7280;
+    max-width: 700px;
+}
+
+/*  -----------------------------------------------------
+                    NOTICE / VACANCY BLOCKS
+    ----------------------------------------------------- */
+
+.cso-notice-intro,
+.cso-vacancy-list,
+.cso-standing-box {
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cso-vacancy-card {
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.cso-vacancy-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.08);
+}
+
+.cso-vacancy-card h4,
+.cso-standing-box h3 {
+  margin-top: 0;
+}
+
+.cso-vacancy-card p {
+  margin-bottom: 20px;
+  flex-grow: 1;
+}
+
+.cso-vacancy-card .wp-block-button__link,
+.cso-standing-box .wp-block-button__link {
+  border-radius: 999px;
+}
+
+@media (max-width: 781px) {
+  .cso-vacancy-card {
+    margin-bottom: 18px;
+  }
+}
+
+
+/*  -----------------------------------------------------
+                    SECTION PREVIEWS / CARDS
+    ----------------------------------------------------- */
+
+.section-preview {
+  background: white;
+  border-radius: 8px;
+  padding: 20px 22px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.section-preview h2 {
+  font-size: 1.5rem;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 0.5rem;
+}
+
+.section-preview > p:last-child {
+  margin-top: 10px;
+  margin-bottom: 0;
+}
+
+.preview-item {
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #ddd;
+}
+
+.preview-item h2 {
+  font-size: 1.6rem;
+  color: #0073aa;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
+}
+
+.preview-item h2 a {
+  color: inherit;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.preview-item h2 a:hover { color: #005f8a; text-decoration: underline; }
+
+.preview-item h3 {
+  margin-bottom: 6px;
+  line-height: 1.25;
+}
+
+.preview-item p {
+  margin-bottom: 8px;
+  line-height: 1.45;
+}
+
+.compact-preview p:last-child {
+  margin-bottom: 0;
+}
+
+.post-date,
+.event-date {
+  margin-bottom: 6px;
+  font-size: 0.92em;
+}
+
+.read-more {
+  display: inline-block;
+  margin-top: 0.5rem;
+  background-color: #0073aa;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+}
+
+.read-more:hover { background-color: #005f8a; }
+
+
+.home-page-phone-link {
+  color: #fff;
+  font-weight: bold;
+}
+
+/*  -----------------------------------------------------
+                    EVENTS CALENDAR BLOCK
+    ----------------------------------------------------- */
+
+/* Reset */
+ul.ecs-event-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-width: 1000px;
+}
+
+/* Event card as grid */
+ul.ecs-event-list > li.ecs-event {
+  display: grid;
+  grid-template-columns: auto 1fr; /* let date grow naturally */
+  gap: 1.5rem;
+  align-items: start;
+
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 1.75rem;
+  margin-bottom: 1.75rem;
+
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+
+ul.ecs-event-list > li.ecs-event:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0,0,0,0.08);
+}
+
+/* DATE COLUMN */
+span.duration.time {
+  grid-column: 1;
+  display: inline-block;
+
+  background: #f3f4f6;
+  border-radius: 12px;
+  padding: 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  color: #1f2937;
+
+  white-space: normal;        /* allow wrapping */
+  min-width: 150px;           /* prevent ultra narrow collapse */
+  max-width: 260px;           /* prevent absurd expansion */
+}
+
+span.duration.time span {
+  display: block;
+}
+
+/* MAIN CONTENT COLUMN */
+h4.entry-title.summary,
+p.ecs-excerpt,
+span.duration.venue {
+  grid-column: 2;
+}
+
+/* Title */
+h4.entry-title.summary {
+  margin: 0 0 0.5rem;
+  font-size: 1.4rem;
+  line-height: 1.3;
+}
+
+h4.entry-title.summary a {
+  text-decoration: none;
+  color: #111827;
+}
+
+h4.entry-title.summary a:hover {
+  text-decoration: underline;
+}
+
+/* Excerpt */
+p.ecs-excerpt {
+  margin: 0.75rem 0 0;
+  font-size: 0.95rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+p.ecs-excerpt:empty {
+  display: none;
+}
+
+/* Venue */
+span.duration.venue {
+  margin-top: 0.75rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+}
+
+span.duration.venue em {
+  font-style: normal;
+  opacity: 0.6;
+  margin-right: 0.25rem;
+}
+
+/* Mobile: stack */
+@media (max-width: 768px) {
+  ul.ecs-event-list > li.ecs-event {
+    grid-template-columns: 1fr;
+  }
+
+  span.duration.time,
+  h4.entry-title.summary,
+  p.ecs-excerpt,
+  span.duration.venue {
+    grid-column: 1;
+  }
+
+  span.duration.time {
+    margin-bottom: 0.75rem;
+  }
+}
+
+
+/*  -----------------------------------------------------
+                    CONTACT FORM 7
+    ----------------------------------------------------- */
+
+/* Wrap the whole CF7 form in a card-style layout */
+.wpcf7 form {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 24px 20px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    box-sizing: border-box;
+}
+
+/* Space out each form row */
+.wpcf7-form p {
+    margin: 0 0 16px;
+}
+
+/* Labels (if you decide to add them later) */
+.wpcf7-form label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+    color: #111827;
+}
+
+/* Inputs, textareas, selects */
+.wpcf7-form input[type="text"],
+.wpcf7-form input[type="email"],
+.wpcf7-form input[type="tel"],
+.wpcf7-form textarea,
+.wpcf7-form select {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 0.95rem;
+    line-height: 1.4;
+    background: #f9fafb;
+    box-sizing: border-box;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+/* Focus states */
+.wpcf7-form input[type="text"]:focus,
+.wpcf7-form input[type="email"]:focus,
+.wpcf7-form input[type="tel"]:focus,
+.wpcf7-form textarea:focus,
+.wpcf7-form select:focus {
+    outline: none;
+    border-color: #2563eb;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.40);
+}
+
+/* Placeholder styling */
+.wpcf7-form ::placeholder {
+    color: #9ca3af;
+}
+
+/* Textarea height */
+.wpcf7-form textarea {
+    min-height: 140px;
+    resize: vertical;
+}
+
+/* Submit button */
+.wpcf7-form input[type="submit"] {
+    display: inline-block;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 999px;
+    font-size: 0.95rem;
+    line-clamp: 2 !important;
+    font-weight: 600;
+    cursor: pointer;
+    background: #1f2937; /* dark grey / almost black */
+    color: #ffffff;
+    text-transform: none;
+    letter-spacing: 0.02em;
+    transition: transform 0.1s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+/* Submit hover/active */
+.wpcf7-form input[type="submit"]:hover {
+    background: #111827;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
+    transform: translateY(-1px);
+}
+
+.wpcf7-form input[type="submit"]:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.14);
+}
+
+/* CF7 validation error styling */
+.wpcf7-not-valid-tip {
+    font-size: 0.8rem;
+    color: #b91c1c;
+    margin-top: 4px;
+}
+
+.wpcf7 form.invalid .wpcf7-response-output {
+    border-color: #b91c1c;
+    color: #7f1d1d;
+}
+
+/* Success message styling */
+.wpcf7 form.sent .wpcf7-response-output {
+    border-color: #059669;
+    color: #065f46;
+}
+
+
+/*  -----------------------------------------------------
+                    WOOCOMMERCE
+    ----------------------------------------------------- */
+
+/* SINGLE PRODUCT — Larger Flyer Images */
+.single-product .woocommerce-product-gallery {
+    max-width: 800px !important;
+    margin: 0 auto !important;
+}
+
+.single-product .woocommerce-product-gallery__wrapper,
+.single-product .woocommerce-product-gallery__image {
+    width: auto !important;
+    max-width: 800px !important;
+    margin: 0 auto !important;
+    text-align: center;
+}
+
+.single-product .woocommerce-product-gallery__image img {
+    width: auto !important;
+    height: auto !important;
+    max-width: 100% !important;
+    max-height: 1100px !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+
+/* SHOP & CATEGORY GRID — Base Flex Layout */
+.woocommerce ul.products li.product {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    height: 100% !important;
+    text-align: center;
+}
+
+/* Make the clickable area flex correctly and tighten spacing */
+.woocommerce ul.products li.product .woocommerce-LoopProduct-link {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    flex-grow: 1 !important;
+    margin: 0 !important;
+    margin-bottom: 0 !important;
+    padding: 0 !important;
+    padding-bottom: 0 !important;
+    gap: 4px !important;
+}
+
+/* Astra wrapper spacing fixes for WooCommerce */
+.woocommerce ul.products li.product .astra-shop-thumbnail-wrap {
+    margin-bottom: 6px !important; /* removes giant gap under images */
+    padding-bottom: 0 !important;
+}
+
+.woocommerce ul.products li.product .astra-shop-summary-wrap {
+    display: flex !important;
+    flex-direction: column !important;
+    flex-grow: 1 !important;
+    justify-content: flex-start !important;
+    gap: 4px !important;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+}
+
+/* Uniform product image heights */
+.woocommerce ul.products li.product img,
+.woocommerce ul.products li.product .attachment-woocommerce_thumbnail,
+.woocommerce ul.products li.product .woocommerce-LoopProduct-link img {
+    height: 260px !important;
+    width: 100% !important;
+    object-fit: contain !important;
+    object-position: center !important;
+}
+
+.woocommerce ul.products li.product img,
+.woocommerce ul.products li.product .attachment-woocommerce_thumbnail {
+    padding: 10px !important;
+    border: 1px solid #e5e5e5 !important;
+    border-radius: 4px !important;
+    display: block !important;
+    margin-bottom: 6px !important;
+}
+
+/* Title — exactly 2 lines, ellipsis, no overflow */
+.woocommerce ul.products li.product .woocommerce-loop-product__title,
+.woocommerce ul.products li.product .astra-shop-summary-wrap h2.woocommerce-loop-product__title {
+    display: -webkit-box !important;
+    -webkit-line-clamp: 2 !important;
+    -webkit-box-orient: vertical !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    white-space: normal !important;
+    line-height: 1.25em !important;
+    max-height: calc(1.25em * 2) !important; /* hard cap */
+    min-height: calc(1.25em * 2) !important; /* align rows */
+    margin: 6px 0 !important;
+}
+
+/* Remove Woo/Astra extra spacing between price and button */
+.woocommerce ul.products li.product .price {
+    margin-bottom: 2px !important;
+    padding-bottom: 0 !important;
+}
+
+/* Buttons: full width, no wrapping, directly under price */
+.woocommerce ul.products li.product .button {
+    display: block !important;
+    width: 100% !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    padding: 10px 15px !important;
+    font-size: 16px !important;
+    margin-top: 0 !important;
+}
+
+/*  -----------------------------------------------------
+                    TSML [TWELVE STEP MEETING LIST]
+    ----------------------------------------------------- */
+
+#tsml .controls > div {
+  position: static !important;
+}
+
+.single-meeting {
+    width: 100%;
+    height: 100%;
+}
+
+/*  -----------------------------------------------------
+            VACANT POSITION DESCRIPTIONS PAGE
+    ----------------------------------------------------- */
+
+.cso-role-buttons {
+    margin-top: 20px;
+}
+
+.cso-role-buttons .wp-block-button {
+    margin-bottom: 15px;
+}
+
+.cso-role-button .wp-block-button__link {
+    width: 100%;
+    text-align: left;
+    padding: 16px 20px;
+    background: #f7f9fc;
+    color: #1f2933;
+    border-left: 4px solid #2f6f9f;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.cso-role-button .wp-block-button__link:hover {
+    background: #eef4f9;
+    transform: translateY(-1px);
+}
+
+/*  -----------------------------------------------------
+                    FOOTER
+    ----------------------------------------------------- */
+
+/* 1. Main Footer Wrapper */
+.aa-footer {
+  background: #0b0b0b;
+  color: #ccc;
+  font-size: 14px;
+  width: 100%;
+  margin: 0;
+  display: block;
+  clear: both;
+}
+
+/* 2. The Columns Container */
+.aa-footer-container {
+  display: flex;
+  flex-flow: row wrap; /* Allows wrapping on mobile */
+  gap: 40px;
+  max-width: 1200px; /* Keeps content from spreading too wide on desktop */
+  margin: 0 auto;    /* Centers the footer content */
+  padding: 80px 20px;
+}
+
+/* 3. Individual Columns */
+.aa-footer-col {
+  flex: 1 1 100%; /* Default: Full width on mobile */
+}
+
+/* Tablet & Desktop Breakpoints */
+@media (min-width: 768px) {
+  .aa-footer-col {
+    flex: 1 1 calc(45% - 20px); /* 2 columns on tablet */
+  }
+}
+
+@media (min-width: 1024px) {
+  .aa-footer-col {
+    flex: 1; /* 4 columns evenly on desktop */
+  }
+}
+
+/* 4. Typography & Elements */
+.aa-footer-col h4 {
+  color: #fff;
+  font-size: 15px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.aa-footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.aa-footer-col ul li {
+  margin-bottom: 8px;
+}
+
+.aa-footer a {
+  color: #aaa;
+  text-decoration: none;
+  transition: 0.2s ease;
+}
+
+.aa-footer a:hover {
+  color: #fff;
+}
+
+.aa-footer-logo {
+  max-width: 140px !important;
+  padding: 10px;
+  margin-bottom: 15px;
+  opacity: 0.9;
+}
+
+.aa-footer-heading {
+  font-weight: 700;
+}
+
+.aa-footer-brand p {
+  line-height: 1.6;
+  max-width: 280px;
+}
+
+/* 5. Footer Bottom Bar */
+.aa-footer-bottom {
+  border-top: 1px solid #222;
+  padding: 20px 20px;
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+}
+
+.aa-footer-bottom p {
+  margin: 5px auto;
+  max-width: 1100px;
+}
+
+@media (max-width: 600px) {
+  .aa-footer-container {
+    padding: 40px 20px;
+    gap: 24px;
+  }
+}
+
+/* Astra Footer Overrides */
+.ast-footer-wrap, #colophon {
+  display: block !important;
+  width: 100% !important;
+  padding: 0 !important;
+}

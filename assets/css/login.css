@@ -1,0 +1,176 @@
+/*
+Description: Custom WP Login
+Author: Hamish Wright
+*/
+
+* {
+    box-sizing: border-box;
+}
+
+html,
+body.login {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body.login {
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.55));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100svh;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body.login div#login {
+    width: min(440px, calc(100vw - 32px));
+    max-width: calc(100vw - 32px);
+    padding: 20px 0;
+}
+
+.login h1 a {
+    background-image: var(--aacbr-login-logo) !important;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100px;
+    margin: 0 auto 25px;
+}
+
+.login form {
+    width: 100%;
+    max-width: 100%;
+    background: rgba(28, 28, 30, 0.88);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 18px;
+    box-shadow:
+        0 10px 40px rgba(0,0,0,0.45),
+        0 0 0 1px rgba(255,255,255,0.03);
+    padding: 32px;
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+}
+
+.login label {
+    color: #e5e5e7;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.login input[type="text"],
+.login input[type="password"] {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: #ffffff;
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 16px;
+    box-shadow: none;
+    transition: 0.2s ease;
+}
+
+.login input[type="text"]:focus,
+.login input[type="password"]:focus {
+    border-color: #3b82f6;
+    background: rgba(255,255,255,0.08);
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.18);
+    color: #ffffff;
+}
+
+.login input:-webkit-autofill,
+.login input:-webkit-autofill:hover,
+.login input:-webkit-autofill:focus {
+    -webkit-text-fill-color: #ffffff;
+    -webkit-box-shadow: 0 0 0 1000px #2a2a2d inset;
+    transition: background-color 9999s ease-in-out 0s;
+}
+
+.wp-core-ui .button-primary {
+    background: linear-gradient(135deg, #0ea5e9, #2563eb);
+    border: none;
+    border-radius: 12px;
+    min-height: 44px;
+    padding: 0 18px;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+.wp-core-ui .button-primary:hover {
+    transform: translateY(-1px);
+    background: linear-gradient(135deg, #38bdf8, #3b82f6);
+}
+
+.login #backtoblog,
+.login #nav {
+    text-align: center;
+}
+
+.login #backtoblog a,
+.login #nav a {
+    color: rgba(0,0,0,0.82);
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.login #backtoblog a:hover,
+.login #nav a:hover {
+    color: rgba(0,0,0,0.56);
+}
+
+.login .message,
+.login .notice,
+.login .success {
+    background: rgba(28,28,30,0.92);
+    border-left: 4px solid #3b82f6;
+    color: #ffffff;
+    border-radius: 12px;
+}
+
+.login #login_error {
+    background: rgba(40,20,20,0.92);
+    border-left: 4px solid #ef4444;
+    color: #ffffff;
+    border-radius: 12px;
+}
+
+.login .cf-turnstile {
+    width: 100%;
+    display: flex !important;
+    justify-content: center !important;
+    margin: 24px 0;
+    overflow: hidden;
+}
+
+.login .cf-turnstile iframe {
+    margin: 0 auto;
+}
+
+@media (max-width: 480px) {
+    body.login {
+        align-items: flex-start;
+        padding-top: 28px;
+    }
+
+    body.login div#login {
+        width: calc(100vw - 32px);
+        max-width: calc(100vw - 32px);
+        padding: 0;
+    }
+
+    .login h1 a {
+        height: 120px;
+        margin-bottom: 18px;
+    }
+
+    .login form {
+        padding: 28px 24px;
+    }
+
+    .login .cf-turnstile {
+        transform: scale(0.94);
+        transform-origin: center;
+        margin: 22px 0;
+    }
+}
