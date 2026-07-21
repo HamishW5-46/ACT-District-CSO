@@ -25,16 +25,76 @@ jQuery(function ($) {
     function getFilters(page = 1) {
         const data = $form.serializeArray();
 
-        data.push({ name: 'action', value: 'aac_filter_products' });
-        data.push({ name: 'nonce', value: aacShopFilters.nonce });
-        data.push({ name: 'paged', value: page });
+        data.push({
+            name: 'action',
+            value: 'aac_filter_products'
+        });
+
+        data.push({
+            name: 'nonce',
+            value: aacShopFilters.nonce
+        });
+
+        data.push({
+            name: 'paged',
+            value: page
+        });
 
         const orderby = $('.woocommerce-ordering select[name="orderby"]').val();
+
         if (orderby) {
-            data.push({ name: 'orderby', value: orderby });
+            data.push({
+                name: 'orderby',
+                value: orderby
+            });
         }
 
         return data;
+    }
+
+    function replaceProducts(productsHtml) {
+        const $currentProducts = $('.woocommerce ul.products');
+        const $noProductsMessage = $('.woocommerce > .woocommerce-info');
+
+        if ($currentProducts.length) {
+            $currentProducts.replaceWith(productsHtml);
+            return;
+        }
+
+        if ($noProductsMessage.length) {
+            $noProductsMessage.replaceWith(productsHtml);
+            return;
+        }
+
+        const $resultCount = $('.woocommerce-result-count');
+
+        if ($resultCount.length) {
+            $resultCount.after(productsHtml);
+        }
+    }
+
+    function updatePagination(paginationHtml) {
+        const $pagination = $('.woocommerce-pagination');
+
+        if (paginationHtml) {
+            if ($pagination.length) {
+                $pagination.replaceWith(
+                    '<nav class="woocommerce-pagination">' +
+                    paginationHtml +
+                    '</nav>'
+                );
+            } else {
+                $('.woocommerce').append(
+                    '<nav class="woocommerce-pagination">' +
+                    paginationHtml +
+                    '</nav>'
+                );
+            }
+
+            return;
+        }
+
+        $pagination.remove();
     }
 
     function applyFilters(page = 1) {
@@ -42,43 +102,45 @@ jQuery(function ($) {
             url: aacShopFilters.ajaxUrl,
             type: 'POST',
             data: getFilters(page),
+
             beforeSend: function () {
                 $('body').addClass('aac-shop-filtering');
                 $('.woocommerce ul.products').css('opacity', '0.45');
             },
+
             success: function (response) {
-                if (!response.success) return;
-
-                const $products = $('.woocommerce ul.products');
-                const $resultCount = $('.woocommerce-result-count');
-                const $pagination = $('.woocommerce-pagination');
-
-                if ($products.length) {
-                    $products.replaceWith(response.data.products);
+                if (!response.success || !response.data) {
+                    return;
                 }
+
+                replaceProducts(response.data.products);
+
+                const $resultCount = $('.woocommerce-result-count');
 
                 if ($resultCount.length) {
                     $resultCount.text(response.data.resultCount);
                 }
 
-                if ($pagination.length) {
-                    $pagination.html(response.data.pagination);
-                } else if (response.data.pagination) {
-                    $('.woocommerce').append(
-                        '<nav class="woocommerce-pagination">' + response.data.pagination + '</nav>'
-                    );
-                }
-
-                const params = new URLSearchParams($form.serialize());
-                params.set('paged', page);
-                history.pushState({}, '', '?' + params.toString());
+                updatePagination(response.data.pagination);
 
                 closeDrawer();
 
-                $('html, body').animate({
-                    scrollTop: $('.woocommerce').offset().top - 120
-                }, 250);
+                const $woocommerce = $('.woocommerce');
+
+                if ($woocommerce.length) {
+                    $('html, body').animate(
+                        {
+                            scrollTop: $woocommerce.offset().top - 120
+                        },
+                        250
+                    );
+                }
             },
+
+            error: function () {
+                console.error('Unable to filter products.');
+            },
+
             complete: function () {
                 $('body').removeClass('aac-shop-filtering');
                 $('.woocommerce ul.products').css('opacity', '1');
@@ -105,18 +167,25 @@ jQuery(function ($) {
         $form[0].reset();
     });
 
-    
+    $(document).on(
+        'change',
+        '.woocommerce-ordering select[name="orderby"]',
+        function () {
+            applyFilters(1);
+        }
+    );
+
     $(document).on('click', '.woocommerce-pagination a', function (event) {
         event.preventDefault();
 
-        const href = $(this).attr('href');
-        let page = 1;
+        const href = $(this).attr('href') || '';
+        const match =
+            href.match(/[?&]paged=([0-9]+)/) ||
+            href.match(/\/page\/([0-9]+)/);
 
-        const match = href.match(/paged=([0-9]+)/) || href.match(/page\/([0-9]+)/);
-
-        if (match && match[1]) {
-            page = parseInt(match[1], 10);
-        }
+        const page = match && match[1]
+            ? parseInt(match[1], 10)
+            : 1;
 
         applyFilters(page);
     });
