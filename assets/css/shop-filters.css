@@ -135,15 +135,21 @@
         max-width: 100%;
     }
 
-    .post-type-archive-product .site-main .woocommerce,
-    .tax-product_cat .site-main .woocommerce,
-    .tax-product_tag .site-main .woocommerce {
+    .post-type-archive-product .site-main .ast-woocommerce-container,
+    .tax-product_cat .site-main .ast-woocommerce-container,
+    .tax-product_tag .site-main .ast-woocommerce-container {
         display: grid;
         grid-template-columns: minmax(230px, 280px) minmax(0, 1fr) auto;
         gap: 1.25rem 2.25rem;
         align-items: start;
     }
 
+    .post-type-archive-product .woocommerce-breadcrumb,
+    .tax-product_cat .woocommerce-breadcrumb,
+    .tax-product_tag .woocommerce-breadcrumb,
+    .post-type-archive-product .woocommerce-products-header,
+    .tax-product_cat .woocommerce-products-header,
+    .tax-product_tag .woocommerce-products-header,
     .post-type-archive-product .woocommerce-notices-wrapper,
     .tax-product_cat .woocommerce-notices-wrapper,
     .tax-product_tag .woocommerce-notices-wrapper {
