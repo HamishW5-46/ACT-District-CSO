@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * remove privacy controls, archive rules, or WooCommerce features.
  */
 $act_district_cso_child_includes = array(
-    '/inc/theme-assets.php',
+    '/inc/bootstrap.php',
     '/inc/footer-sitemap.php',
     '/inc/site-branding.php',
     '/inc/wp-login-branding.php',

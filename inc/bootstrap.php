@@ -87,3 +87,7 @@ function act_district_cso_child_enqueue_page_style( $template, $stylesheet, $dep
 		act_district_cso_child_asset_version( $relative_path )
 	);
 }
+
+if ( class_exists( 'WooCommerce' ) ) {
+	require_once get_stylesheet_directory() . '/inc/woocommerce/mobile-shop-filters.php';
+}
