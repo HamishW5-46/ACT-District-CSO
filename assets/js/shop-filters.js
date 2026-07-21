@@ -226,10 +226,15 @@ jQuery(function ($) {
         }
     });
 
+    $(document).on('submit', '.woocommerce-ordering', function (event) {
+        event.preventDefault();
+    });
+
     $(document).on(
         'change',
         '.woocommerce-ordering select[name="orderby"]',
-        function () {
+        function (event) {
+            event.preventDefault();
             applyFilters(1, getActiveForm());
         }
     );
