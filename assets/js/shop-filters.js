@@ -3,9 +3,59 @@ jQuery(function ($) {
     const $drawer = $('.aac-mobile-filter-drawer');
     const $overlay = $('.aac-mobile-filter-overlay');
     const $closeButton = $('.aac-mobile-filter-close');
-    const $form = $('.aac-mobile-filter-form');
+    const $forms = $('.aac-shop-filter-form');
+    const $desktopForm = $('.aac-shop-filter-form--desktop');
+    const $mobileForm = $('.aac-shop-filter-form--mobile');
+
+    function getActiveForm() {
+        if ($('body').hasClass('aac-filter-drawer-open') && $mobileForm.length) {
+            return $mobileForm;
+        }
+
+        if (window.matchMedia('(max-width: 768px)').matches && $mobileForm.length) {
+            return $mobileForm;
+        }
+
+        if ($desktopForm.length) {
+            return $desktopForm;
+        }
+
+        return $forms.first();
+    }
+
+    function syncForms($source, $target) {
+        if (!$source.length || !$target.length || $source[0] === $target[0]) {
+            return;
+        }
+
+        $target.find('input').each(function () {
+            const $targetInput = $(this);
+            const name = $targetInput.attr('name');
+
+            if (!name) {
+                return;
+            }
+
+            if ($targetInput.is(':checkbox, :radio')) {
+                const value = $targetInput.val();
+                const checked = $source
+                    .find('input[name="' + name + '"][value="' + value + '"]')
+                    .prop('checked');
+
+                $targetInput.prop('checked', Boolean(checked));
+                return;
+            }
+
+            const $sourceInput = $source.find('input[name="' + name + '"]');
+
+            if ($sourceInput.length) {
+                $targetInput.val($sourceInput.val());
+            }
+        });
+    }
 
     function openDrawer() {
+        syncForms($desktopForm, $mobileForm);
         $overlay.prop('hidden', false);
         $drawer.attr('aria-hidden', 'false');
         $openButton.attr('aria-expanded', 'true');
@@ -22,7 +72,7 @@ jQuery(function ($) {
         }, 250);
     }
 
-    function getFilters(page = 1) {
+    function getFilters(page = 1, $form = getActiveForm()) {
         const data = $form.serializeArray();
 
         data.push({
@@ -97,11 +147,11 @@ jQuery(function ($) {
         $pagination.remove();
     }
 
-    function applyFilters(page = 1) {
+    function applyFilters(page = 1, $form = getActiveForm()) {
         $.ajax({
             url: aacShopFilters.ajaxUrl,
             type: 'POST',
-            data: getFilters(page),
+            data: getFilters(page, $form),
 
             beforeSend: function () {
                 $('body').addClass('aac-shop-filtering');
@@ -123,7 +173,11 @@ jQuery(function ($) {
 
                 updatePagination(response.data.pagination);
 
-                closeDrawer();
+                syncForms($form, $forms.not($form).first());
+
+                if ($('body').hasClass('aac-filter-drawer-open')) {
+                    closeDrawer();
+                }
 
                 const $woocommerce = $('.woocommerce');
 
@@ -158,20 +212,25 @@ jQuery(function ($) {
         }
     });
 
-    $form.on('submit', function (event) {
+    $forms.on('submit', function (event) {
         event.preventDefault();
-        applyFilters(1);
+        applyFilters(1, $(this));
     });
 
-    $('.aac-filter-clear').on('click', function () {
-        $form[0].reset();
+    $(document).on('click', '.aac-filter-clear', function () {
+        const $form = $(this).closest('.aac-shop-filter-form');
+
+        if ($form.length) {
+            $form[0].reset();
+            applyFilters(1, $form);
+        }
     });
 
     $(document).on(
         'change',
         '.woocommerce-ordering select[name="orderby"]',
         function () {
-            applyFilters(1);
+            applyFilters(1, getActiveForm());
         }
     );
 
@@ -187,6 +246,6 @@ jQuery(function ($) {
             ? parseInt(match[1], 10)
             : 1;
 
-        applyFilters(page);
+        applyFilters(page, getActiveForm());
     });
 });
