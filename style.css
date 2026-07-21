@@ -421,6 +421,8 @@ header .custom-logo-link img {
   display: flex;
   flex-direction: column;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  padding: 20px;
+  border-radius: 12px;
 }
 
 .cso-vacancy-card:hover {
@@ -866,6 +868,7 @@ span.duration.venue em {
 .woocommerce ul.products li.product .woocommerce-loop-product__title,
 .woocommerce ul.products li.product .astra-shop-summary-wrap h2.woocommerce-loop-product__title {
     display: -webkit-box !important;
+    line-clamp: 2 !important; /* standard property */
     -webkit-line-clamp: 2 !important;
     -webkit-box-orient: vertical !important;
     overflow: hidden !important;
