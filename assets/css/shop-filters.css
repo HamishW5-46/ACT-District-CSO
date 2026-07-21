@@ -159,7 +159,7 @@
     .aac-shop-filter-sidebar {
         display: block;
         grid-column: 1;
-        grid-row: span 20;
+        grid-row: 3 / span 20;
         position: sticky;
         top: 104px;
         align-self: start;
@@ -198,6 +198,7 @@
     .tax-product_cat .woocommerce-result-count,
     .tax-product_tag .woocommerce-result-count {
         grid-column: 2;
+        grid-row: 3;
         align-self: center;
         margin: 0;
     }
@@ -206,6 +207,7 @@
     .tax-product_cat .woocommerce-ordering,
     .tax-product_tag .woocommerce-ordering {
         grid-column: 3;
+        grid-row: 3;
         justify-self: end;
         align-self: center;
         margin: 0;
@@ -214,13 +216,18 @@
     .post-type-archive-product ul.products,
     .tax-product_cat ul.products,
     .tax-product_tag ul.products,
-    .post-type-archive-product .woocommerce-pagination,
-    .tax-product_cat .woocommerce-pagination,
-    .tax-product_tag .woocommerce-pagination,
     .post-type-archive-product .woocommerce-info,
     .tax-product_cat .woocommerce-info,
     .tax-product_tag .woocommerce-info {
         grid-column: 2 / 4;
+        grid-row: 4;
+    }
+
+    .post-type-archive-product .woocommerce-pagination,
+    .tax-product_cat .woocommerce-pagination,
+    .tax-product_tag .woocommerce-pagination {
+        grid-column: 2 / 4;
+        grid-row: 5;
     }
 
     .post-type-archive-product ul.products,
