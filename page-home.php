@@ -26,7 +26,7 @@ $aa_home_preview_text = static function ( $post ) {
 
 <section class="hero-overlay">
   <div class="hero-image-wrapper">
-    <img src="<?php echo esc_url( get_theme_file_uri( '/assets/img/front-page-vector.jpg' ) ); ?>" alt="Illustration of a person reflecting with a drink" class="hero-illustration">
+    <img fetchpriority=high src="<?php echo esc_url( get_theme_file_uri( '/assets/img/front-page-vector.jpg' ) ); ?>" alt="Illustration of a person reflecting with a drink" class="hero-illustration">
     <div class="hero-text">
       <p>Do you think you have a drinking problem?</p>
       <p>Is it costing you more than money?</p>
