@@ -12,7 +12,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 $act_district_cso_child_includes = array(
     '/inc/bootstrap.php',
-    '/inc/footer-sitemap.php',
     '/inc/site-branding.php',
     '/inc/wp-login-branding.php',
 );

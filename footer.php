@@ -36,8 +36,31 @@ if ( ! defined( 'ABSPATH' ) ) {
 
         <!-- Sitemap -->
         <div class="aa-footer-col">
-        <h4>Sitemap</h4>
-        <?php echo act_district_cso_child_footer_sitemap_list(); ?>
+            <h4>Sitemap</h4>
+            <?php
+            if ( has_nav_menu( 'ACT-District-CSO-Child-footer-menu-1' ) ) {
+                wp_nav_menu( array(
+                    'theme_location' => 'ACT-District-CSO-Child-footer-menu-1',
+                    'container'      => 'nav',
+                    'container_class'=> 'footer-navigation',
+                    'menu_class'     => 'footer-menu-links',
+                    'depth'          => 1,
+                ) );
+            }
+            ?>
+        </div>
+        <div class="aa-footer-col" style="margin-top: 2rem;">
+            <?php
+            if ( has_nav_menu( 'ACT-District-CSO-Child-footer-menu-2' ) ) {
+                wp_nav_menu( array(
+                    'theme_location' => 'ACT-District-CSO-Child-footer-menu-2',
+                    'container'      => 'nav',
+                    'container_class'=> 'footer-navigation',
+                    'menu_class'     => 'footer-menu-links',
+                    'depth'          => 1,
+                ) );
+            }
+            ?>
         </div>
 
         <!-- Quick Links -->
