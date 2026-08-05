@@ -35,34 +35,35 @@ if ( ! defined( 'ABSPATH' ) ) {
         </div>
 
         <!-- Sitemap -->
-        <div class="aa-footer-col">
-            <h4>Sitemap</h4>
-            <?php
-            if ( has_nav_menu( 'ACT-District-CSO-Child-footer-menu-1' ) ) {
-                wp_nav_menu( array(
-                    'theme_location' => 'ACT-District-CSO-Child-footer-menu-1',
-                    'container'      => 'nav',
-                    'container_class'=> 'footer-navigation',
-                    'menu_class'     => 'footer-menu-links',
-                    'depth'          => 1,
-                ) );
-            }
-            ?>
+         <div class="sitemap-container">
+            <div class="aa-footer-col">
+                <h4>Sitemap</h4>
+                <?php
+                if ( has_nav_menu( 'ACT-District-CSO-Child-footer-menu-1' ) ) {
+                    wp_nav_menu( array(
+                        'theme_location' => 'ACT-District-CSO-Child-footer-menu-1',
+                        'container'      => 'nav',
+                        'container_class'=> 'footer-navigation',
+                        'menu_class'     => 'footer-menu-links',
+                        'depth'          => 1,
+                    ) );
+                }
+                ?>
+            </div>
+            <div class="aa-footer-col" id="sitemap-2">
+                <?php
+                if ( has_nav_menu( 'ACT-District-CSO-Child-footer-menu-2' ) ) {
+                    wp_nav_menu( array(
+                        'theme_location' => 'ACT-District-CSO-Child-footer-menu-2',
+                        'container'      => 'nav',
+                        'container_class'=> 'footer-navigation',
+                        'menu_class'     => 'footer-menu-links',
+                        'depth'          => 1,
+                    ) );
+                }
+                ?>
+            </div>
         </div>
-        <div class="aa-footer-col" style="margin-top: 2rem;">
-            <?php
-            if ( has_nav_menu( 'ACT-District-CSO-Child-footer-menu-2' ) ) {
-                wp_nav_menu( array(
-                    'theme_location' => 'ACT-District-CSO-Child-footer-menu-2',
-                    'container'      => 'nav',
-                    'container_class'=> 'footer-navigation',
-                    'menu_class'     => 'footer-menu-links',
-                    'depth'          => 1,
-                ) );
-            }
-            ?>
-        </div>
-
         <!-- Quick Links -->
         <?php if ( function_exists( 'custom_site_details_quick_links_list' ) ) : ?>
             <?php $quick_links = custom_site_details_quick_links_list( array( 'class' => 'aa-footer-quick-links' ) ); ?>
