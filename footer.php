@@ -65,15 +65,20 @@ if ( ! defined( 'ABSPATH' ) ) {
             </div>
         </div>
         <!-- Quick Links -->
-        <?php if ( function_exists( 'custom_site_details_quick_links_list' ) ) : ?>
-            <?php $quick_links = custom_site_details_quick_links_list( array( 'class' => 'aa-footer-quick-links' ) ); ?>
-            <?php if ( $quick_links ) : ?>
-                <div class="aa-footer-col">
-                    <h4>Quick Links</h4>
-                    <?php echo $quick_links; ?>
-                </div>
-            <?php endif; ?>
-        <?php endif; ?>
+        <div class="aa-footer-col">
+            <h4>Quick Links</h4>
+            <?php
+            if ( has_nav_menu( 'ACT-District-CSO-Child-quick-links' ) ) {
+                wp_nav_menu( array(
+                    'theme_location' => 'ACT-District-CSO-Child-quick-links',
+                    'container'      => 'nav',
+                    'container_class'=> 'footer-navigation',
+                    'menu_class'     => 'footer-menu-links',
+                    'depth'          => 1,
+                ) );
+            }
+            ?>
+        </div>
         <!-- Contact -->
         <div class="aa-footer-col">
             <h4 class="aa-footer-heading">Contact</h4>

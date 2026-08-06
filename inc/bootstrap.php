@@ -21,11 +21,12 @@ function act_district_cso_child_asset_version( $relative_path ) {
  * Register footer menus.
  */
 
-function ACT_District_CSO_Child_footer_menu() {
+function ACT_District_CSO_Child_footer_menus() {
     register_nav_menu('ACT-District-CSO-Child-footer-menu-1', __( 'Footer Menu 1', 'ACT_District_CSO_Child' ));
 	register_nav_menu('ACT-District-CSO-Child-footer-menu-2', __( 'Footer Menu 2', 'ACT_District_CSO_Child' ));
+	register_nav_menu('ACT-District-CSO-Child-quick-links', __( 'Quick Links', 'ACT_District_CSO_Child' ));
 }
-add_action( 'init', 'ACT_District_CSO_Child_footer_menu' );
+add_action( 'init', 'ACT_District_CSO_Child_footer_menus' );
 
 
 /**
