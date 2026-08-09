@@ -343,6 +343,38 @@ header .custom-logo-link img {
   .hero-text p { font-size: 0.95rem; }
 }
 
+@media (orientation: landscape) and (max-height: 500px) and (max-width: 921px) {
+  .home .hero-image-wrapper img {
+    height: min(320px, 72svh);
+    min-height: 240px;
+    object-fit: cover;
+    object-position: center 45%;
+  }
+
+  .home .hero-text {
+    width: min(320px, calc(100% - 32px));
+    max-width: 320px;
+    box-sizing: border-box;
+    padding: 12px 16px;
+  }
+
+  .home .hero-text p {
+    margin: 6px 0;
+    font-size: 0.95rem;
+  }
+
+  .home .hero-text .button {
+    margin-top: 10px;
+    padding: 9px 16px;
+  }
+
+  .home .container {
+    width: calc(100% - 16px);
+    margin: 8px auto;
+    padding: 8px;
+  }
+}
+
 
 /*  -----------------------------------------------------
                     PAGE LAYOUT / CONTENT
