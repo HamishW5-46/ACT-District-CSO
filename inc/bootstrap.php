@@ -80,29 +80,6 @@ function ACT_District_CSO_Child_enqueue_styles() {
 add_action( 'wp_enqueue_scripts', 'ACT_District_CSO_Child_enqueue_styles', 15 );
 
 /**
- * Keep Astra's mobile menu container renderable for the dropdown toggle.
- *
- * LiteSpeed's generated unused CSS can preserve Astra's default hidden state
- * while dropping the dynamic open state. Printing this directly keeps the
- * parent wrapper available, while Astra's JavaScript still controls the inner
- * navigation display when the hamburger is toggled.
- */
-function act_district_cso_child_mobile_menu_visibility_fix() {
-	?>
-	<style id="act-district-cso-child-mobile-menu-visibility">
-		.ast-header-break-point #ast-mobile-header .ast-mobile-header-content {
-			display: block !important;
-		}
-
-		.ast-header-break-point #ast-mobile-header .ast-mobile-header-content .main-header-bar-navigation {
-			display: none;
-		}
-	</style>
-	<?php
-}
-add_action( 'wp_head', 'act_district_cso_child_mobile_menu_visibility_fix', 100 );
-
-/**
  * Enqueue a page/template-specific stylesheet.
  */
 function act_district_cso_child_enqueue_page_style( $template, $stylesheet, $dependency ) {
