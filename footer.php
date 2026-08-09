@@ -35,21 +35,50 @@ if ( ! defined( 'ABSPATH' ) ) {
         </div>
 
         <!-- Sitemap -->
-        <div class="aa-footer-col">
-        <h4>Sitemap</h4>
-        <?php echo act_district_cso_child_footer_sitemap_list(); ?>
+         <div class="sitemap-container">
+            <div class="aa-footer-col">
+                <h4>Sitemap</h4>
+                <?php
+                if ( has_nav_menu( 'ACT-District-CSO-Child-footer-menu-1' ) ) {
+                    wp_nav_menu( array(
+                        'theme_location' => 'ACT-District-CSO-Child-footer-menu-1',
+                        'container'      => 'nav',
+                        'container_class'=> 'footer-navigation',
+                        'menu_class'     => 'footer-menu-links',
+                        'depth'          => 1,
+                    ) );
+                }
+                ?>
+            </div>
+            <div class="aa-footer-col" id="sitemap-2">
+                <?php
+                if ( has_nav_menu( 'ACT-District-CSO-Child-footer-menu-2' ) ) {
+                    wp_nav_menu( array(
+                        'theme_location' => 'ACT-District-CSO-Child-footer-menu-2',
+                        'container'      => 'nav',
+                        'container_class'=> 'footer-navigation',
+                        'menu_class'     => 'footer-menu-links',
+                        'depth'          => 1,
+                    ) );
+                }
+                ?>
+            </div>
         </div>
-
         <!-- Quick Links -->
-        <?php if ( function_exists( 'custom_site_details_quick_links_list' ) ) : ?>
-            <?php $quick_links = custom_site_details_quick_links_list( array( 'class' => 'aa-footer-quick-links' ) ); ?>
-            <?php if ( $quick_links ) : ?>
-                <div class="aa-footer-col">
-                    <h4>Quick Links</h4>
-                    <?php echo $quick_links; ?>
-                </div>
-            <?php endif; ?>
-        <?php endif; ?>
+        <div class="aa-footer-col">
+            <h4>Quick Links</h4>
+            <?php
+            if ( has_nav_menu( 'ACT-District-CSO-Child-quick-links' ) ) {
+                wp_nav_menu( array(
+                    'theme_location' => 'ACT-District-CSO-Child-quick-links',
+                    'container'      => 'nav',
+                    'container_class'=> 'footer-navigation',
+                    'menu_class'     => 'footer-menu-links',
+                    'depth'          => 1,
+                ) );
+            }
+            ?>
+        </div>
         <!-- Contact -->
         <div class="aa-footer-col">
             <h4 class="aa-footer-heading">Contact</h4>
