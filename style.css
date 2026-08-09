@@ -255,6 +255,14 @@ header .custom-logo-link img {
   padding: 0 !important;
 }
 
+.ast-header-break-point #ast-mobile-header .ast-mobile-header-content {
+  display: block;
+}
+
+.ast-header-break-point #ast-mobile-header .ast-mobile-header-content .main-header-bar-navigation {
+  display: none;
+}
+
 /* Opt custom layout wrappers out of Astra's default block padding. */
 .entry-content > .wp-block-group.aa-no-ast-padding,
 .entry-content > .wp-block-cover.aa-no-ast-padding,
