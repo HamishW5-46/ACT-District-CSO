@@ -8,7 +8,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Return the destination for PIPA enquiries.
  */
 function aa_forms_pipa_recipient_email() {
-	return apply_filters( 'aa_forms_pipa_recipient_email', 'pipa@aacanberra.org' );
+	return apply_filters( 'aa_forms_pipa_recipient_email', 'pipa@aaareaber.org.au' );
 }
 
 /**
