@@ -127,6 +127,18 @@ function aa_forms_register_contact_directory( $forms ) {
 				return $values['email'] ?? '';
 			},
 		),
+		'receipt' => array(
+			'enabled' => true,
+			'to'      => function( $form, $values ) {
+				return $values['email'] ?? '';
+			},
+			'name'    => function( $form, $values ) {
+				return $values['name'] ?? '';
+			},
+			'subject' => function( $form, $values ) {
+				return sprintf( 'Submission Received: "%s"', $values['subject'] ?? $form['title'] );
+			},
+		),
 		'email_data' => function( $values ) {
 			$contacts  = aa_get_contact_directory();
 			$recipient = sanitize_key( $values['recipient'] ?? '' );

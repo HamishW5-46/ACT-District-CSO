@@ -481,6 +481,83 @@ function aa_forms_resolve_mail_value( $value, array $form, array $values ) {
 	return (string) $value;
 }
 
+
+/**
+ * Send an optional receipt email to the person who submitted a form.
+ */
+function aa_forms_send_submitter_receipt( $form_id, array $form, array $values, array $email_data, $admin_recipient ) {
+	$receipt = $form['receipt'] ?? array();
+
+	if ( empty( $receipt['enabled'] ) ) {
+		return true;
+	}
+
+	$to = sanitize_email(
+		aa_forms_resolve_mail_value(
+			$receipt['to'] ?? aa_forms_primary_email( $form, $values ),
+			$form,
+			$values
+		)
+	);
+
+	if ( ! $to ) {
+		return true;
+	}
+
+	$submitter_name = aa_forms_resolve_mail_value( $receipt['name'] ?? '', $form, $values );
+	$subject        = aa_forms_resolve_mail_value( $receipt['subject'] ?? '', $form, $values );
+
+	if ( $subject === '' ) {
+		$submitted_subject = $values['subject'] ?? $form['title'];
+		$subject           = sprintf( 'Submission Received: "%s"', $submitted_subject );
+	}
+
+	$receipt_data = array_merge(
+		$email_data,
+		array(
+			'receipt' => array(
+				'name'        => $submitter_name,
+				'to'          => $to,
+				'subject'     => $subject,
+				'button_url'  => $receipt['button_url'] ?? home_url( '/meetings/' ),
+				'button_text' => $receipt['button_text'] ?? 'Find a meeting',
+			),
+		)
+	);
+
+	if ( ! empty( $receipt['email_data'] ) && is_callable( $receipt['email_data'] ) ) {
+		$receipt_data = array_merge(
+			$receipt_data,
+			(array) call_user_func( $receipt['email_data'], $values, $form )
+		);
+	}
+
+	$template = get_stylesheet_directory() . '/templates/emails/' . ( $receipt['template'] ?? 'receipt' ) . '.php';
+	$body     = trim( aa_forms_render_template( $template, array( 'email_data' => $receipt_data ) ) );
+
+	if ( $body === '' ) {
+		return true;
+	}
+
+	$headers = array( 'Content-Type: text/html; charset=UTF-8' );
+
+	if ( $admin_recipient ) {
+		$headers[] = sprintf(
+			'Reply-To: %s <%s>',
+			get_bloginfo( 'name' ),
+			$admin_recipient
+		);
+	}
+
+	$sent = wp_mail( $to, $subject, $body, $headers );
+
+	if ( ! $sent ) {
+		error_log( sprintf( 'AA form receipt failed for form "%s" to %s.', $form_id, $to ) );
+	}
+
+	return $sent;
+}
+
 /**
  * Handle public form submissions.
  */
@@ -575,6 +652,8 @@ function aa_forms_submit() {
 	if ( ! $sent ) {
 		wp_send_json_error( array( 'message' => 'Your message could not be sent. Please try again.' ), 500 );
 	}
+
+	aa_forms_send_submitter_receipt( $form_id, $form, $values, $email_data, $to );
 
 	wp_send_json_success( array( 'message' => $form['success_message'] ?? 'Your message has been sent.' ) );
 }
