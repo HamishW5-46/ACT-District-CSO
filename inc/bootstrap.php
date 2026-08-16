@@ -59,12 +59,9 @@ function ACT_District_CSO_Child_enqueue_styles() {
 	);
 
 	$template_styles = array(
-		'page-form-contact.php'		=> 'contact.css',
-		'page-form-beginners.php'	=> 'beginners.css',
-		'page-information.php'		=> 'about-aa.css',
-		'page-resources.php'		=> 'members.css',
-		'page-directory.php'		=> 'directory.css',
-		'page-simple.php'			=> 'simple-page.css',
+		'page-form-contact.php'	=> 'contact.css',
+		'page-information.php'	=> 'about-aa.css',
+		'page-resources.php'	=> 'members.css',
 	);
 
 	foreach ( $template_styles as $template => $stylesheet ) {
@@ -103,3 +100,5 @@ function act_district_cso_child_enqueue_page_style( $template, $stylesheet, $dep
 if ( class_exists( 'WooCommerce' ) ) {
 	require_once get_stylesheet_directory() . '/inc/woocommerce/shop-filters.php';
 }
+
+require_once get_stylesheet_directory() . '/inc/contact-directory.php';
