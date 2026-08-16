@@ -84,7 +84,7 @@ get_header();
 
 				<h2>Send a Message</h2>
 
-				<?php echo do_shortcode( '[contact-form-7 id="12a9a40" title="Contact form"]' ); ?>
+				<?php echo do_shortcode( '[aa_form id="contact"]' ); ?>
 
 			</section>
 

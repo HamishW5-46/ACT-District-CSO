@@ -101,4 +101,4 @@ if ( class_exists( 'WooCommerce' ) ) {
 	require_once get_stylesheet_directory() . '/inc/woocommerce/shop-filters.php';
 }
 
-require_once get_stylesheet_directory() . '/inc/contact-directory.php';
+require_once get_stylesheet_directory() . '/inc/forms.php';
