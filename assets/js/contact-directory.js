@@ -18,8 +18,110 @@ document.addEventListener("DOMContentLoaded", () => {
     const submitButton = directory.querySelector(
         "[data-aa-contact-submit]"
     );
+    const turnstileContainer = directory.querySelector(
+        "[data-aa-contact-turnstile]"
+    );
 
     let previouslyFocusedElement = null;
+    let turnstileWidgetId = null;
+    let turnstileRenderTimer = null;
+
+
+    function clearStatus() {
+        status.textContent = "";
+        status.classList.remove(
+            "is-success",
+            "is-error"
+        );
+    }
+
+
+    function showStatus(message, statusClass) {
+        status.textContent = message;
+        status.classList.remove(
+            "is-success",
+            "is-error"
+        );
+        status.classList.add(statusClass);
+    }
+
+
+    function isTurnstileEnabled() {
+        return Boolean(
+            window.aaContactDirectory?.turnstile?.enabled &&
+            window.aaContactDirectory.turnstile.siteKey &&
+            turnstileContainer
+        );
+    }
+
+
+    function resetTurnstile() {
+        if (
+            isTurnstileEnabled() &&
+            window.turnstile &&
+            turnstileWidgetId !== null
+        ) {
+            window.turnstile.reset(turnstileWidgetId);
+        }
+    }
+
+
+    function renderTurnstile() {
+        if (!isTurnstileEnabled()) {
+            return;
+        }
+
+        if (
+            !window.turnstile ||
+            typeof window.turnstile.render !== "function"
+        ) {
+            window.clearTimeout(turnstileRenderTimer);
+            turnstileRenderTimer = window.setTimeout(
+                renderTurnstile,
+                100
+            );
+            return;
+        }
+
+        if (turnstileWidgetId !== null) {
+            resetTurnstile();
+            return;
+        }
+
+        turnstileWidgetId = window.turnstile.render(
+            turnstileContainer,
+            {
+                sitekey: window.aaContactDirectory.turnstile.siteKey,
+                action: window.aaContactDirectory.turnstile.action,
+                theme: "auto",
+                "error-callback": () => {
+                    showStatus(
+                        "Verification could not be completed. Please try again.",
+                        "is-error"
+                    );
+                },
+                "expired-callback": () => {
+                    resetTurnstile();
+                },
+            }
+        );
+    }
+
+
+    function getTurnstileToken() {
+        if (!isTurnstileEnabled()) {
+            return "";
+        }
+
+        if (
+            !window.turnstile ||
+            turnstileWidgetId === null
+        ) {
+            return "";
+        }
+
+        return window.turnstile.getResponse(turnstileWidgetId) || "";
+    }
 
 
     function openModal(button) {
@@ -33,16 +135,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         title.textContent = `Contact ${recipientName}`;
 
-        status.textContent = "";
-        status.classList.remove(
-            "is-success",
-            "is-error"
-        );
+        clearStatus();
 
         modal.classList.add("is-open");
         modal.setAttribute("aria-hidden", "false");
 
         document.body.classList.add("aa-contact-modal-open");
+
+        renderTurnstile();
 
         const firstInput = form.querySelector(
             'input:not([type="hidden"])'
@@ -60,13 +160,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         document.body.classList.remove("aa-contact-modal-open");
 
-        status.textContent = "";
-        status.classList.remove(
-            "is-success",
-            "is-error"
-        );
-
+        clearStatus();
         form.reset();
+        resetTurnstile();
 
         if (previouslyFocusedElement) {
             previouslyFocusedElement.focus();
@@ -114,16 +210,32 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
+        clearStatus();
+
+        const turnstileToken = getTurnstileToken();
+
+        if (
+            isTurnstileEnabled() &&
+            !turnstileToken
+        ) {
+            showStatus(
+                "Please complete the verification before sending.",
+                "is-error"
+            );
+            return;
+        }
+
         submitButton.disabled = true;
         submitButton.textContent = "Sending...";
 
-        status.textContent = "";
-        status.classList.remove(
-            "is-success",
-            "is-error"
-        );
-
         const formData = new FormData(form);
+
+        if (isTurnstileEnabled()) {
+            formData.set(
+                "cf-turnstile-response",
+                turnstileToken
+            );
+        }
 
         formData.append(
             "action",
@@ -154,8 +266,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 );
             }
 
-            status.textContent = result.data.message;
-            status.classList.add("is-success");
+            showStatus(
+                result.data.message,
+                "is-success"
+            );
 
             /*
              * Preserve recipient/opened_at before reset if desired,
@@ -166,10 +280,13 @@ document.addEventListener("DOMContentLoaded", () => {
             submitButton.textContent = "Sent";
 
         } catch (error) {
-            status.textContent = error.message;
-            status.classList.add("is-error");
+            showStatus(
+                error.message,
+                "is-error"
+            );
 
         } finally {
+            resetTurnstile();
             submitButton.disabled = false;
 
             if (

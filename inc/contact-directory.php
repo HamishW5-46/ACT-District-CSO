@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 
 if (!defined('ABSPATH')) {
     exit;
@@ -58,6 +58,226 @@ function aa_get_contact_directory()
 
 
 /**
+ * Return the configured Cloudflare Turnstile site key.
+ */
+function aa_contact_directory_turnstile_site_key()
+{
+    $site_key = defined('CF_TURNSTILE_SITE_KEY')
+        ? CF_TURNSTILE_SITE_KEY
+        : '';
+
+    return trim((string) apply_filters(
+        'aa_contact_directory_turnstile_site_key',
+        $site_key
+    ));
+}
+
+
+/**
+ * Return the configured Cloudflare Turnstile secret key.
+ */
+function aa_contact_directory_turnstile_secret_key()
+{
+    $secret_key = defined('CF_TURNSTILE_SECRET_KEY')
+        ? CF_TURNSTILE_SECRET_KEY
+        : '';
+
+    return trim((string) apply_filters(
+        'aa_contact_directory_turnstile_secret_key',
+        $secret_key
+    ));
+}
+
+
+/**
+ * Return whether Turnstile has both required keys configured.
+ */
+function aa_contact_directory_turnstile_enabled()
+{
+    return aa_contact_directory_turnstile_site_key() !== '' &&
+        aa_contact_directory_turnstile_secret_key() !== '';
+}
+
+
+/**
+ * Return the Turnstile action expected for this form.
+ */
+function aa_contact_directory_turnstile_action()
+{
+    return 'contact_directory';
+}
+
+
+/**
+ * Return the best available visitor IP address for anti-spam checks.
+ */
+function aa_contact_directory_client_ip()
+{
+    $headers = [
+        'HTTP_CF_CONNECTING_IP',
+        'REMOTE_ADDR',
+    ];
+
+    foreach ($headers as $header) {
+        if (empty($_SERVER[$header])) {
+            continue;
+        }
+
+        $ip = sanitize_text_field(wp_unslash($_SERVER[$header]));
+
+        if (filter_var($ip, FILTER_VALIDATE_IP)) {
+            return $ip;
+        }
+    }
+
+    return 'unknown';
+}
+
+
+/**
+ * Increment and check a transient-backed rate limit bucket.
+ */
+function aa_contact_directory_check_rate_limit($scope, $value, $limit, $window)
+{
+    $value = trim((string) $value);
+
+    if ($value === '') {
+        $value = 'unknown';
+    }
+
+    $key = sprintf(
+        'aa_contact_rate_%s_%s',
+        sanitize_key($scope),
+        hash('sha256', strtolower($value))
+    );
+
+    $now = time();
+    $bucket = get_transient($key);
+
+    if (
+        !is_array($bucket) ||
+        empty($bucket['expires']) ||
+        (int) $bucket['expires'] <= $now
+    ) {
+        $bucket = [
+            'count'   => 0,
+            'expires' => $now + (int) $window,
+        ];
+    }
+
+    if ((int) $bucket['count'] >= (int) $limit) {
+        return false;
+    }
+
+    $bucket['count'] = (int) $bucket['count'] + 1;
+
+    set_transient(
+        $key,
+        $bucket,
+        max(1, (int) $bucket['expires'] - $now)
+    );
+
+    return true;
+}
+
+
+/**
+ * Check configured contact form rate limits.
+ */
+function aa_contact_directory_rate_limit_allows($email)
+{
+    $limits = apply_filters(
+        'aa_contact_directory_rate_limits',
+        [
+            'ip' => [
+                'value'  => aa_contact_directory_client_ip(),
+                'limit'  => 5,
+                'window' => 15 * MINUTE_IN_SECONDS,
+            ],
+            'email' => [
+                'value'  => $email,
+                'limit'  => 3,
+                'window' => HOUR_IN_SECONDS,
+            ],
+        ]
+    );
+
+    foreach ($limits as $scope => $limit) {
+        if (empty($limit['limit']) || empty($limit['window'])) {
+            continue;
+        }
+
+        if (!aa_contact_directory_check_rate_limit(
+            $scope,
+            $limit['value'] ?? '',
+            (int) $limit['limit'],
+            (int) $limit['window']
+        )) {
+            return false;
+        }
+    }
+
+    return true;
+}
+
+
+/**
+ * Verify a Cloudflare Turnstile token with the Siteverify API.
+ */
+function aa_contact_directory_verify_turnstile_token($token)
+{
+    if (!aa_contact_directory_turnstile_enabled()) {
+        return true;
+    }
+
+    $token = trim((string) $token);
+
+    if ($token === '' || strlen($token) > 2048) {
+        return false;
+    }
+
+    $response = wp_remote_post(
+        'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+        [
+            'timeout' => 5,
+            'body'    => [
+                'secret'          => aa_contact_directory_turnstile_secret_key(),
+                'response'        => $token,
+                'remoteip'        => aa_contact_directory_client_ip(),
+                'idempotency_key' => wp_generate_uuid4(),
+            ],
+        ]
+    );
+
+    if (is_wp_error($response)) {
+        error_log(
+            'AA contact Turnstile validation request failed: ' .
+            $response->get_error_message()
+        );
+
+        return false;
+    }
+
+    $body = json_decode(wp_remote_retrieve_body($response), true);
+
+    if (!is_array($body) || empty($body['success'])) {
+        $codes = isset($body['error-codes']) && is_array($body['error-codes'])
+            ? implode(', ', array_map('sanitize_text_field', $body['error-codes']))
+            : 'unknown-error';
+
+        error_log(
+            'AA contact Turnstile validation failed: ' . $codes
+        );
+
+        return false;
+    }
+
+    return isset($body['action']) &&
+        $body['action'] === aa_contact_directory_turnstile_action();
+}
+
+
+/**
  * Register frontend assets.
  */
 function aa_contact_directory_assets()
@@ -67,6 +287,14 @@ function aa_contact_directory_assets()
         get_stylesheet_directory_uri() . '/assets/css/contact-directory.css',
         [],
         '1.0.0'
+    );
+
+    wp_register_script(
+        'aa-contact-directory-turnstile',
+        'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit',
+        [],
+        null,
+        true
     );
 
     wp_register_script(
@@ -89,16 +317,29 @@ add_action('wp_enqueue_scripts', 'aa_contact_directory_assets');
 function aa_contact_directory_shortcode()
 {
     $contacts = aa_get_contact_directory();
+    $turnstile_enabled = aa_contact_directory_turnstile_enabled();
 
     wp_enqueue_style('aa-contact-directory');
+
+    if ($turnstile_enabled) {
+        wp_enqueue_script('aa-contact-directory-turnstile');
+    }
+
     wp_enqueue_script('aa-contact-directory');
 
     wp_localize_script(
         'aa-contact-directory',
         'aaContactDirectory',
         [
-            'ajaxUrl' => admin_url('admin-ajax.php'),
-            'nonce'   => wp_create_nonce('aa_contact_directory'),
+            'ajaxUrl'   => admin_url('admin-ajax.php'),
+            'nonce'     => wp_create_nonce('aa_contact_directory'),
+            'turnstile' => [
+                'enabled' => $turnstile_enabled,
+                'siteKey'  => $turnstile_enabled
+                    ? aa_contact_directory_turnstile_site_key()
+                    : '',
+                'action'   => aa_contact_directory_turnstile_action(),
+            ],
         ]
     );
 
@@ -289,6 +530,13 @@ function aa_contact_directory_shortcode()
                     </div>
 
 
+                    <?php if ($turnstile_enabled) : ?>
+                        <div class="aa-contact-form__turnstile">
+                            <div data-aa-contact-turnstile></div>
+                        </div>
+                    <?php endif; ?>
+
+
                     <div
                         class="aa-contact-form__status"
                         data-aa-contact-status
@@ -371,6 +619,10 @@ function aa_contact_directory_submit()
     $opened_at = isset($_POST['opened_at'])
         ? absint($_POST['opened_at'])
         : 0;
+
+    $turnstile_token = isset($_POST['cf-turnstile-response'])
+        ? sanitize_text_field(wp_unslash($_POST['cf-turnstile-response']))
+        : '';
 
 
     /*
@@ -461,6 +713,26 @@ function aa_contact_directory_submit()
     if (mb_strlen($message) > 5000) {
         wp_send_json_error([
             'message' => 'Your message is too long.',
+        ], 400);
+    }
+
+
+    /*
+     * Rate limiting.
+     */
+    if (!aa_contact_directory_rate_limit_allows($email)) {
+        wp_send_json_error([
+            'message' => 'Too many messages have been sent recently. Please try again later.',
+        ], 429);
+    }
+
+
+    /*
+     * Turnstile verification.
+     */
+    if (!aa_contact_directory_verify_turnstile_token($turnstile_token)) {
+        wp_send_json_error([
+            'message' => 'Please complete the verification and try again.',
         ], 400);
     }
 

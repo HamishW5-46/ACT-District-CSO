@@ -217,6 +217,16 @@
     min-height: 150px;
 }
 
+
+.aa-contact-form__turnstile {
+    min-height: 65px;
+    margin: 0 0 20px;
+}
+
+.aa-contact-form__turnstile iframe {
+    max-width: 100%;
+}
+
 .aa-contact-form__actions {
     display: flex;
     justify-content: flex-end;
