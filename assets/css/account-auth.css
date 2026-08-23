@@ -169,10 +169,10 @@ body.aac-account-auth-page .aa-account-auth .woocommerce-form .woocommerce-butto
 body.aac-account-auth-page .aa-account-auth .woocommerce-form .woocommerce-Button {
 	min-height: 46px;
 	padding: 11px 24px;
-	border: 1px solid #111827;
-	border-radius: 999px;
-	background: #111827;
-	color: #fff;
+	border: 1px solid #111827 !important;
+	border-radius: 999px !important;
+	background: #111827 !important;
+	color: #fff !important;
 	font-weight: 800;
 	line-height: 1.2;
 	text-align: center;
@@ -187,9 +187,9 @@ body.aac-account-auth-page .aa-account-auth .woocommerce-form .woocommerce-butto
 body.aac-account-auth-page .aa-account-auth .woocommerce-form .woocommerce-button:focus,
 body.aac-account-auth-page .aa-account-auth .woocommerce-form .woocommerce-Button:hover,
 body.aac-account-auth-page .aa-account-auth .woocommerce-form .woocommerce-Button:focus {
-	border-color: var(--aa-color-link, #2f6fa3);
-	background: var(--aa-color-link, #2f6fa3);
-	color: #fff;
+	border-color: var(--aa-color-link, #2f6fa3) !important;
+	background: var(--aa-color-link, #2f6fa3) !important;
+	color: #fff !important;
 	text-decoration: none;
 	transform: translateY(-1px);
 }
