@@ -17,19 +17,6 @@ function aac_is_shop_filter_screen() {
 }
 
 /**
- * Keep the literature shop out of Astra's generic widget sidebar.
- */
-add_filter( 'astra_page_layout', 'aac_use_full_width_shop_layout' );
-
-function aac_use_full_width_shop_layout( $layout ) {
-	if ( aac_is_shop_filter_screen() ) {
-		return 'no-sidebar';
-	}
-
-	return $layout;
-}
-
-/**
  * Enqueue the shop-filter assets.
  */
 add_action( 'wp_enqueue_scripts', 'aac_enqueue_shop_filter_assets' );
@@ -44,16 +31,6 @@ function aac_enqueue_shop_filter_assets() {
 
 	$script_path = $theme_dir . '/assets/js/shop-filters.js';
 	$script_uri  = $theme_uri . '/assets/js/shop-filters.js';
-
-	$style_path = $theme_dir . '/assets/css/shop-filters.css';
-	$style_uri  = $theme_uri . '/assets/css/shop-filters.css';
-
-	wp_enqueue_style(
-		'aac-shop-filters',
-		$style_uri,
-		array(),
-		file_exists( $style_path ) ? (string) filemtime( $style_path ) : '1.0.0'
-	);
 
 	wp_enqueue_script(
 		'aac-shop-filters',

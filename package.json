@@ -1,0 +1,15 @@
+{
+  "name": "act-district-cso-standalone-theme",
+  "private": true,
+  "scripts": {
+    "env:start": "wp-env start",
+    "env:stop": "wp-env stop",
+    "env:destroy": "wp-env destroy",
+    "env:activate-theme": "wp-env run cli wp theme activate ACT-District-CSO-Standalone",
+    "env:plugin-list": "wp-env run cli wp plugin list --fields=name,status,version",
+    "env:theme-status": "wp-env run cli wp theme status ACT-District-CSO-Standalone"
+  },
+  "devDependencies": {
+    "@wordpress/env": "^10.31.0"
+  }
+}

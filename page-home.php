@@ -31,7 +31,9 @@ $aa_home_preview_text = static function ( $post ) {
       <p>Do you think you have a drinking problem?</p>
       <p>Is it costing you more than money?</p>
       <p>We could help...</p>
-      <p><?php echo custom_site_details_phone_link( array( 'class' => 'home-page-phone-link' ) ); ?></p>
+      <?php if ( function_exists( 'custom_site_details_phone_link' ) ) : ?>
+        <p><?php echo wp_kses_post( custom_site_details_phone_link( array( 'class' => 'home-page-phone-link' ) ) ); ?></p>
+      <?php endif; ?>
       <a href="/meetings" class="button">Find a Meeting</a>
     </div>
   </div>

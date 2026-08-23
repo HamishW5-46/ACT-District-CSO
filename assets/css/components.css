@@ -11,6 +11,7 @@
 
 .aa-container,
 .aa-container-narrow,
+.aa-container--narrow,
 .aa-container-wide {
     margin: 0 auto;
     padding: 0;
@@ -21,7 +22,8 @@
     width: min(1120px, calc(100% - 40px));
 }
 
-.aa-container-narrow {
+.aa-container-narrow,
+.aa-container--narrow {
     width: min(820px, calc(100% - 40px));
 }
 
