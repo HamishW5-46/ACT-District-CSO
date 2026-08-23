@@ -220,6 +220,11 @@
 	display: grid !important;
 }
 
+.wp-block-group.aa-grid > .wp-block-group__inner-container,
+.wp-block-group.aa-resource-grid > .wp-block-group__inner-container {
+	display: contents;
+}
+
 .aa-grid-2.wp-block-group {
 	grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 }
