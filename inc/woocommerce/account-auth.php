@@ -21,11 +21,19 @@ function aac_enqueue_account_auth_assets() {
 		return;
 	}
 
+	$relative_path = '/assets/css/account-auth.css';
+	$version       = act_district_cso_child_asset_version( $relative_path );
+	$style_uri     = add_query_arg(
+		'aacv',
+		rawurlencode( (string) $version ),
+		get_stylesheet_directory_uri() . $relative_path
+	);
+
 	wp_enqueue_style(
 		'aac-account-auth',
-		get_stylesheet_directory_uri() . '/assets/css/account-auth.css',
+		$style_uri,
 		array( 'ACT-District-CSO-Child-components' ),
-		act_district_cso_child_asset_version( '/assets/css/account-auth.css' )
+		null
 	);
 }
 add_action( 'wp_enqueue_scripts', 'aac_enqueue_account_auth_assets', 20 );
