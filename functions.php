@@ -13,7 +13,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 $act_district_cso_child_includes = array(
     '/inc/bootstrap.php',
     '/inc/site-branding.php',
-    '/inc/wp-login-branding.php',
 );
 
 foreach ( $act_district_cso_child_includes as $act_district_cso_child_include ) {
