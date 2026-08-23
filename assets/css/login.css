@@ -1,0 +1,244 @@
+@font-face {
+	font-display: swap;
+	font-family: 'EB Garamond';
+	font-style: normal;
+	font-weight: 700;
+	src: url('../fonts/eb-garamond-v32-latin-700.woff2') format('woff2');
+}
+
+:root {
+	--aa-login-text: #222;
+	--aa-login-heading: #1f2937;
+	--aa-login-link: #2f6fa3;
+	--aa-login-link-hover: #1d557f;
+	--aa-login-border: #d9e1ea;
+	--aa-login-surface: #fff;
+	--aa-login-muted: #526071;
+	--aa-login-shadow: 0 18px 48px rgba(15, 23, 42, 0.12);
+}
+
+body.login.aa-login-page {
+	min-height: 100vh;
+	background:
+		linear-gradient(180deg, rgba(248, 250, 252, 0.96) 0%, rgba(239, 246, 255, 0.8) 46%, rgba(255, 255, 255, 0.98) 100%),
+		#f8fafc;
+	color: var(--aa-login-text);
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+body.login.aa-login-page::before {
+	content: "";
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	background:
+		linear-gradient(90deg, rgba(47, 111, 163, 0.08), transparent 34%, transparent 66%, rgba(31, 41, 55, 0.05)),
+		linear-gradient(180deg, rgba(255, 255, 255, 0) 0, rgba(47, 111, 163, 0.08) 100%);
+}
+
+.aa-login-page #login {
+	width: min(420px, calc(100% - 32px));
+	padding: clamp(36px, 8vh, 72px) 0 32px;
+}
+
+.aa-login-page #login h1 {
+	margin: 0 0 22px;
+	text-align: center;
+}
+
+.aa-login-page #login h1 a {
+	width: 94px;
+	height: 94px;
+	margin: 0 auto 14px;
+	background-image: url('../img/aa-logo.svg');
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	border-radius: 50%;
+	box-shadow: 0 12px 30px rgba(15, 23, 42, 0.12);
+}
+
+.aa-login-page #login h1::after {
+	content: "Canberra & District Central Service Office";
+	display: block;
+	max-width: 20rem;
+	margin: 0 auto;
+	color: #000;
+	font-family: 'EB Garamond', Georgia, "Times New Roman", serif;
+	font-size: clamp(1.25rem, 4.8vw, 1.55rem);
+	font-weight: 700;
+	line-height: 1.1;
+}
+
+.aa-login-page #login_error,
+.aa-login-page .message,
+.aa-login-page .success {
+	margin: 0 0 18px;
+	border: 1px solid var(--aa-login-border);
+	border-left: 5px solid var(--aa-login-link);
+	border-radius: 8px;
+	background: var(--aa-login-surface);
+	box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+	color: var(--aa-login-heading);
+}
+
+.aa-login-page #login_error {
+	border-left-color: #b91c1c;
+}
+
+.aa-login-page .success {
+	border-left-color: #047857;
+}
+
+.aa-login-page form {
+	margin-top: 0;
+	padding: 28px;
+	border: 1px solid var(--aa-login-border);
+	border-radius: 8px;
+	background: rgba(255, 255, 255, 0.96);
+	box-shadow: var(--aa-login-shadow);
+}
+
+.aa-login-page form .input,
+.aa-login-page input[type="text"],
+.aa-login-page input[type="password"],
+.aa-login-page input[type="email"] {
+	min-height: 46px;
+	border: 1px solid #cfd8e3;
+	border-radius: 8px;
+	background: #fff;
+	color: var(--aa-login-heading);
+	font-size: 1rem;
+	line-height: 1.4;
+	box-shadow: none;
+	transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+
+.aa-login-page form .input:focus,
+.aa-login-page input[type="text"]:focus,
+.aa-login-page input[type="password"]:focus,
+.aa-login-page input[type="email"]:focus,
+.aa-login-page input[type="checkbox"]:focus {
+	border-color: var(--aa-login-link);
+	box-shadow: 0 0 0 3px rgba(47, 111, 163, 0.16);
+	outline: none;
+}
+
+.aa-login-page label {
+	color: var(--aa-login-heading);
+	font-size: 0.92rem;
+	font-weight: 700;
+}
+
+.aa-login-page .forgetmenot label {
+	color: var(--aa-login-muted);
+	font-weight: 600;
+}
+
+.aa-login-page .button.wp-hide-pw {
+	color: var(--aa-login-link);
+}
+
+.aa-login-page .button.wp-hide-pw:focus {
+	border-color: var(--aa-login-link);
+	box-shadow: 0 0 0 3px rgba(47, 111, 163, 0.16);
+}
+
+.aa-login-page .button-primary,
+.aa-login-page .wp-core-ui .button-primary {
+	min-height: 42px;
+	padding: 0 22px;
+	border: 1px solid #111827;
+	border-radius: 999px;
+	background: #111827;
+	color: #fff;
+	font-weight: 800;
+	text-shadow: none;
+	box-shadow: none;
+	transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
+}
+
+.aa-login-page .button-primary:hover,
+.aa-login-page .button-primary:focus {
+	border-color: var(--aa-login-link);
+	background: var(--aa-login-link);
+	color: #fff;
+	transform: translateY(-1px);
+}
+
+.aa-login-page #nav,
+.aa-login-page #backtoblog {
+	margin: 18px 0 0;
+	padding: 0;
+	text-align: center;
+}
+
+.aa-login-page #nav a,
+.aa-login-page #backtoblog a,
+.aa-login-page .privacy-policy-page-link a {
+	color: var(--aa-login-link);
+	font-weight: 700;
+	text-decoration-thickness: 1px;
+	text-underline-offset: 3px;
+}
+
+.aa-login-page #nav a:hover,
+.aa-login-page #backtoblog a:hover,
+.aa-login-page .privacy-policy-page-link a:hover,
+.aa-login-page #nav a:focus,
+.aa-login-page #backtoblog a:focus,
+.aa-login-page .privacy-policy-page-link a:focus {
+	color: var(--aa-login-link-hover);
+}
+
+.aa-login-page .language-switcher {
+	margin-top: 22px;
+}
+
+.aa-login-page .language-switcher label {
+	color: var(--aa-login-muted);
+}
+
+.aa-login-page .language-switcher select {
+	min-height: 38px;
+	border-color: var(--aa-login-border);
+	border-radius: 8px;
+}
+
+.aa-login-footer-note {
+	margin: 22px auto 0;
+	color: var(--aa-login-muted);
+	font-size: 0.82rem;
+	font-weight: 700;
+	line-height: 1.45;
+	text-align: center;
+}
+
+@media (max-width: 420px) {
+	.aa-login-page #login {
+		width: min(100% - 24px, 420px);
+		padding-top: 28px;
+	}
+
+	.aa-login-page form {
+		padding: 24px 20px;
+	}
+
+	.aa-login-page #login h1 a {
+		width: 82px;
+		height: 82px;
+	}
+
+	.aa-login-page .forgetmenot,
+	.aa-login-page .submit {
+		float: none;
+	}
+
+	.aa-login-page .submit {
+		margin-top: 18px;
+	}
+
+	.aa-login-page .button-primary {
+		width: 100%;
+	}
+}

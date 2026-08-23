@@ -103,4 +103,6 @@ if ( class_exists( 'WooCommerce' ) ) {
 
 require_once get_stylesheet_directory() . '/inc/forms.php';
 
+require_once get_stylesheet_directory() . '/inc/login-page.php';
+
 require_once get_stylesheet_directory() . '/templates/gutenberg/tribe_events.php';
