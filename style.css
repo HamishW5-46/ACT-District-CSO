@@ -204,6 +204,11 @@ p {
   padding: 0;
 }
 
+.aa-header-menu li {
+  position: relative;
+  margin: 0;
+}
+
 .aa-header-menu a {
   display: inline-flex;
   align-items: center;
@@ -217,6 +222,67 @@ p {
 .aa-header-menu a:focus-visible {
   color: var(--aa-color-link);
   text-decoration: none;
+}
+
+.aa-header-menu .menu-item-has-children > a::after {
+  content: "";
+  width: 0.42em;
+  height: 0.42em;
+  margin-left: 0.45em;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: translateY(-0.12em) rotate(45deg);
+}
+
+.aa-header-menu .sub-menu {
+  position: absolute;
+  z-index: 1002;
+  top: calc(100% - 2px);
+  left: 0;
+  display: grid;
+  min-width: 220px;
+  margin: 0;
+  padding: 8px 0;
+  border: 1px solid var(--aa-color-border);
+  border-radius: 8px;
+  background: #fff;
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.14);
+  list-style: none;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(8px);
+  transition: opacity 0.16s ease, transform 0.16s ease, visibility 0.16s ease;
+}
+
+.aa-header-menu > li:last-child > .sub-menu {
+  right: 0;
+  left: auto;
+}
+
+.aa-header-menu .menu-item-has-children:hover > .sub-menu,
+.aa-header-menu .menu-item-has-children:focus-within > .sub-menu {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.aa-header-menu .sub-menu a {
+  display: flex;
+  min-height: 40px;
+  padding: 8px 14px;
+  color: #333;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+.aa-header-menu .sub-menu a:hover,
+.aa-header-menu .sub-menu a:focus-visible {
+  background: #f8fafc;
+  color: var(--aa-color-link);
 }
 
 .aa-menu-toggle {
@@ -377,6 +443,11 @@ header .custom-logo-link img {
         background: #f8fafc;
         box-shadow: none;
         list-style: none;
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: none;
+        transition: none;
     }
 
     .aa-header-menu .sub-menu a {
