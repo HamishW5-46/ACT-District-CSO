@@ -135,6 +135,18 @@ body.login.aa-login-page::before {
 	font-weight: 600;
 }
 
+.aa-login-turnstile {
+	display: flex;
+	justify-content: center;
+	margin: 18px 0 20px;
+	min-height: 65px;
+}
+
+.aa-login-turnstile .cf-turnstile,
+.aa-login-turnstile iframe {
+	max-width: 100%;
+}
+
 .aa-login-page .button.wp-hide-pw {
 	color: var(--aa-login-link);
 }
