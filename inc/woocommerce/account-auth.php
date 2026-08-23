@@ -21,7 +21,7 @@ function aac_enqueue_account_auth_assets() {
 		return;
 	}
 
-	$relative_path = '/assets/css/account-auth.css';
+	$relative_path = '/assets/css/account-auth-page.css';
 	$version       = act_district_cso_child_asset_version( $relative_path );
 	$style_uri     = add_query_arg(
 		'aacv',
