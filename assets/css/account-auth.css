@@ -164,9 +164,9 @@
 	margin-top: 4px;
 }
 
-.aa-account-auth .button,
-.aa-account-auth .woocommerce-button,
-.aa-account-auth .woocommerce-Button {
+body.aac-account-auth-page .aa-account-auth .woocommerce-form button.button,
+body.aac-account-auth-page .aa-account-auth .woocommerce-form .woocommerce-button,
+body.aac-account-auth-page .aa-account-auth .woocommerce-form .woocommerce-Button {
 	min-height: 46px;
 	padding: 11px 24px;
 	border: 1px solid #111827;
@@ -181,12 +181,12 @@
 	transition: background-color 0.18s ease, border-color 0.18s ease, transform 0.18s ease;
 }
 
-.aa-account-auth .button:hover,
-.aa-account-auth .button:focus,
-.aa-account-auth .woocommerce-button:hover,
-.aa-account-auth .woocommerce-button:focus,
-.aa-account-auth .woocommerce-Button:hover,
-.aa-account-auth .woocommerce-Button:focus {
+body.aac-account-auth-page .aa-account-auth .woocommerce-form button.button:hover,
+body.aac-account-auth-page .aa-account-auth .woocommerce-form button.button:focus,
+body.aac-account-auth-page .aa-account-auth .woocommerce-form .woocommerce-button:hover,
+body.aac-account-auth-page .aa-account-auth .woocommerce-form .woocommerce-button:focus,
+body.aac-account-auth-page .aa-account-auth .woocommerce-form .woocommerce-Button:hover,
+body.aac-account-auth-page .aa-account-auth .woocommerce-form .woocommerce-Button:focus {
 	border-color: var(--aa-color-link, #2f6fa3);
 	background: var(--aa-color-link, #2f6fa3);
 	color: #fff;
@@ -225,7 +225,7 @@
 	margin-top: auto;
 }
 
-.aa-account-auth__register-submit .button {
+body.aac-account-auth-page .aa-account-auth .woocommerce-form .aa-account-auth__register-submit .button {
 	width: 100%;
 }
 
@@ -260,9 +260,9 @@
 		grid-template-columns: 1fr;
 	}
 
-	.aa-account-auth .button,
-	.aa-account-auth .woocommerce-button,
-	.aa-account-auth .woocommerce-Button {
+	body.aac-account-auth-page .aa-account-auth .woocommerce-form button.button,
+	body.aac-account-auth-page .aa-account-auth .woocommerce-form .woocommerce-button,
+	body.aac-account-auth-page .aa-account-auth .woocommerce-form .woocommerce-Button {
 		width: 100%;
 	}
 }
