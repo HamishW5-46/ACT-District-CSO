@@ -142,9 +142,9 @@
         max-width: 100%;
     }
 
-    .post-type-archive-product .site-main .ast-woocommerce-container,
-    .tax-product_cat .site-main .ast-woocommerce-container,
-    .tax-product_tag .site-main .ast-woocommerce-container {
+    .post-type-archive-product .site-main .aa-woocommerce-container,
+    .tax-product_cat .site-main .aa-woocommerce-container,
+    .tax-product_tag .site-main .aa-woocommerce-container {
         display: grid;
         grid-template-columns: minmax(230px, 280px) minmax(0, 1fr) auto;
         gap: 1.25rem 2.25rem;
@@ -176,7 +176,11 @@
     }
 
     .aac-shop-filter-sidebar__inner {
+        display: flex;
+        flex-direction: column;
         position: relative;
+        box-sizing: border-box;
+        max-height: calc(100vh - 128px);
         padding: 1.1rem;
         border: 1px solid #dbe3ef;
         border-top: 5px solid #d59b2f;
@@ -196,15 +200,32 @@
         line-height: 1.2;
     }
 
+    .aac-shop-filter-form--desktop {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        min-height: 0;
+    }
+
     .aac-shop-filter-form--desktop .aac-mobile-filter-content {
+        flex: 1;
+        min-height: 0;
+        margin: 0 -0.45rem 0.9rem 0;
         padding: 0;
+        padding-right: 0.45rem;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .aac-shop-filter-form--desktop .aac-mobile-filter-footer {
         display: grid;
         grid-template-columns: 1fr;
         gap: 0.65rem;
-        margin-top: 0.35rem;
+        flex: 0 0 auto;
+        margin: 0;
+        padding-top: 0.9rem;
+        border-top: 1px solid #e2e8f0;
+        background: #ffffff;
     }
 
     .post-type-archive-product .woocommerce-result-count,

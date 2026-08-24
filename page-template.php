@@ -3,33 +3,34 @@
 Template Name: Default Page Template
 */
 
-get_header(); ?>
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
-<div class="aa-page">
+get_header();
+?>
 
-  <!-- Hero -->
-  <section class="aa-page-hero">
-    <div class="aa-container">
-      <h1><?php the_title(); ?></h1>
+<main id="primary" class="site-main aa-page aa-template aa-template-default">
+	<?php while ( have_posts() ) : ?>
+		<?php the_post(); ?>
 
-      <?php if (has_excerpt()) : ?>
-        <p class="aa-subtitle"><?php echo get_the_excerpt(); ?></p>
-      <?php endif; ?>
-    </div>
-  </section>
+		<section class="aa-page-hero">
+			<div class="aa-container">
+				<h1><?php the_title(); ?></h1>
 
-  <!-- Content -->
-  <section class="aa-page-content">
-    <div class="aa-container aa-container--narrow">
-      <?php
-      while (have_posts()) :
-        the_post();
-        the_content();
-      endwhile;
-      ?>
-    </div>
-  </section>
+				<?php if ( has_excerpt() ) : ?>
+					<p class="aa-subtitle"><?php echo esc_html( get_the_excerpt() ); ?></p>
+				<?php endif; ?>
+			</div>
+		</section>
 
-</div>
+		<section class="aa-page-content">
+			<div class="aa-container aa-container--narrow">
+				<?php the_content(); ?>
+			</div>
+		</section>
+	<?php endwhile; ?>
+</main>
 
-<?php get_footer(); ?>
+<?php
+get_footer();

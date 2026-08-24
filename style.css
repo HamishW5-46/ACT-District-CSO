@@ -87,12 +87,18 @@ p {
   flex: 1 0 auto;
 }
 
-.ast-container {
+.aa-site-container,
+.aa-header-container {
   width: min(100% - 32px, 1120px);
   max-width: 1120px;
   margin-left: auto;
   margin-right: auto;
   box-sizing: border-box;
+}
+
+body.post-type-archive-tsml_meeting #content > .aa-site-container {
+  width: min(100% - 32px, 1480px);
+  max-width: 1480px;
 }
 
 .screen-reader-text {
@@ -311,7 +317,7 @@ p {
     align-items: center;
     gap: 12px;
     max-width: 100%;
-    text-decoration: none !important;
+    text-decoration: none;
 }
 
 .aa-logo-mark,
@@ -557,8 +563,15 @@ header .custom-logo-link img {
   max-width: 90%;
 }
 
-.hero-text h1, .hero-text p {
+.hero-text h1,
+.hero-text p {
   margin: 10px 0;
+}
+
+.hero-text h1 {
+  color: #fff;
+  font-size: 1.75rem;
+  line-height: 1.2;
 }
 
 .hero-text p {
@@ -568,7 +581,7 @@ header .custom-logo-link img {
 .hero-text .button {
   display: inline-block;
   margin-top: 20px;
-  background-color: #005c99;
+  background-color: #1e293b;
   color: #fff;
   padding: 10px 20px;
   text-transform: uppercase;
@@ -638,20 +651,25 @@ header .custom-logo-link img {
     padding: 9px 16px;
   }
 
-  .home .container {
+  .home .home-content {
     width: calc(100% - 16px);
     margin: 8px auto;
     padding: 8px;
   }
 }
 
-.home #content > .ast-container,
-.page-template-page-home #content > .ast-container {
-  display: flex;
-  align-items: stretch;
+.home #content > .aa-site-container,
+.page-template-page-home #content > .aa-site-container {
   width: 100%;
   max-width: 1400px;
   margin: 0 auto;
+}
+
+.home .aa-template-home,
+.page-template-page-home .aa-template-home {
+  display: flex;
+  align-items: stretch;
+  width: 100%;
 }
 
 .home .hero-overlay,
@@ -669,8 +687,8 @@ header .custom-logo-link img {
   margin: 0;
 }
 
-.home main.container,
-.page-template-page-home main.container {
+.home .home-content,
+.page-template-page-home .home-content {
   flex: 1 1 48%;
   width: auto;
   max-width: 1100px;
@@ -679,13 +697,17 @@ header .custom-logo-link img {
 }
 
 @media (max-width: 900px) {
-  .home #content > .ast-container,
-  .page-template-page-home #content > .ast-container {
-    display: block;
+  .home #content > .aa-site-container,
+  .page-template-page-home #content > .aa-site-container {
     width: min(100% - 32px, 1120px);
     max-width: 1120px;
     margin-left: auto;
     margin-right: auto;
+  }
+
+  .home .aa-template-home,
+  .page-template-page-home .aa-template-home {
+    display: block;
   }
 
   .home .hero-overlay,
@@ -701,8 +723,8 @@ header .custom-logo-link img {
     margin: 0;
   }
 
-  .home main.container,
-  .page-template-page-home main.container {
+  .home .home-content,
+  .page-template-page-home .home-content {
     width: 100%;
     max-width: 1100px;
     margin: 8px auto;
@@ -721,7 +743,7 @@ header .custom-logo-link img {
   color: #222;
 }
 
-.aa-page .ast-container {
+.aa-page .aa-site-container {
   max-width: 1100px;
 }
 
@@ -1025,136 +1047,6 @@ span.duration.venue em {
   }
 }
 
-
-/*  -----------------------------------------------------
-                    CONTACT FORM 7
-    ----------------------------------------------------- */
-
-/* Wrap the whole CF7 form in a card-style layout */
-.wpcf7 form {
-    max-width: 640px;
-    margin: 0 auto;
-    padding: 24px 20px;
-    background: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-    box-sizing: border-box;
-}
-
-/* Space out each form row */
-.wpcf7-form p {
-    margin: 0 0 16px;
-}
-
-/* Labels (if you decide to add them later) */
-.wpcf7-form label {
-    display: block;
-    font-size: 0.9rem;
-    font-weight: 500;
-    margin-bottom: 6px;
-    color: #111827;
-}
-
-/* Inputs, textareas, selects */
-.wpcf7-form input[type="text"],
-.wpcf7-form input[type="email"],
-.wpcf7-form input[type="tel"],
-.wpcf7-form textarea,
-.wpcf7-form select {
-    width: 100%;
-    padding: 10px 12px;
-    border-radius: 8px;
-    border: 1px solid #d1d5db;
-    font-size: 0.95rem;
-    line-height: 1.4;
-    background: #f9fafb;
-    box-sizing: border-box;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
-}
-
-/* Focus states */
-.wpcf7-form input[type="text"]:focus,
-.wpcf7-form input[type="email"]:focus,
-.wpcf7-form input[type="tel"]:focus,
-.wpcf7-form textarea:focus,
-.wpcf7-form select:focus {
-    outline: none;
-    border-color: #2563eb;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.40);
-}
-
-/* Placeholder styling */
-.wpcf7-form ::placeholder {
-    color: #9ca3af;
-}
-
-/* Textarea height */
-.wpcf7-form textarea {
-    min-height: 140px;
-    resize: vertical;
-}
-
-/* Submit button */
-.wpcf7-form input[type="submit"] {
-    display: inline-block;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 999px;
-    font-size: 0.95rem;
-    line-clamp: 2 !important;
-    font-weight: 600;
-    cursor: pointer;
-    background: #1f2937; /* dark grey / almost black */
-    color: #ffffff;
-    text-transform: none;
-    letter-spacing: 0.02em;
-    transition: transform 0.1s ease, box-shadow 0.15s ease, background-color 0.15s ease;
-}
-
-/* Submit hover/active */
-.wpcf7-form input[type="submit"]:hover {
-    background: #111827;
-    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
-    transform: translateY(-1px);
-}
-
-.wpcf7-form input[type="submit"]:active {
-    transform: translateY(0);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.14);
-}
-
-/* CF7 validation error styling */
-.wpcf7-not-valid-tip {
-    font-size: 0.8rem;
-    color: #b91c1c;
-    margin-top: 4px;
-}
-
-.wpcf7 form.invalid .wpcf7-response-output {
-    border-color: #b91c1c;
-    color: #7f1d1d;
-}
-
-/* Success message styling */
-.wpcf7 form.sent .wpcf7-response-output {
-    border-color: #059669;
-    color: #065f46;
-}
-
-/*  -----------------------------------------------------
-                    TSML [TWELVE STEP MEETING LIST]
-    ----------------------------------------------------- */
-
-#tsml .controls > div {
-  position: static !important;
-}
-
-.single-meeting {
-    width: 100%;
-    height: 100%;
-}
-
 /*  -----------------------------------------------------
             VACANT POSITION DESCRIPTIONS PAGE
     ----------------------------------------------------- */
@@ -1229,7 +1121,7 @@ span.duration.venue em {
   }
   .sitemap-container {
     flex-wrap: nowrap;
-    width: 350px;;
+    width: 350px;
     margin: 0 auto;
   }
   .aa-footer-col {

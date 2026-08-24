@@ -1,26 +1,43 @@
 <?php
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
 get_header();
 ?>
 
-<main class="container">
-  <section class="section-preview">
-    <h1>Notices & Updates</h1>
+<main id="primary" class="site-main aa-page aa-template aa-template-notices-archive">
+	<section class="aa-page-hero">
+		<div class="aa-container">
+			<h1>Notices &amp; Updates</h1>
+		</div>
+	</section>
 
-    <?php if (have_posts()) : ?>
-      <?php while (have_posts()) : the_post(); ?>
-        <article class="preview-item">
-          <h2><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
-          <p class="post-date"><?php echo get_the_date('j M Y'); ?></p>
-          <?php the_excerpt(); ?>
-        </article>
-      <?php endwhile; ?>
+	<section class="aa-page-content">
+		<div class="aa-container aa-container--narrow">
+			<?php if ( have_posts() ) : ?>
+				<?php while ( have_posts() ) : ?>
+					<?php the_post(); ?>
 
-      <?php the_posts_navigation(); ?>
+					<article id="post-<?php the_ID(); ?>" <?php post_class( 'aa-card aa-card-white' ); ?>>
+						<h2 class="entry-title">
+							<a href="<?php the_permalink(); ?>"><?php the_title(); ?></a>
+						</h2>
+						<p class="post-date"><?php echo esc_html( get_the_date( 'j M Y' ) ); ?></p>
+						<div class="entry-content">
+							<?php the_excerpt(); ?>
+						</div>
+					</article>
+				<?php endwhile; ?>
 
-    <?php else : ?>
-      <p>No notices or updates at the moment.</p>
-    <?php endif; ?>
-  </section>
+				<?php the_posts_navigation(); ?>
+			<?php else : ?>
+				<p>No notices or updates at the moment.</p>
+			<?php endif; ?>
+		</div>
+	</section>
 </main>
 
-<?php get_footer(); ?>
+<?php
+get_footer();

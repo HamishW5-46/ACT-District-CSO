@@ -30,12 +30,12 @@
 	padding: clamp(28px, 4vw, 48px) 0 clamp(42px, 6vw, 72px);
 }
 
-.aac-woocommerce-page #content > .ast-container {
+.aac-woocommerce-page #content > .aa-site-container {
 	width: 100%;
 	max-width: none;
 }
 
-.aac-woocommerce-page .ast-woocommerce-container,
+.aac-woocommerce-page .aa-woocommerce-container,
 .aac-woocommerce-page .entry-content > .woocommerce,
 .aac-woocommerce-page .woocommerce-notices-wrapper {
 	box-sizing: border-box;
@@ -45,9 +45,9 @@
 	margin-left: auto;
 }
 
-.post-type-archive-product .ast-woocommerce-container,
-.tax-product_cat .ast-woocommerce-container,
-.tax-product_tag .ast-woocommerce-container {
+.post-type-archive-product .aa-woocommerce-container,
+.tax-product_cat .aa-woocommerce-container,
+.tax-product_tag .aa-woocommerce-container {
 	width: min(100% - 32px, 1480px);
 	max-width: 1480px;
 }
@@ -582,7 +582,7 @@
 
 /* Single product ------------------------------------------- */
 
-.single-product .ast-woocommerce-container {
+.single-product .aa-woocommerce-container {
 	max-width: 1180px;
 }
 
@@ -1560,7 +1560,7 @@ body.woocommerce-account:not(.aac-account-auth-page) .aa-woocommerce-block-page 
 /* Mobile ---------------------------------------------------- */
 
 @media (max-width: 960px) {
-	body.single-product .ast-woocommerce-container,
+	body.single-product .aa-woocommerce-container,
 	body.single-product .entry-content > .woocommerce,
 	body.single-product .woocommerce-notices-wrapper {
 		width: min(100% - 24px, 1180px);
@@ -1622,12 +1622,12 @@ body.woocommerce-account:not(.aac-account-auth-page) .aa-woocommerce-block-page 
 }
 
 @media (max-width: 782px) {
-	.aac-woocommerce-page .ast-woocommerce-container,
+	.aac-woocommerce-page .aa-woocommerce-container,
 	.aac-woocommerce-page .entry-content > .woocommerce,
 	.aac-woocommerce-page .woocommerce-notices-wrapper,
-	.post-type-archive-product .ast-woocommerce-container,
-	.tax-product_cat .ast-woocommerce-container,
-	.tax-product_tag .ast-woocommerce-container {
+	.post-type-archive-product .aa-woocommerce-container,
+	.tax-product_cat .aa-woocommerce-container,
+	.tax-product_tag .aa-woocommerce-container {
 		width: min(100% - 24px, 1180px);
 	}
 
@@ -1688,7 +1688,7 @@ body.woocommerce-account:not(.aac-account-auth-page) .aa-woocommerce-block-page 
 		padding: 18px;
 	}
 
-	.single-product .ast-woocommerce-container {
+	.single-product .aa-woocommerce-container {
 		width: min(100% - 24px, 1180px);
 	}
 

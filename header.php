@@ -24,7 +24,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div id="page" class="hfeed site">
     <header class="site-header aa-site-header" role="banner">
         <div class="aa-header-nav">
-            <div class="aa-header-nav__inner ast-container">
+            <div class="aa-header-nav__inner aa-header-container">
                 <div class="site-branding aa-site-branding">
                     <?php the_custom_logo(); ?>
                 </div>
@@ -56,4 +56,4 @@ if ( ! defined( 'ABSPATH' ) ) {
     </header>
 
     <div id="content" class="site-content">
-        <div class="ast-container">
+        <div class="aa-site-container">
