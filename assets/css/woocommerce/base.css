@@ -946,7 +946,24 @@
 	justify-content: center;
 	width: 100%;
 	margin: 0;
+	border-color: var(--aac-shop-ink);
+	background: var(--aac-shop-navy);
+	background-color: var(--aac-shop-navy);
+	color: #ffffff;
 	font-size: 1rem;
+	font-weight: 900;
+	box-shadow: 0 10px 22px rgba(23, 35, 60, 0.14);
+}
+
+.woocommerce-cart .wc-proceed-to-checkout a.checkout-button:hover,
+.woocommerce-cart .wc-proceed-to-checkout a.checkout-button:focus {
+	border-color: var(--aac-shop-link);
+	background: var(--aac-shop-link);
+	background-color: var(--aac-shop-link);
+	color: #ffffff;
+	text-decoration: none;
+	transform: translateY(-1px);
+	box-shadow: 0 12px 26px rgba(47, 111, 163, 0.18);
 }
 
 .woocommerce form.checkout {
