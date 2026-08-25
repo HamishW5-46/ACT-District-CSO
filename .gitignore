@@ -1,6 +1,5 @@
-node_modules/
-.wp-env/
-wp-env-plugins/
-wp-env-mu-plugins
-wp-env-plugin-copies/
-wp-env-mu-plugin-copies/
+*.md
+.codex/
+.wp-env.json
+package-lock.json
+package.json
