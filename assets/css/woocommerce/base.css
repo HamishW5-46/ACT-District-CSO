@@ -916,16 +916,24 @@
 	float: right;
 }
 
-.woocommerce-cart table.cart td.actions button[name="update_cart"]:disabled,
-.woocommerce-cart table.cart td.actions button[name="update_cart"]:disabled[disabled],
-.woocommerce-cart table.cart td.actions input[name="update_cart"]:disabled,
-.woocommerce-cart table.cart td.actions input[name="update_cart"]:disabled[disabled],
-.woocommerce-cart table.cart td.actions .button[name="update_cart"].disabled {
+.woocommerce-cart form.woocommerce-cart-form:not(.aac-cart-is-dirty) table.cart td.actions button[name="update_cart"],
+.woocommerce-cart form.woocommerce-cart-form:not(.aac-cart-is-dirty) table.cart td.actions input[name="update_cart"] {
 	display: none;
 }
 
-.woocommerce-cart table.cart td.actions:has(> button[name="update_cart"]:disabled):not(:has(.coupon)),
-.woocommerce-cart table.cart td.actions:has(> input[name="update_cart"]:disabled):not(:has(.coupon)) {
+.woocommerce-cart form.woocommerce-cart-form:not(.aac-cart-is-dirty) table.cart td.actions:not(:has(.coupon)) {
+	display: none;
+}
+
+.woocommerce-cart form.woocommerce-cart-form.aac-cart-is-dirty table.cart td.actions button[name="update_cart"]:disabled,
+.woocommerce-cart form.woocommerce-cart-form.aac-cart-is-dirty table.cart td.actions button[name="update_cart"]:disabled[disabled],
+.woocommerce-cart form.woocommerce-cart-form.aac-cart-is-dirty table.cart td.actions input[name="update_cart"]:disabled,
+.woocommerce-cart form.woocommerce-cart-form.aac-cart-is-dirty table.cart td.actions input[name="update_cart"]:disabled[disabled] {
+	display: none;
+}
+
+.woocommerce-cart form.woocommerce-cart-form.aac-cart-is-dirty table.cart td.actions:has(> button[name="update_cart"]:disabled):not(:has(.coupon)),
+.woocommerce-cart form.woocommerce-cart-form.aac-cart-is-dirty table.cart td.actions:has(> input[name="update_cart"]:disabled):not(:has(.coupon)) {
 	display: none;
 }
 

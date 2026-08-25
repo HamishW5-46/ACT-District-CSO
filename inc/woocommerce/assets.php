@@ -68,8 +68,8 @@ function aac_enqueue_woocommerce_assets() {
 add_action( 'wp_enqueue_scripts', 'aac_enqueue_woocommerce_assets', 25 );
 
 /**
- * Prevent the disabled "Update cart" button from flashing before the main
- * WooCommerce stylesheet finishes loading.
+ * Prevent the "Update cart" button from flashing before the main WooCommerce
+ * stylesheet finishes loading. It is revealed by script once the cart changes.
  */
 function aac_print_cart_critical_styles() {
 	if ( ! function_exists( 'is_cart' ) || ! is_cart() ) {
@@ -77,22 +77,62 @@ function aac_print_cart_critical_styles() {
 	}
 	?>
 	<style id="aac-cart-critical-css">
-		.woocommerce-cart table.cart td.actions button[name="update_cart"]:disabled,
-		.woocommerce-cart table.cart td.actions button[name="update_cart"]:disabled[disabled],
-		.woocommerce-cart table.cart td.actions input[name="update_cart"]:disabled,
-		.woocommerce-cart table.cart td.actions input[name="update_cart"]:disabled[disabled],
-		.woocommerce-cart table.cart td.actions .button[name="update_cart"].disabled {
+		.woocommerce-cart form.woocommerce-cart-form:not(.aac-cart-is-dirty) table.cart td.actions button[name="update_cart"],
+		.woocommerce-cart form.woocommerce-cart-form:not(.aac-cart-is-dirty) table.cart td.actions input[name="update_cart"] {
 			display: none !important;
 		}
 
-		.woocommerce-cart table.cart td.actions:has(> button[name="update_cart"]:disabled):not(:has(.coupon)),
-		.woocommerce-cart table.cart td.actions:has(> input[name="update_cart"]:disabled):not(:has(.coupon)) {
+		.woocommerce-cart form.woocommerce-cart-form:not(.aac-cart-is-dirty) table.cart td.actions:not(:has(.coupon)) {
+			display: none !important;
+		}
+
+		.woocommerce-cart form.woocommerce-cart-form.aac-cart-is-dirty table.cart td.actions button[name="update_cart"]:disabled,
+		.woocommerce-cart form.woocommerce-cart-form.aac-cart-is-dirty table.cart td.actions button[name="update_cart"]:disabled[disabled],
+		.woocommerce-cart form.woocommerce-cart-form.aac-cart-is-dirty table.cart td.actions input[name="update_cart"]:disabled,
+		.woocommerce-cart form.woocommerce-cart-form.aac-cart-is-dirty table.cart td.actions input[name="update_cart"]:disabled[disabled] {
+			display: none !important;
+		}
+
+		.woocommerce-cart form.woocommerce-cart-form.aac-cart-is-dirty table.cart td.actions:has(> button[name="update_cart"]:disabled):not(:has(.coupon)),
+		.woocommerce-cart form.woocommerce-cart-form.aac-cart-is-dirty table.cart td.actions:has(> input[name="update_cart"]:disabled):not(:has(.coupon)) {
 			display: none !important;
 		}
 	</style>
 	<?php
 }
 add_action( 'wp_head', 'aac_print_cart_critical_styles', 1 );
+
+/**
+ * Reveal the cart update button only after the customer changes the cart form.
+ */
+function aac_print_cart_update_button_script() {
+	if ( ! function_exists( 'is_cart' ) || ! is_cart() ) {
+		return;
+	}
+	?>
+	<script id="aac-cart-update-button-js">
+		document.addEventListener('DOMContentLoaded', function () {
+			var form = document.querySelector('.woocommerce-cart form.woocommerce-cart-form');
+
+			if (!form) {
+				return;
+			}
+
+			var markCartDirty = function () {
+				form.classList.add('aac-cart-is-dirty');
+			};
+
+			form.addEventListener('change', markCartDirty);
+			form.addEventListener('input', function (event) {
+				if (event.target && event.target.matches('input.qty, input[name^="cart"][name$="[qty]"]')) {
+					markCartDirty();
+				}
+			});
+		});
+	</script>
+	<?php
+}
+add_action( 'wp_footer', 'aac_print_cart_update_button_script', 20 );
 
 /**
  * Add a body class for the standalone WooCommerce theme layer.
