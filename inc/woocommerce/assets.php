@@ -68,6 +68,33 @@ function aac_enqueue_woocommerce_assets() {
 add_action( 'wp_enqueue_scripts', 'aac_enqueue_woocommerce_assets', 25 );
 
 /**
+ * Prevent the disabled "Update cart" button from flashing before the main
+ * WooCommerce stylesheet finishes loading.
+ */
+function aac_print_cart_critical_styles() {
+	if ( ! function_exists( 'is_cart' ) || ! is_cart() ) {
+		return;
+	}
+	?>
+	<style id="aac-cart-critical-css">
+		.woocommerce-cart table.cart td.actions button[name="update_cart"]:disabled,
+		.woocommerce-cart table.cart td.actions button[name="update_cart"]:disabled[disabled],
+		.woocommerce-cart table.cart td.actions input[name="update_cart"]:disabled,
+		.woocommerce-cart table.cart td.actions input[name="update_cart"]:disabled[disabled],
+		.woocommerce-cart table.cart td.actions .button[name="update_cart"].disabled {
+			display: none !important;
+		}
+
+		.woocommerce-cart table.cart td.actions:has(> button[name="update_cart"]:disabled):not(:has(.coupon)),
+		.woocommerce-cart table.cart td.actions:has(> input[name="update_cart"]:disabled):not(:has(.coupon)) {
+			display: none !important;
+		}
+	</style>
+	<?php
+}
+add_action( 'wp_head', 'aac_print_cart_critical_styles', 1 );
+
+/**
  * Add a body class for the standalone WooCommerce theme layer.
  */
 function aac_woocommerce_body_classes( $classes ) {
