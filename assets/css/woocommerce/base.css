@@ -989,12 +989,15 @@
 
 .woocommerce form.checkout {
 	display: grid;
-	grid-template-columns: minmax(0, 1fr) minmax(320px, 0.72fr);
+	grid-template-columns: minmax(0, 1fr) minmax(340px, 420px);
+	grid-template-areas:
+		"customer order";
 	gap: 28px;
 	align-items: start;
 }
 
 .woocommerce-checkout #customer_details {
+	grid-area: customer;
 	min-width: 0;
 }
 
@@ -1018,18 +1021,39 @@
 	padding: 0;
 }
 
-.woocommerce-checkout #order_review_heading,
-.woocommerce-checkout #order_review {
-	grid-column: 2;
+.woocommerce-checkout #customer_details.col2-set,
+.woocommerce-checkout #customer_details .col2-set {
+	grid-template-columns: 1fr;
+	gap: 24px;
+}
+
+.woocommerce-checkout #customer_details .col-1,
+.woocommerce-checkout #customer_details .col-2 {
+	padding: 22px;
+	border: 1px solid var(--aac-shop-border);
+	border-radius: var(--aac-shop-radius);
+	background: var(--aac-shop-panel);
+	box-shadow: var(--aac-shop-shadow-soft);
+}
+
+.woocommerce-checkout #customer_details .col-1 {
+	border-top: 5px solid var(--aac-shop-link);
+}
+
+.woocommerce-checkout #customer_details .col-2 {
+	border-top: 5px solid var(--aac-shop-gold);
 }
 
 .woocommerce-checkout #order_review_heading {
-	margin: 0 0 -12px;
+	grid-area: order;
+	margin: 0 0 18px;
 }
 
 .woocommerce-checkout #order_review {
+	grid-area: order;
 	position: sticky;
 	top: 96px;
+	margin-top: 58px;
 	padding: 22px;
 	border: 1px solid var(--aac-shop-border);
 	border-radius: var(--aac-shop-radius);
@@ -1618,6 +1642,20 @@ body.woocommerce-account:not(.aac-account-auth-page) .aa-woocommerce-block-page 
 	body.woocommerce-account:not(.aac-account-auth-page) .entry-content > .woocommerce,
 	body.woocommerce-account:not(.aac-account-auth-page) .aa-woocommerce-block-page > .woocommerce {
 		grid-template-columns: 1fr;
+	}
+
+	.woocommerce form.checkout {
+		grid-template-areas: none;
+	}
+
+	.woocommerce-checkout #customer_details,
+	.woocommerce-checkout #order_review_heading,
+	.woocommerce-checkout #order_review {
+		grid-area: auto;
+	}
+
+	.woocommerce-checkout #order_review {
+		margin-top: 0;
 	}
 
 	body.single-product.woocommerce div.product div.images.woocommerce-product-gallery,
