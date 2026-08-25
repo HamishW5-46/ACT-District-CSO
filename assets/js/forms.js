@@ -247,58 +247,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const recipientInput = scope.querySelector("[data-aa-contact-recipient]");
         const openedAtInput = scope.querySelector("[data-aa-form-opened-at]");
         let previouslyFocusedElement = null;
-        let stopModalViewportSync = null;
-
-        function syncModalViewport() {
-            const visualViewport = window.visualViewport;
-
-            if (!visualViewport) {
-                modal.style.removeProperty("--aa-contact-modal-height");
-                modal.style.removeProperty("--aa-contact-modal-top");
-                return;
-            }
-
-            modal.style.setProperty(
-                "--aa-contact-modal-height",
-                `${Math.round(visualViewport.height)}px`
-            );
-            modal.style.setProperty(
-                "--aa-contact-modal-top",
-                `${Math.round(visualViewport.offsetTop)}px`
-            );
-        }
-
-        function startModalViewportSync() {
-            syncModalViewport();
-
-            if (!window.visualViewport || stopModalViewportSync) {
-                return;
-            }
-
-            const updateViewport = () => {
-                window.requestAnimationFrame(syncModalViewport);
-            };
-
-            window.visualViewport.addEventListener("resize", updateViewport);
-            window.visualViewport.addEventListener("scroll", updateViewport);
-            window.addEventListener("orientationchange", updateViewport);
-
-            stopModalViewportSync = () => {
-                window.visualViewport.removeEventListener("resize", updateViewport);
-                window.visualViewport.removeEventListener("scroll", updateViewport);
-                window.removeEventListener("orientationchange", updateViewport);
-                stopModalViewportSync = null;
-            };
-        }
-
-        function stopViewportSync() {
-            if (stopModalViewportSync) {
-                stopModalViewportSync();
-            }
-
-            modal.style.removeProperty("--aa-contact-modal-height");
-            modal.style.removeProperty("--aa-contact-modal-top");
-        }
 
         function openModal(button) {
             const recipient = button.dataset.recipient;
@@ -317,7 +265,6 @@ document.addEventListener("DOMContentLoaded", () => {
             modal.setAttribute("aria-hidden", "false");
             document.documentElement.classList.add("aa-contact-modal-open");
             document.body.classList.add("aa-contact-modal-open");
-            startModalViewportSync();
             renderTurnstile(form);
 
             const firstInput = form.querySelector('input:not([type="hidden"]):not([tabindex="-1"])');
@@ -332,7 +279,6 @@ document.addEventListener("DOMContentLoaded", () => {
             modal.setAttribute("aria-hidden", "true");
             document.documentElement.classList.remove("aa-contact-modal-open");
             document.body.classList.remove("aa-contact-modal-open");
-            stopViewportSync();
             clearStatus(form);
             form.reset();
             resetTurnstile(form);
@@ -361,13 +307,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.addEventListener("keydown", (event) => {
             if (event.key === "Escape" && modal.classList.contains("is-open")) {
                 closeModal();
-            }
-        });
-
-        form.addEventListener("focusin", () => {
-            if (modal.classList.contains("is-open")) {
-                window.setTimeout(syncModalViewport, 50);
-                window.setTimeout(syncModalViewport, 250);
             }
         });
     });

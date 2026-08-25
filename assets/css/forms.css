@@ -301,14 +301,10 @@ body.aa-contact-modal-open {
 	}
 
 	.aa-contact-modal {
-		top: var(--aa-contact-modal-top, 0);
-		right: 0;
-		bottom: auto;
-		left: 0;
 		align-items: stretch;
 		justify-content: stretch;
-		height: var(--aa-contact-modal-height, 100vh);
-		height: var(--aa-contact-modal-height, 100dvh);
+		height: 100vh;
+		height: 100lvh;
 		padding: 0;
 		overflow: hidden;
 		background: #ffffff;
@@ -316,11 +312,11 @@ body.aa-contact-modal-open {
 
 	.aa-contact-modal__dialog {
 		width: 100%;
-		height: var(--aa-contact-modal-height, 100vh);
-		height: var(--aa-contact-modal-height, 100dvh);
-		min-height: 0;
-		max-height: var(--aa-contact-modal-height, 100vh);
-		max-height: var(--aa-contact-modal-height, 100dvh);
+		height: 100vh;
+		height: 100lvh;
+		min-height: 100vh;
+		min-height: 100lvh;
+		max-height: none;
 		overflow-y: auto;
 		background: #ffffff;
 		border-radius: 0;
