@@ -363,6 +363,7 @@ header .custom-logo-link img {
         width: 100%;
         max-width: 100%;
         gap: 8px;
+        transform: translateY(3px);
     }
 
     .aa-logo-mark,
