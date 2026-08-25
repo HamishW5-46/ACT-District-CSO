@@ -263,6 +263,7 @@ document.addEventListener("DOMContentLoaded", () => {
             clearStatus(form);
             modal.classList.add("is-open");
             modal.setAttribute("aria-hidden", "false");
+            document.documentElement.classList.add("aa-contact-modal-open");
             document.body.classList.add("aa-contact-modal-open");
             renderTurnstile(form);
 
@@ -276,6 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
         function closeModal() {
             modal.classList.remove("is-open");
             modal.setAttribute("aria-hidden", "true");
+            document.documentElement.classList.remove("aa-contact-modal-open");
             document.body.classList.remove("aa-contact-modal-open");
             clearStatus(form);
             form.reset();

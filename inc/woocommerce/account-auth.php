@@ -14,27 +14,12 @@ function aac_is_account_auth_screen() {
 }
 
 /**
- * Enqueue the custom login and registration page styles.
+ * Enqueue account-auth scripts that are not part of the shared WooCommerce CSS layer.
  */
 function aac_enqueue_account_auth_assets() {
 	if ( ! aac_is_account_auth_screen() ) {
 		return;
 	}
-
-	$relative_path = '/assets/css/account-auth-page.css';
-	$version       = act_district_cso_child_asset_version( $relative_path );
-	$style_uri     = add_query_arg(
-		'aacv',
-		rawurlencode( (string) $version ),
-		get_stylesheet_directory_uri() . $relative_path
-	);
-
-	wp_enqueue_style(
-		'aac-account-auth',
-		$style_uri,
-		array( 'ACT-District-CSO-Child-components' ),
-		null
-	);
 
 	if ( aac_account_auth_turnstile_enabled() ) {
 		wp_enqueue_script(

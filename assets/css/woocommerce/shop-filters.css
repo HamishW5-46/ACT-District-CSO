@@ -6,15 +6,16 @@
 }
 
 .aac-filter-section {
-    margin-bottom: 1.55rem;
+    margin-bottom: 1.45rem;
 }
 
 .aac-filter-section h3 {
-    margin: 0 0 0.8rem;
+    margin: 0 0 0.72rem;
     color: #0f172a;
-    font-size: 1rem;
+    font-size: 0.94rem;
     font-weight: 800;
     line-height: 1.25;
+    letter-spacing: 0.01em;
 }
 
 .aac-filter-search {
@@ -45,12 +46,18 @@
     display: flex;
     align-items: flex-start;
     gap: 0.6rem;
-    min-height: 36px;
-    padding: 0.48rem 0;
+    min-height: 34px;
+    padding: 0.46rem 0.2rem;
+    border-radius: 6px;
     color: #0f172a;
     font-weight: 700;
     line-height: 1.35;
     cursor: pointer;
+    transition: background-color 0.16s ease, color 0.16s ease;
+}
+
+.aac-filter-option:hover {
+    background: #f8fafc;
 }
 
 .aac-filter-option input {
@@ -135,9 +142,9 @@
         max-width: 100%;
     }
 
-    .post-type-archive-product .site-main .ast-woocommerce-container,
-    .tax-product_cat .site-main .ast-woocommerce-container,
-    .tax-product_tag .site-main .ast-woocommerce-container {
+    .post-type-archive-product .site-main .aa-woocommerce-container,
+    .tax-product_cat .site-main .aa-woocommerce-container,
+    .tax-product_tag .site-main .aa-woocommerce-container {
         display: grid;
         grid-template-columns: minmax(230px, 280px) minmax(0, 1fr) auto;
         gap: 1.25rem 2.25rem;
@@ -147,6 +154,9 @@
     .post-type-archive-product .woocommerce-breadcrumb,
     .tax-product_cat .woocommerce-breadcrumb,
     .tax-product_tag .woocommerce-breadcrumb,
+    .post-type-archive-product .aac-shop-archive-intro,
+    .tax-product_cat .aac-shop-archive-intro,
+    .tax-product_tag .aac-shop-archive-intro,
     .post-type-archive-product .woocommerce-products-header,
     .tax-product_cat .woocommerce-products-header,
     .tax-product_tag .woocommerce-products-header,
@@ -166,11 +176,18 @@
     }
 
     .aac-shop-filter-sidebar__inner {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        box-sizing: border-box;
+        max-height: calc(100vh - 128px);
         padding: 1.1rem;
         border: 1px solid #dbe3ef;
+        border-top: 5px solid #d59b2f;
         border-radius: 8px;
         background: #ffffff;
-        box-shadow: 0 10px 26px rgba(15, 23, 42, 0.06);
+        box-shadow: 0 16px 36px rgba(15, 23, 42, 0.08);
+        overflow: hidden;
     }
 
     .aac-shop-filter-sidebar h2 {
@@ -178,20 +195,37 @@
         padding-bottom: 0.75rem;
         border-bottom: 1px solid #e2e8f0;
         color: #0f172a;
-        font-size: 1.25rem;
+        font-size: 1.18rem;
         font-weight: 800;
         line-height: 1.2;
     }
 
+    .aac-shop-filter-form--desktop {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        min-height: 0;
+    }
+
     .aac-shop-filter-form--desktop .aac-mobile-filter-content {
+        flex: 1;
+        min-height: 0;
+        margin: 0 -0.45rem 0.9rem 0;
         padding: 0;
+        padding-right: 0.45rem;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
     }
 
     .aac-shop-filter-form--desktop .aac-mobile-filter-footer {
         display: grid;
         grid-template-columns: 1fr;
         gap: 0.65rem;
-        margin-top: 0.35rem;
+        flex: 0 0 auto;
+        margin: 0;
+        padding-top: 0.9rem;
+        border-top: 1px solid #e2e8f0;
+        background: #ffffff;
     }
 
     .post-type-archive-product .woocommerce-result-count,
@@ -258,11 +292,12 @@
         padding: 0.95rem 1rem;
         border: 0;
         border-radius: 8px;
-        background: #17233c;
+        background: linear-gradient(135deg, #17233c 0%, #1d557f 100%);
         color: #ffffff;
         font-size: 1rem;
         font-weight: 800;
         cursor: pointer;
+        box-shadow: 0 10px 22px rgba(23, 35, 60, 0.16);
     }
 
     .aac-filter-icon {
@@ -382,7 +417,8 @@
         min-height: 48px;
         padding: 0.75rem;
         border-radius: 8px;
-        background: #f7f9fb;
+        border: 1px solid #e8edf5;
+        background: #f8fafc;
     }
 
     .aac-filter-option input {

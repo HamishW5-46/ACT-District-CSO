@@ -1,0 +1,5 @@
+*.md
+.codex/
+.wp-env.json
+package-lock.json
+package.json

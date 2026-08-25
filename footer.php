@@ -8,12 +8,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 ?>
 
-<?php astra_content_bottom(); ?>
-
-</div><!-- ast-container -->
+</div><!-- aa-site-container -->
 </div><!-- #content -->
-
-<?php astra_content_after(); ?>
 
 <footer class="aa-footer">
     <div class="aa-footer-container">
@@ -29,7 +25,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <?php if ( function_exists( 'custom_site_details_footer_text' ) ) : ?>
                 <?php $custom_site_details_footer_text = custom_site_details_footer_text(); ?>
                 <?php if ( $custom_site_details_footer_text ) : ?>
-                    <div class="aa-footer-about"><?php echo $custom_site_details_footer_text; ?></div>
+                    <div class="aa-footer-about"><?php echo wp_kses_post( $custom_site_details_footer_text ); ?></div>
                 <?php endif; ?>
             <?php endif; ?>
         </div>
@@ -86,28 +82,28 @@ if ( ! defined( 'ABSPATH' ) ) {
                 <?php if ( function_exists( 'custom_site_details_email_link' ) ) : ?>
                     <?php $site_email = custom_site_details_email_link( array( 'class' => 'footer-email' ) ); ?>
                     <?php if ( $site_email ) : ?>
-                        <li>Email: <?php echo $site_email; ?></li>
+                        <li>Email: <?php echo wp_kses_post( $site_email ); ?></li>
                     <?php endif; ?>
                 <?php endif; ?>
 
                 <?php if ( function_exists( 'custom_site_details_phone_link' ) ) : ?>
                     <?php $site_phone = custom_site_details_phone_link( array( 'class' => 'footer-phone' ) ); ?>
                     <?php if ( $site_phone ) : ?>
-                        <li>Phone: <?php echo $site_phone; ?> <strong>(24/7)</strong></li>
+                        <li>Phone: <?php echo wp_kses_post( $site_phone ); ?> <strong>(24/7)</strong></li>
                     <?php endif; ?>
                 <?php endif; ?>
 
                 <?php if ( function_exists( 'custom_site_details_opening_hours' ) ) : ?>
                     <?php $site_opening_hours = custom_site_details_opening_hours(); ?>
                     <?php if ( $site_opening_hours ) : ?>
-                        <li>Office Hours: <?php echo $site_opening_hours; ?></li>
+                        <li>Office Hours: <?php echo wp_kses_post( $site_opening_hours ); ?></li>
                     <?php endif; ?>
                 <?php endif; ?>
 
                 <?php if ( function_exists( 'custom_site_details_address' ) ) : ?>
                     <?php $site_address = custom_site_details_address(); ?>
                     <?php if ( $site_address ) : ?>
-                        <li><?php echo $site_address; ?></li>
+                        <li><?php echo wp_kses_post( $site_address ); ?></li>
                     <?php endif; ?>
                 <?php endif; ?>
             </ul>
@@ -122,7 +118,7 @@ if ( ! defined( 'ABSPATH' ) ) {
             <?php $custom_site_details_footer_disclaimer = custom_site_details_footer_disclaimer(); ?>
             <?php if ( $custom_site_details_footer_disclaimer ) : ?>
                 <div class="aa-footer-note">
-                    <?php echo $custom_site_details_footer_disclaimer; ?>
+                    <?php echo wp_kses_post( $custom_site_details_footer_disclaimer ); ?>
                 </div>
             <?php endif; ?>
         <?php endif; ?>
