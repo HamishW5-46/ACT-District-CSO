@@ -1247,6 +1247,12 @@ div.aa-footer-about {
     padding-left: 16px;
   }
 
+  .home #content > .aa-site-container,
+  .page-template-page-home #content > .aa-site-container {
+    padding-right: 0;
+    padding-left: 0;
+  }
+
   #content .aa-container,
   #content .aa-container-narrow,
   #content .aa-container--narrow,
