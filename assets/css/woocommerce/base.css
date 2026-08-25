@@ -290,6 +290,45 @@
 	transform: none;
 }
 
+.woocommerce a.button.alt.disabled,
+.woocommerce a.button.alt:disabled,
+.woocommerce a.button.alt:disabled[disabled],
+.woocommerce button.button.alt.disabled,
+.woocommerce button.button.alt:disabled,
+.woocommerce button.button.alt:disabled[disabled],
+.woocommerce input.button.alt.disabled,
+.woocommerce input.button.alt:disabled,
+.woocommerce input.button.alt:disabled[disabled],
+.woocommerce div.product form.cart .single_add_to_cart_button.disabled,
+.woocommerce div.product form.cart .single_add_to_cart_button.wc-variation-selection-needed,
+.woocommerce div.product form.cart .single_add_to_cart_button:disabled,
+.woocommerce div.product form.cart .single_add_to_cart_button:disabled[disabled] {
+	border-color: var(--aac-shop-ink);
+	background: var(--aac-shop-navy);
+	color: #ffffff;
+	cursor: not-allowed;
+	opacity: 0.58;
+	transform: none;
+}
+
+.woocommerce a.button.alt.disabled:hover,
+.woocommerce a.button.alt.disabled:focus,
+.woocommerce button.button.alt.disabled:hover,
+.woocommerce button.button.alt.disabled:focus,
+.woocommerce button.button.alt:disabled:hover,
+.woocommerce button.button.alt:disabled:focus,
+.woocommerce button.button.alt:disabled[disabled]:hover,
+.woocommerce button.button.alt:disabled[disabled]:focus,
+.woocommerce div.product form.cart .single_add_to_cart_button.disabled:hover,
+.woocommerce div.product form.cart .single_add_to_cart_button.disabled:focus,
+.woocommerce div.product form.cart .single_add_to_cart_button.wc-variation-selection-needed:hover,
+.woocommerce div.product form.cart .single_add_to_cart_button.wc-variation-selection-needed:focus {
+	border-color: var(--aac-shop-ink);
+	background: var(--aac-shop-navy);
+	color: #ffffff;
+	transform: none;
+}
+
 .woocommerce form .form-row {
 	margin: 0 0 18px;
 	padding: 0;
