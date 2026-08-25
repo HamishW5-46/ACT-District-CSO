@@ -216,6 +216,7 @@
 	box-sizing: border-box;
 	width: min(100%, 620px);
 	max-height: calc(100vh - 40px);
+	max-height: calc(100dvh - 40px);
 	overflow-y: auto;
 	background: #ffffff;
 	border-radius: 8px;
@@ -268,6 +269,29 @@
 
 body.aa-contact-modal-open {
 	overflow: hidden;
+}
+
+@media (min-width: 701px) {
+	.aa-form--modal {
+		padding: 22px 32px 24px;
+	}
+
+	.aa-form--modal .aa-form__field {
+		margin-bottom: 16px;
+	}
+
+	.aa-form--modal .aa-form__field textarea {
+		height: 145px;
+		min-height: 145px;
+	}
+
+	.aa-form--modal .aa-form__turnstile {
+		margin-bottom: 16px;
+	}
+
+	.aa-form--modal .aa-form__actions {
+		margin-top: 18px;
+	}
 }
 
 @media (max-width: 700px) {
