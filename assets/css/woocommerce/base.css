@@ -916,6 +916,19 @@
 	float: right;
 }
 
+.woocommerce-cart table.cart td.actions button[name="update_cart"]:disabled,
+.woocommerce-cart table.cart td.actions button[name="update_cart"]:disabled[disabled],
+.woocommerce-cart table.cart td.actions input[name="update_cart"]:disabled,
+.woocommerce-cart table.cart td.actions input[name="update_cart"]:disabled[disabled],
+.woocommerce-cart table.cart td.actions .button[name="update_cart"].disabled {
+	display: none;
+}
+
+.woocommerce-cart table.cart td.actions:has(> button[name="update_cart"]:disabled):not(:has(.coupon)),
+.woocommerce-cart table.cart td.actions:has(> input[name="update_cart"]:disabled):not(:has(.coupon)) {
+	display: none;
+}
+
 .woocommerce-cart .cart-collaterals {
 	display: flex;
 	justify-content: flex-end;
