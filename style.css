@@ -127,7 +127,7 @@ body.post-type-archive-tsml_meeting #content > .aa-site-container {
   box-shadow: 0 0 0 3px rgba(47, 111, 163, 0.35);
 }
 
-.container {
+.home-content.container {
   width: 90%;
   max-width: 1100px;
   margin: 0 auto;
@@ -136,7 +136,7 @@ body.post-type-archive-tsml_meeting #content > .aa-site-container {
 }
 
 @media (max-width: 768px) {
-  .container {
+  .home-content.container {
     padding: 5px;
     margin: 8px;
   }
