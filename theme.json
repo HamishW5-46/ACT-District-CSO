@@ -1,0 +1,157 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 3,
+  "customTemplates": [
+    {
+      "name": "page-home",
+      "title": "Home",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "page-form-contact",
+      "title": "CSO Contact Page",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "page-form-beginners",
+      "title": "Beginners Sign-Up Form",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "page-form-pipa",
+      "title": "PIPA Form",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "page-directory",
+      "title": "AA Card Directory",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "page-information",
+      "title": "AA Information Page",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "page-resources",
+      "title": "AA Resources Page",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "page-simple",
+      "title": "AA Simple Page",
+      "postTypes": [
+        "page"
+      ]
+    },
+    {
+      "name": "page-blank",
+      "title": "AA Blank Canvas",
+      "postTypes": [
+        "page"
+      ]
+    }
+  ],
+  "templateParts": [
+    {
+      "area": "header",
+      "name": "header",
+      "title": "Header"
+    },
+    {
+      "area": "footer",
+      "name": "footer",
+      "title": "Footer"
+    }
+  ],
+
+  "settings": {
+    "appearanceTools": true,
+    "color": {
+      "palette": [
+        {
+          "color": "#222222",
+          "name": "Text",
+          "slug": "text"
+        },
+        {
+          "color": "#1f2937",
+          "name": "Heading",
+          "slug": "heading"
+        },
+        {
+          "color": "#2f6fa3",
+          "name": "Link",
+          "slug": "link"
+        },
+        {
+          "color": "#f8fafc",
+          "name": "Surface",
+          "slug": "surface"
+        },
+        {
+          "color": "#ffffff",
+          "name": "White",
+          "slug": "white"
+        }
+      ]
+    },
+
+    "layout": {
+      "contentSize": "1100px",
+      "wideSize": "1400px"
+    },
+
+    "typography": {
+      "fontFamilies": [
+        {
+          "name": "System Sans",
+          "slug": "sans",
+          "fontFamily": "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+        },
+        {
+          "name": "EB Garamond",
+          "slug": "serif-display",
+          "fontFamily": "\"EB Garamond\", Georgia, \"Times New Roman\", serif"
+        }
+      ]
+    }
+  },
+
+  "styles": {
+    "typography": {
+      "fontFamily": "var:preset|font-family|sans"
+    },
+
+    "spacing": {
+      "blockGap": "1.5rem"
+    },
+
+    "color": {
+      "background": "#ffffff",
+      "text": "#222222"
+    },
+
+    "elements": {
+      "link": {
+        "color": {
+          "text": "#2f6fa3"
+        }
+      }
+    }
+  }
+}

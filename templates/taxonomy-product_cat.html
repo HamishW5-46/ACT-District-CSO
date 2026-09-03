@@ -1,0 +1,28 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"div","anchor":"content","className":"site-content","layout":{"type":"default"}} -->
+<div id="content" class="wp-block-group site-content">
+	<!-- wp:group {"className":"aa-site-container","layout":{"type":"default"}} -->
+	<div class="wp-block-group aa-site-container">
+		<!-- wp:group {"className":"aa-woocommerce-container","layout":{"type":"default"}} -->
+		<div class="wp-block-group aa-woocommerce-container">
+			<!-- wp:group {"tagName":"section","className":"aac-shop-archive-intro","layout":{"type":"default"}} -->
+			<section class="wp-block-group aac-shop-archive-intro">
+				<!-- wp:paragraph {"className":"aac-shop-archive-intro__eyebrow"} -->
+				<p class="aac-shop-archive-intro__eyebrow">Literature Shop</p>
+				<!-- /wp:paragraph -->
+
+				<!-- wp:query-title {"type":"archive","showPrefix":false} /-->
+				<!-- wp:term-description /-->
+			</section>
+			<!-- /wp:group -->
+
+			<!-- wp:woocommerce/legacy-template {"template":"taxonomy-product_cat"} /-->
+		</div>
+		<!-- /wp:group -->
+	</div>
+	<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

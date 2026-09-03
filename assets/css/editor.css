@@ -1,0 +1,99 @@
+/*
+ * Editor-only canvas adjustments.
+ *
+ * Frontend header, footer, component, form and WooCommerce styles are loaded in
+ * the editor via add_editor_style(). Keep this file limited to editor canvas
+ * sizing and template layout gaps that do not have frontend body classes.
+ */
+
+body.post-type-page.editor-styles-wrapper .is-root-container.wp-block-post-content {
+	--wp--style--global--content-size: 1120px;
+	--wp--style--global--wide-size: 1400px;
+	box-sizing: border-box;
+	width: min(1120px, calc(100% - 40px));
+	max-width: 1120px;
+	margin: 0 auto;
+	padding: 18px 0 48px;
+}
+
+body.post-type-page.editor-styles-wrapper .wp-block-post-title.editor-post-title {
+	box-sizing: border-box;
+	width: min(1120px, calc(100% - 40px));
+	max-width: 1120px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+body.post-type-page.editor-styles-wrapper .is-root-container.wp-block-post-content > .wp-block {
+	max-width: 100%;
+}
+
+body.post-type-page.editor-styles-wrapper .is-root-container.wp-block-post-content > .wp-block + .wp-block {
+	margin-block-start: 24px;
+}
+
+body.post-type-page.editor-styles-wrapper .is-root-container.wp-block-post-content > .aa-section {
+	margin: 0 0 24px;
+}
+
+body.post-type-page.editor-styles-wrapper .is-root-container.wp-block-post-content > .aa-grid {
+	margin: 0 0 28px;
+}
+
+body.post-type-page.editor-styles-wrapper .is-root-container.wp-block-post-content > .aa-card {
+	margin: 0 0 28px;
+}
+
+.editor-styles-wrapper .aa-template-home,
+body .aa-template-home {
+	display: flex;
+	align-items: stretch;
+	width: min(1400px, 100%);
+	max-width: 1400px;
+	margin-right: auto;
+	margin-left: auto;
+}
+
+.editor-styles-wrapper .aa-template-home > .hero-overlay,
+body .aa-template-home > .hero-overlay {
+	flex: 0 0 52%;
+	max-width: none;
+	margin: 0;
+	border-radius: 0;
+	box-shadow: none;
+}
+
+.editor-styles-wrapper .aa-template-home > .home-content,
+body .aa-template-home > .home-content {
+	flex: 1 1 48%;
+	width: auto;
+	max-width: none;
+	margin: 0;
+	padding: 20px;
+}
+
+@media (max-width: 960px), (orientation: landscape) and (max-height: 540px) and (pointer: coarse) {
+	.editor-styles-wrapper .aa-template-home,
+	body .aa-template-home {
+		display: block;
+		width: 100%;
+		max-width: none;
+	}
+
+	.editor-styles-wrapper .aa-template-home > .hero-overlay,
+	body .aa-template-home > .hero-overlay {
+		width: 100%;
+		max-width: none;
+		margin-top: 0;
+		padding-top: 10px;
+		border-radius: 0;
+	}
+
+	.editor-styles-wrapper .aa-template-home > .home-content,
+	body .aa-template-home > .home-content {
+		width: min(100% - 32px, 1100px);
+		max-width: 1100px;
+		margin: 8px auto;
+		padding: 8px;
+	}
+}

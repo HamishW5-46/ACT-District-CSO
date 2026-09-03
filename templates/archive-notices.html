@@ -1,0 +1,58 @@
+<!-- wp:template-part {"slug":"header","tagName":"header"} /-->
+
+<!-- wp:group {"tagName":"div","anchor":"content","className":"site-content","layout":{"type":"default"}} -->
+<div id="content" class="wp-block-group site-content">
+	<!-- wp:group {"className":"aa-site-container","layout":{"type":"default"}} -->
+	<div class="wp-block-group aa-site-container">
+		<!-- wp:group {"tagName":"main","className":"site-main aa-page aa-template aa-template-notices-archive","layout":{"type":"default"}} -->
+		<main class="wp-block-group site-main aa-page aa-template aa-template-notices-archive">
+			<!-- wp:group {"tagName":"section","className":"aa-page-hero","layout":{"type":"default"}} -->
+			<section class="wp-block-group aa-page-hero">
+				<!-- wp:group {"className":"aa-container","layout":{"type":"default"}} -->
+				<div class="wp-block-group aa-container">
+					<!-- wp:heading {"level":1} -->
+					<h1 class="wp-block-heading">Notices &amp; Updates</h1>
+					<!-- /wp:heading -->
+				</div>
+				<!-- /wp:group -->
+			</section>
+			<!-- /wp:group -->
+
+			<!-- wp:group {"tagName":"section","className":"aa-page-content","layout":{"type":"default"}} -->
+			<section class="wp-block-group aa-page-content">
+				<!-- wp:group {"className":"aa-container aa-container--narrow","layout":{"type":"default"}} -->
+				<div class="wp-block-group aa-container aa-container--narrow">
+					<!-- wp:query {"query":{"perPage":10,"pages":0,"offset":0,"postType":"notices","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":true},"layout":{"type":"default"}} -->
+					<div class="wp-block-query">
+						<!-- wp:post-template -->
+							<!-- wp:group {"tagName":"article","className":"aa-card aa-card-white","layout":{"type":"default"}} -->
+							<article class="wp-block-group aa-card aa-card-white">
+								<!-- wp:post-title {"isLink":true,"level":2} /-->
+								<!-- wp:post-date {"format":"j M Y","className":"post-date"} /-->
+								<!-- wp:post-excerpt /-->
+							</article>
+							<!-- /wp:group -->
+						<!-- /wp:post-template -->
+						<!-- wp:query-pagination {"layout":{"type":"flex","justifyContent":"space-between"}} -->
+							<!-- wp:query-pagination-previous /-->
+							<!-- wp:query-pagination-next /-->
+						<!-- /wp:query-pagination -->
+						<!-- wp:query-no-results -->
+							<!-- wp:paragraph -->
+							<p>No notices or updates at the moment.</p>
+							<!-- /wp:paragraph -->
+						<!-- /wp:query-no-results -->
+					</div>
+					<!-- /wp:query -->
+				</div>
+				<!-- /wp:group -->
+			</section>
+			<!-- /wp:group -->
+		</main>
+		<!-- /wp:group -->
+	</div>
+	<!-- /wp:group -->
+</div>
+<!-- /wp:group -->
+
+<!-- wp:template-part {"slug":"footer","tagName":"footer"} /-->

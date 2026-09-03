@@ -1,5 +1,45 @@
-.aa-form {
+.aa-form,
+.aa-form-card form {
 	width: 100%;
+	margin: 0;
+}
+
+.aa-form-card input,
+.aa-form-card textarea,
+.aa-form-card select {
+	width: 100%;
+	border: 1px solid #d1d5db;
+	border-radius: 8px;
+	padding: 10px 12px;
+	background: #fff;
+	box-shadow: none;
+	box-sizing: border-box;
+}
+
+.aa-form-card textarea {
+	min-height: 220px;
+	resize: vertical;
+}
+
+.aa-form-card input:focus,
+.aa-form-card textarea:focus,
+.aa-form-card select:focus {
+	border-color: var(--aa-color-link, #2f6fa3);
+	outline: none;
+	box-shadow: 0 0 0 3px rgba(47, 111, 163, 0.16);
+}
+
+.aa-form-card input[type="submit"],
+.aa-form-card button[type="submit"] {
+	display: inline-block;
+	width: auto;
+	background: #111827;
+	color: #fff;
+	border: 0;
+	border-radius: 999px;
+	padding: 11px 24px;
+	font-weight: 800;
+	cursor: pointer;
 }
 
 .aa-form--standalone {
@@ -16,13 +56,13 @@
 }
 
 .aa-form__field {
-	margin-bottom: 20px;
+	margin-bottom: 3px;
 }
 
 .aa-form__field label,
 .aa-form__radio-field legend {
 	display: block;
-	margin-bottom: 6px;
+	margin-bottom: 3px;
 	color: #111827;
 	font-weight: 800;
 }
@@ -32,7 +72,7 @@
 .aa-form__field select {
 	box-sizing: border-box;
 	width: 100%;
-	padding: 11px 12px;
+	padding: 6px 12px;
 	background: #ffffff;
 	border: 1px solid #c9d0d7;
 	border-radius: 6px;
@@ -124,6 +164,18 @@
 	white-space: nowrap;
 }
 
+.aa-form__honeypot input,
+.aa-form__honeypot textarea {
+	position: absolute;
+	width: 1px !important;
+	height: 1px !important;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	opacity: 0;
+	pointer-events: none;
+}
+
 .aa-form-button {
 	display: inline-flex;
 	align-items: center;
@@ -162,6 +214,54 @@
 
 .aa-form .aa-form-button--primary {
 	width: 100%;
+}
+
+.cso-contact-form h2 {
+	margin-bottom: 15px;
+}
+
+.cso-contact-form .aa-form {
+	display: block;
+}
+
+.cso-contact-form .aa-form > br,
+.cso-contact-form .aa-form > p:empty,
+.cso-contact-form .aa-form__honeypot br,
+.cso-contact-form .aa-form__field br {
+	display: none;
+	margin: 0;
+}
+
+.cso-contact-form .aa-form__honeypot {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	white-space: nowrap;
+}
+
+.cso-contact-form .aa-form__field {
+	margin: 0 0 20px;
+}
+
+.cso-contact-form .aa-form__field label {
+	margin: 0 0 6px;
+}
+
+.cso-contact-form .aa-form__field input:not([type="radio"]),
+.cso-contact-form .aa-form__field textarea,
+.cso-contact-form .aa-form__field select {
+	display: block;
+	margin: 0;
+	padding: 11px 12px;
+}
+
+.cso-contact-form .aa-form__field textarea {
+	min-height: 180px;
 }
 
 .aa-contact-directory {

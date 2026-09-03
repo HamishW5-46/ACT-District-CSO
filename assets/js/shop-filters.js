@@ -1,4 +1,5 @@
 jQuery(function ($) {
+    const mobileMedia = window.matchMedia('(max-width: 768px)');
     const $openButton = $('.aac-mobile-filter-toggle');
     const $drawer = $('.aac-mobile-filter-drawer');
     const $overlay = $('.aac-mobile-filter-overlay');
@@ -12,7 +13,7 @@ jQuery(function ($) {
             return $mobileForm;
         }
 
-        if (window.matchMedia('(max-width: 768px)').matches && $mobileForm.length) {
+        if (mobileMedia.matches && $mobileForm.length) {
             return $mobileForm;
         }
 
@@ -70,6 +71,14 @@ jQuery(function ($) {
         setTimeout(function () {
             $overlay.prop('hidden', true);
         }, 250);
+    }
+
+    function closeDrawerOnDesktop(event) {
+        if (event.matches) {
+            return;
+        }
+
+        closeDrawer();
     }
 
     function getFilters(page = 1, $form = getActiveForm()) {
@@ -205,6 +214,12 @@ jQuery(function ($) {
     $openButton.on('click', openDrawer);
     $closeButton.on('click', closeDrawer);
     $overlay.on('click', closeDrawer);
+
+    if (typeof mobileMedia.addEventListener === 'function') {
+        mobileMedia.addEventListener('change', closeDrawerOnDesktop);
+    } else if (typeof mobileMedia.addListener === 'function') {
+        mobileMedia.addListener(closeDrawerOnDesktop);
+    }
 
     $(document).on('keydown', function (event) {
         if (event.key === 'Escape') {

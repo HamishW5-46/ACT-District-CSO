@@ -12,6 +12,20 @@ function act_district_cso_child_setup() {
 	add_theme_support( 'title-tag' );
 	add_theme_support( 'post-thumbnails' );
 	add_theme_support( 'custom-logo' );
+	add_theme_support( 'editor-styles' );
+	add_editor_style(
+		array(
+			'style.css',
+			'assets/css/components.css',
+			'assets/css/contact.css',
+			'assets/css/about-aa.css',
+			'assets/css/forms.css',
+			'assets/css/woocommerce/base.css',
+			'assets/css/woocommerce/shop-filters.css',
+			'assets/css/woocommerce/account-auth.css',
+			'assets/css/editor.css',
+		)
+	);
 	add_theme_support(
 		'html5',
 		array(
@@ -32,10 +46,10 @@ function act_district_cso_child_setup() {
 
 	register_nav_menus(
 		array(
-			'primary'                              => __( 'Primary Menu', 'ACT_District_CSO_Child' ),
-			'ACT-District-CSO-Child-footer-menu-1' => __( 'Footer Menu 1', 'ACT_District_CSO_Child' ),
-			'ACT-District-CSO-Child-footer-menu-2' => __( 'Footer Menu 2', 'ACT_District_CSO_Child' ),
-			'ACT-District-CSO-Child-quick-links'  => __( 'Quick Links', 'ACT_District_CSO_Child' ),
+			'primary'                              => __( 'Primary Menu', 'ACT_District_CSO' ),
+			'ACT-District-CSO-Child-footer-menu-1' => __( 'Footer Menu 1', 'ACT_District_CSO' ),
+			'ACT-District-CSO-Child-footer-menu-2' => __( 'Footer Menu 2', 'ACT_District_CSO' ),
+			'ACT-District-CSO-Child-quick-links'  => __( 'Quick Links', 'ACT_District_CSO' ),
 		)
 	);
 }
@@ -52,6 +66,41 @@ function act_district_cso_child_asset_version( $relative_path ) {
 	}
 
 	return wp_get_theme()->get( 'Version' );
+}
+
+/**
+ * Return the active page template slug for classic or block templates.
+ */
+function act_district_cso_child_current_page_template_slug() {
+	if ( ! is_singular( 'page' ) ) {
+		return '';
+	}
+
+	$template = get_page_template_slug( get_queried_object_id() );
+
+	if ( ! is_string( $template ) || '' === $template ) {
+		return '';
+	}
+
+	$slug = preg_replace( '/\.php$/', '', $template );
+
+	return is_string( $slug ) ? $slug : '';
+}
+
+/**
+ * Determine whether the current request is handled by WooCommerce.
+ */
+function act_district_cso_child_is_woocommerce_context() {
+	if ( ! class_exists( 'WooCommerce' ) ) {
+		return false;
+	}
+
+	return (
+		( function_exists( 'is_woocommerce' ) && is_woocommerce() ) ||
+		( function_exists( 'is_cart' ) && is_cart() ) ||
+		( function_exists( 'is_checkout' ) && is_checkout() ) ||
+		( function_exists( 'is_account_page' ) && is_account_page() )
+	);
 }
 
 /**
@@ -75,14 +124,14 @@ function ACT_District_CSO_Child_enqueue_styles() {
 		act_district_cso_child_asset_version( '/assets/css/components.css' )
 	);
 
-	$template_styles = array(
-		'page-form-contact.php'	=> 'contact.css',
-		'page-information.php'	=> 'about-aa.css',
-		'page-resources.php'	=> 'members.css',
+	$template_styles  = array(
+		'page-form-contact' => 'contact.css',
+		'page-information'  => 'about-aa.css',
 	);
+	$current_template = act_district_cso_child_current_page_template_slug();
 
 	foreach ( $template_styles as $template => $stylesheet ) {
-		if ( is_page_template( $template ) ) {
+		if ( $current_template === $template || is_page_template( $template . '.php' ) ) {
 			act_district_cso_child_enqueue_page_style(
 				$template,
 				$stylesheet,
@@ -102,15 +151,74 @@ function ACT_District_CSO_Child_enqueue_styles() {
 add_action( 'wp_enqueue_scripts', 'ACT_District_CSO_Child_enqueue_styles', 15 );
 
 /**
- * Simple fallback when no primary menu has been assigned yet.
+ * Add stable body classes used by template-specific CSS.
  */
-function act_district_cso_child_primary_menu_fallback() {
-	echo '<ul id="primary-menu" class="aa-header-menu nav-links">';
-	echo '<li><a href="' . esc_url( home_url( '/' ) ) . '">' . esc_html__( 'Home', 'ACT_District_CSO_Child' ) . '</a></li>';
-	echo '<li><a href="' . esc_url( home_url( '/meetings/' ) ) . '">' . esc_html__( 'Meetings', 'ACT_District_CSO_Child' ) . '</a></li>';
-	echo '<li><a href="' . esc_url( home_url( '/contact/' ) ) . '">' . esc_html__( 'Contact', 'ACT_District_CSO_Child' ) . '</a></li>';
-	echo '</ul>';
+function act_district_cso_child_body_classes( $classes ) {
+	if ( act_district_cso_child_is_woocommerce_context() ) {
+		$classes[] = 'aac-woocommerce-page';
+	}
+
+	if ( function_exists( 'is_account_page' ) && is_account_page() && ! is_user_logged_in() ) {
+		$classes[] = 'aac-account-auth-page';
+	}
+
+	return array_values( array_unique( $classes ) );
 }
+add_filter( 'body_class', 'act_district_cso_child_body_classes' );
+
+/**
+ * Keep WooCommerce's automatic block hooks from adding account/cart controls to
+ * the public header. The shop still has its normal account and cart pages.
+ */
+function act_district_cso_child_remove_woocommerce_header_hooked_blocks( $hooked_blocks, $position, $anchor_block, $context ) {
+	if ( 'after' !== $position || 'core/navigation' !== $anchor_block || ! is_array( $hooked_blocks ) ) {
+		return $hooked_blocks;
+	}
+
+	$is_header_context = false;
+
+	if ( $context instanceof WP_Block_Template ) {
+		$is_header_context = 'header' === $context->area || false !== strpos( $context->slug, '//header' );
+	} elseif ( $context instanceof WP_Post && 'wp_template_part' === $context->post_type ) {
+		$is_header_context = 'header' === get_post_meta( $context->ID, 'area', true ) || false !== strpos( $context->post_name, 'header' );
+	} elseif ( is_array( $context ) ) {
+		$is_header_context =
+			( isset( $context['area'] ) && 'header' === $context['area'] ) ||
+			( isset( $context['slug'] ) && false !== strpos( (string) $context['slug'], 'header' ) ) ||
+			( isset( $context['blockTypes'] ) && in_array( 'core/template-part/header', (array) $context['blockTypes'], true ) ) ||
+			( isset( $context['categories'] ) && in_array( 'header', (array) $context['categories'], true ) );
+	}
+
+	if ( ! $is_header_context ) {
+		return $hooked_blocks;
+	}
+
+	return array_values(
+		array_diff(
+			$hooked_blocks,
+			array(
+				'woocommerce/customer-account',
+				'woocommerce/mini-cart',
+			)
+		)
+	);
+}
+add_filter( 'hooked_block_types', 'act_district_cso_child_remove_woocommerce_header_hooked_blocks', 20, 4 );
+
+/**
+ * Keep custom template parts styled in the block editor canvas.
+ */
+function act_district_cso_child_enqueue_block_editor_assets() {
+	$relative_path = '/assets/css/editor.css';
+
+	wp_enqueue_style(
+		'ACT-District-CSO-Child-editor',
+		get_stylesheet_directory_uri() . $relative_path,
+		array(),
+		act_district_cso_child_asset_version( $relative_path )
+	);
+}
+add_action( 'enqueue_block_editor_assets', 'act_district_cso_child_enqueue_block_editor_assets' );
 
 /**
  * Enqueue a page/template-specific stylesheet.
@@ -132,13 +240,3 @@ function act_district_cso_child_enqueue_page_style( $template, $stylesheet, $dep
 		act_district_cso_child_asset_version( $relative_path )
 	);
 }
-
-if ( class_exists( 'WooCommerce' ) ) {
-	require_once get_stylesheet_directory() . '/inc/woocommerce/bootstrap.php';
-}
-
-require_once get_stylesheet_directory() . '/inc/forms.php';
-
-require_once get_stylesheet_directory() . '/inc/login-page.php';
-
-require_once get_stylesheet_directory() . '/templates/gutenberg/tribe_events.php';

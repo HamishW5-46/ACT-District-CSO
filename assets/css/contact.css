@@ -5,6 +5,14 @@
 
 /* Contact detail blocks */
 
+.aa-template-contact .aa-section {
+	margin: 32px 0 24px;
+}
+
+.aa-template-contact .aa-grid {
+	margin-top: 0;
+}
+
 .cso-contact-item {
 	margin: 0 0 26px;
 }
