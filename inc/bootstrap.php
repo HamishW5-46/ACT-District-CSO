@@ -69,6 +69,32 @@ function act_district_cso_child_asset_version( $relative_path ) {
 }
 
 /**
+ * Add a late cache-busting query arg for theme-owned assets.
+ */
+function act_district_cso_child_versioned_asset_src( $src, $handle ) {
+	$assets = array(
+		'ACT-District-CSO-Child-style'                     => '/style.css',
+		'ACT-District-CSO-Child-components'                => '/assets/css/components.css',
+		'ACT-District-CSO-Child-navigation'                => '/assets/js/navigation.js',
+		'ACT-District-CSO-Child-editor'                    => '/assets/css/editor.css',
+		'ACT-District-CSO-Child-page-form-contact-contact' => '/assets/css/contact.css',
+		'ACT-District-CSO-Child-page-information-about-aa' => '/assets/css/about-aa.css',
+	);
+
+	if ( ! isset( $assets[ $handle ] ) ) {
+		return $src;
+	}
+
+	return add_query_arg(
+		'aacv',
+		act_district_cso_child_asset_version( $assets[ $handle ] ),
+		remove_query_arg( array( 'ver', 'aacv' ), $src )
+	);
+}
+add_filter( 'style_loader_src', 'act_district_cso_child_versioned_asset_src', 9999, 2 );
+add_filter( 'script_loader_src', 'act_district_cso_child_versioned_asset_src', 9999, 2 );
+
+/**
  * Return the active page template slug for classic or block templates.
  */
 function act_district_cso_child_current_page_template_slug() {
@@ -149,6 +175,26 @@ function ACT_District_CSO_Child_enqueue_styles() {
 	);
 }
 add_action( 'wp_enqueue_scripts', 'ACT_District_CSO_Child_enqueue_styles', 15 );
+
+/**
+ * Keep the mobile navigation controller available before the first menu tap.
+ */
+function act_district_cso_child_navigation_script_loader_tag( $tag, $handle, $src ) {
+	if ( 'ACT-District-CSO-Child-navigation' !== $handle ) {
+		return $tag;
+	}
+
+	if ( false !== strpos( $tag, 'data-no-optimize=' ) ) {
+		return $tag;
+	}
+
+	return str_replace(
+		'<script ',
+		'<script data-no-defer="1" data-no-optimize="1" ',
+		$tag
+	);
+}
+add_filter( 'script_loader_tag', 'act_district_cso_child_navigation_script_loader_tag', 10, 3 );
 
 /**
  * Add stable body classes used by template-specific CSS.

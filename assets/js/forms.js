@@ -1,9 +1,18 @@
-document.addEventListener("DOMContentLoaded", () => {
+(() => {
+    let initialized = false;
+
+    function initForms() {
+        if (initialized) {
+            return;
+        }
+
     const forms = document.querySelectorAll("[data-aa-form]");
 
     if (!forms.length) {
         return;
     }
+
+    initialized = true;
 
     const turnstileWidgets = new WeakMap();
 
@@ -310,4 +319,13 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
-});
+    }
+
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initForms);
+    } else {
+        initForms();
+    }
+
+    document.addEventListener("DOMContentLiteSpeedLoaded", initForms);
+})();

@@ -416,6 +416,8 @@ body.post-type-archive-tsml_meeting #tsml-ui {
     .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open {
         position: fixed;
         inset: var(--wp-admin--admin-bar--height, 0px) 0 0;
+        display: flex !important;
+        flex-direction: column;
         width: 100vw;
         height: calc(100svh - var(--wp-admin--admin-bar--height, 0px));
         min-height: 0;
@@ -500,6 +502,18 @@ body.post-type-archive-tsml_meeting #tsml-ui {
         pointer-events: none;
     }
 
+    .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open:has(.is-aa-submenu-panel-open) .wp-block-navigation__container > .wp-block-navigation-item:not(.is-aa-submenu-active) {
+        visibility: hidden;
+        pointer-events: none;
+    }
+
+    .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open.is-aa-submenu-open .wp-block-navigation__container > .wp-block-navigation-submenu.is-aa-submenu-active > .wp-block-navigation-item__content,
+    .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open.is-aa-submenu-open .wp-block-navigation__container > .wp-block-navigation-submenu.is-aa-submenu-active > .wp-block-navigation__submenu-icon,
+    .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open:has(.is-aa-submenu-panel-open) .wp-block-navigation__container > .wp-block-navigation-submenu.is-aa-submenu-active > .wp-block-navigation-item__content,
+    .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open:has(.is-aa-submenu-panel-open) .wp-block-navigation__container > .wp-block-navigation-submenu.is-aa-submenu-active > .wp-block-navigation__submenu-icon {
+        display: none !important;
+    }
+
     .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-item,
     .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-submenu {
         position: relative;
@@ -568,9 +582,11 @@ body.post-type-archive-tsml_meeting #tsml-ui {
         position: fixed;
         z-index: 4;
         inset: var(--wp-admin--admin-bar--height, 0px) 0 0 0;
-        left:0 ;
+        left: 0;
         right: 0;
-        display: block;
+        display: none !important;
+        flex-direction: column;
+        align-items: stretch;
         box-sizing: border-box;
         width: 100vw;
         max-width: none;
@@ -579,6 +595,7 @@ body.post-type-archive-tsml_meeting #tsml-ui {
         margin: 0;
         padding: 0 16px 22px;
         overflow-y: auto;
+        gap: 8px;
         visibility: hidden;
         opacity: 0;
         pointer-events: none;
@@ -591,13 +608,39 @@ body.post-type-archive-tsml_meeting #tsml-ui {
 
     .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation-submenu > .wp-block-navigation__submenu-container.is-aa-submenu-panel-open,
     .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__responsive-container-content .wp-block-navigation__submenu-container.is-aa-submenu-panel-open {
+        display: flex !important;
         visibility: visible;
         opacity: 1;
         pointer-events: auto;
         transform: translateX(0);
     }
 
+    .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__submenu-container:not(.is-aa-submenu-panel-open) {
+        display: none !important;
+        height: 0 !important;
+        min-height: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        pointer-events: none !important;
+    }
+
+    .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__submenu-container > .wp-block-navigation-item,
+    .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__submenu-container > .wp-block-navigation-submenu {
+        position: static;
+        display: block;
+        flex: 0 0 auto;
+        width: 100%;
+        height: auto;
+        margin: 0;
+        padding: 0;
+        transform: none;
+    }
+
     .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__submenu-container .wp-block-navigation-item__content {
+        position: static;
         min-height: 54px;
         padding: 0 18px;
         background: #ffffff;
