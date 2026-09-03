@@ -641,6 +641,7 @@
 	border-radius: 12px;
 	padding: 0;
 	margin-bottom: 12px;
+	align-self: stretch;
 	overflow: hidden;
 }
 
