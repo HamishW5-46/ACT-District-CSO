@@ -227,6 +227,16 @@
 	width: 100%;
 }
 
+.aa-grid > .aa-card > H2,
+.aa-grid > .aa-card > H3,
+.aa-grid-2 > .aa-card > H2,
+.aa-grid-2 > .aa-card > H3,
+.aa-grid-3 > .aa-card > H2,
+.aa-grid-3 > .aa-card > H3
+{
+	text-align: center;
+}
+
 .aa-grid-3 {
 	grid-template-columns: repeat(3, minmax(0, 1fr));
 	align-items: stretch;
