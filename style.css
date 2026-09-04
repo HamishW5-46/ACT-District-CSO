@@ -503,12 +503,6 @@ body.post-type-archive-tsml_meeting #tsml-ui {
         pointer-events: none;
     }
 
-    .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open:has(.is-aa-submenu-panel-open) .wp-block-navigation__container > .wp-block-navigation-item:not(.is-aa-submenu-active) {
-        display: none !important;
-        visibility: hidden;
-        pointer-events: none;
-    }
-
     .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open .wp-block-navigation__container > .is-aa-submenu-background-item {
         display: none !important;
         visibility: hidden !important;
@@ -524,9 +518,7 @@ body.post-type-archive-tsml_meeting #tsml-ui {
     }
 
     .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open.is-aa-submenu-open .wp-block-navigation__container > .wp-block-navigation-submenu.is-aa-submenu-active > .wp-block-navigation-item__content,
-    .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open.is-aa-submenu-open .wp-block-navigation__container > .wp-block-navigation-submenu.is-aa-submenu-active > .wp-block-navigation__submenu-icon,
-    .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open:has(.is-aa-submenu-panel-open) .wp-block-navigation__container > .wp-block-navigation-submenu.is-aa-submenu-active > .wp-block-navigation-item__content,
-    .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open:has(.is-aa-submenu-panel-open) .wp-block-navigation__container > .wp-block-navigation-submenu.is-aa-submenu-active > .wp-block-navigation__submenu-icon {
+    .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open.is-aa-submenu-open .wp-block-navigation__container > .wp-block-navigation-submenu.is-aa-submenu-active > .wp-block-navigation__submenu-icon {
         display: none !important;
     }
 
@@ -717,7 +709,7 @@ body.post-type-archive-tsml_meeting #tsml-ui {
         justify-content: center;
         width: 44px;
         height: 44px;
-        z-index: 6;
+        z-index: 20;
         color: #1f2937;
         border: 1px solid #d8e1ec;
         border-radius: 10px;

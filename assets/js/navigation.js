@@ -1,5 +1,10 @@
 (function () {
   const mobileQuery = window.matchMedia("(max-width: 960px)");
+  const containerSelector = ".wp-block-navigation__responsive-container";
+  const openContainerSelector = `${containerSelector}.is-menu-open`;
+  const submenuSelector = ".wp-block-navigation-submenu";
+  const panelSelector = ".wp-block-navigation__submenu-container";
+  const toggleSelector = ".wp-block-navigation__submenu-icon";
 
   const directChild = (element, selector) => {
     if (!element) {
@@ -9,32 +14,45 @@
     return Array.from(element.children).find((child) => child.matches(selector)) || null;
   };
 
+  const topLevelItems = (item) => Array.from(item.parentElement?.children || []);
   const activeSubmenuItems = (container) => Array.from(container.querySelectorAll(".is-aa-submenu-active"));
 
   const submenuDepth = (item) => {
     let depth = 0;
-    let parent = item.parentElement?.closest(".wp-block-navigation-submenu");
+    let parent = item.parentElement?.closest(submenuSelector);
 
     while (parent) {
       depth += 1;
-      parent = parent.parentElement?.closest(".wp-block-navigation-submenu");
+      parent = parent.parentElement?.closest(submenuSelector);
     }
 
     return depth;
   };
 
+  const clearBackgroundItems = (container) => {
+    container.querySelectorAll(".is-aa-submenu-background-item").forEach((item) => {
+      item.classList.remove("is-aa-submenu-background-item");
+    });
+  };
+
+  const markBackgroundItems = (item) => {
+    topLevelItems(item).forEach((sibling) => {
+      sibling.classList.toggle("is-aa-submenu-background-item", sibling !== item);
+    });
+  };
+
   const closeSubmenu = (container, item) => {
-    if (!item) {
+    if (!container || !item) {
       return;
     }
 
-    const activePanel = directChild(item, ".wp-block-navigation__submenu-container");
-    const toggle = directChild(item, ".wp-block-navigation__submenu-icon");
+    const panel = directChild(item, panelSelector);
+    const toggle = directChild(item, toggleSelector);
 
-    if (activePanel) {
-      activePanel.classList.remove("is-aa-submenu-panel-open");
-      activePanel.setAttribute("aria-hidden", "true");
-      activePanel.style.removeProperty("z-index");
+    if (panel) {
+      panel.classList.remove("is-aa-submenu-panel-open");
+      panel.setAttribute("aria-hidden", "true");
+      panel.style.removeProperty("z-index");
     }
 
     if (toggle) {
@@ -45,18 +63,18 @@
 
     if (!container.querySelector(".is-aa-submenu-panel-open")) {
       container.classList.remove("is-aa-submenu-open");
-      container.querySelectorAll(".is-aa-submenu-background-item").forEach((backgroundItem) => {
-        backgroundItem.classList.remove("is-aa-submenu-background-item");
-      });
+      clearBackgroundItems(container);
     }
   };
 
   const closeAllSubmenus = (container) => {
+    if (!container) {
+      return;
+    }
+
     activeSubmenuItems(container).reverse().forEach((item) => closeSubmenu(container, item));
     container.classList.remove("is-aa-submenu-open");
-    container.querySelectorAll(".is-aa-submenu-background-item").forEach((backgroundItem) => {
-      backgroundItem.classList.remove("is-aa-submenu-background-item");
-    });
+    clearBackgroundItems(container);
   };
 
   const closeDescendantSubmenus = (container, item) => {
@@ -77,26 +95,20 @@
       });
   };
 
-  const closeTopSubmenu = (container) => {
-    const activeItems = activeSubmenuItems(container);
-    closeSubmenu(container, activeItems[activeItems.length - 1]);
-  };
-
   const openSubmenu = (container, item, panel, toggle) => {
     closeDescendantSubmenus(container, item);
     closeSiblingSubmenus(container, item);
-    Array.from(item.parentElement?.children || []).forEach((sibling) => {
-      sibling.classList.toggle("is-aa-submenu-background-item", sibling !== item);
-    });
+    markBackgroundItems(item);
+
     item.classList.add("is-aa-submenu-active");
     panel.classList.add("is-aa-submenu-panel-open");
     panel.setAttribute("aria-hidden", "false");
-    panel.style.zIndex = String(4 + submenuDepth(item));
+    panel.style.zIndex = String(8 + submenuDepth(item));
     toggle.setAttribute("aria-expanded", "true");
     container.classList.add("is-aa-submenu-open");
   };
 
-  const addSubmenuHeader = (panel, label, container) => {
+  const addSubmenuHeader = (panel, label) => {
     if (directChild(panel, ".aa-mobile-submenu-header")) {
       return;
     }
@@ -113,29 +125,6 @@
     title.className = "aa-mobile-submenu-title";
     title.textContent = label;
 
-    backButton.addEventListener(
-      "pointerdown",
-      (event) => {
-        event.preventDefault();
-        event.stopPropagation();
-        event.stopImmediatePropagation();
-      },
-      true
-    );
-
-    backButton.addEventListener("click", (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      event.stopImmediatePropagation();
-      const parentItem = panel.closest(".wp-block-navigation-submenu");
-      const parentToggle = directChild(parentItem, ".wp-block-navigation__submenu-icon");
-      if (parentToggle) {
-        parentToggle.focus({ preventScroll: true });
-      }
-
-      closeSubmenu(container, parentItem);
-    });
-
     header.append(backButton, title);
     panel.prepend(header);
   };
@@ -148,9 +137,9 @@
     container.dataset.aaMobileMenuReady = "true";
     container.classList.add("aa-mobile-menu-enhanced");
 
-    container.querySelectorAll(".wp-block-navigation-submenu").forEach((item) => {
-      const panel = directChild(item, ".wp-block-navigation__submenu-container");
-      const toggle = directChild(item, ".wp-block-navigation__submenu-icon");
+    container.querySelectorAll(submenuSelector).forEach((item) => {
+      const panel = directChild(item, panelSelector);
+      const toggle = directChild(item, toggleSelector);
       const labelElement = directChild(item, ".wp-block-navigation-item__content");
       const label = labelElement ? labelElement.textContent.trim() : "Submenu";
 
@@ -160,97 +149,87 @@
 
       panel.setAttribute("aria-hidden", "true");
       toggle.setAttribute("aria-expanded", "false");
-      addSubmenuHeader(panel, label, container);
-
-      ["pointerdown", "touchstart"].forEach((eventName) => {
-        toggle.addEventListener(
-          eventName,
-          (event) => {
-            if (!mobileQuery.matches || !container.classList.contains("is-menu-open")) {
-              return;
-            }
-
-            event.stopPropagation();
-            event.stopImmediatePropagation();
-          },
-          true
-        );
-      });
-
-      toggle.addEventListener(
-        "click",
-        (event) => {
-          if (!mobileQuery.matches || !container.classList.contains("is-menu-open")) {
-            return;
-          }
-
-          event.preventDefault();
-          event.stopPropagation();
-          event.stopImmediatePropagation();
-          openSubmenu(container, item, panel, toggle);
-        },
-        true
-      );
+      addSubmenuHeader(panel, label);
     });
   };
 
-  const findOpenContainer = (target) => {
-    const element = target instanceof Element ? target : null;
-
-    return (
-      element?.closest(".wp-block-navigation")?.querySelector(".wp-block-navigation__responsive-container.is-menu-open") ||
-      document.querySelector(".wp-block-navigation__responsive-container.is-menu-open")
-    );
+  const prepareContainers = () => {
+    document.querySelectorAll(containerSelector).forEach(prepareContainer);
   };
 
-  const prepareOpenContainers = () => {
-    document.querySelectorAll(".wp-block-navigation__responsive-container.is-menu-open").forEach((container) => {
-      prepareContainer(container);
+  const closestOpenContainer = (element) => element?.closest(openContainerSelector);
 
-      if (container.querySelector(".is-aa-submenu-panel-open")) {
-        container.classList.add("is-aa-submenu-open");
+  const handleNavigationClick = (event) => {
+    const target = event.target instanceof Element ? event.target : null;
+
+    if (!target) {
+      return;
+    }
+
+    const openButton = target.closest(".wp-block-navigation__responsive-container-open");
+    if (openButton) {
+      window.requestAnimationFrame(prepareContainers);
+      return;
+    }
+
+    const closeButton = target.closest(".wp-block-navigation__responsive-container-close");
+    if (closeButton) {
+      closeAllSubmenus(document.querySelector(openContainerSelector));
+      return;
+    }
+
+    const backButton = target.closest(".aa-mobile-submenu-back");
+    if (backButton) {
+      const container = closestOpenContainer(backButton);
+      const item = backButton.closest(submenuSelector);
+
+      if (!mobileQuery.matches || !container || !item) {
+        return;
       }
-    });
+
+      event.preventDefault();
+      event.stopPropagation();
+      closeSubmenu(container, item);
+      return;
+    }
+
+    const toggle = target.closest(toggleSelector);
+    if (!toggle) {
+      return;
+    }
+
+    const container = closestOpenContainer(toggle);
+    const item = toggle.closest(submenuSelector);
+    const panel = directChild(item, panelSelector);
+
+    if (!mobileQuery.matches || !container || !item || !panel) {
+      return;
+    }
+
+    event.preventDefault();
+    event.stopPropagation();
+    openSubmenu(container, item, panel, toggle);
   };
 
-  document.addEventListener(
-    "click",
-    (event) => {
-      window.requestAnimationFrame(() => {
-        const container = findOpenContainer(event.target);
-
-        if (container) {
-          prepareContainer(container);
-        }
-
-        if (event.target instanceof Element && event.target.closest(".wp-block-navigation__responsive-container-close") && container) {
-          closeAllSubmenus(container);
-        }
-      });
-    },
-    true
-  );
-
-  if ("MutationObserver" in window) {
-    const observer = new MutationObserver(prepareOpenContainers);
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ["class"],
-      subtree: true,
-    });
-  }
+  document.addEventListener("click", handleNavigationClick, true);
 
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") {
       return;
     }
 
-    const container = document.querySelector(".wp-block-navigation__responsive-container.is-menu-open.is-aa-submenu-open");
-    if (container) {
+    const container = document.querySelector(`${openContainerSelector}.is-aa-submenu-open`);
+    const activeItems = container ? activeSubmenuItems(container) : [];
+
+    if (container && activeItems.length) {
       event.preventDefault();
-      closeTopSubmenu(container);
+      closeSubmenu(container, activeItems[activeItems.length - 1]);
     }
   });
 
-  prepareOpenContainers();
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", prepareContainers, { once: true });
+  } else {
+    prepareContainers();
+  }
 })();
