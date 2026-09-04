@@ -271,6 +271,12 @@ body.post-type-archive-tsml_meeting #tsml-ui {
     white-space: nowrap;
 }
 
+.aa-main-navigation .aa-mobile-submenu-header,
+.aa-main-navigation .aa-mobile-submenu-back,
+.aa-main-navigation .aa-mobile-submenu-title {
+    display: none;
+}
+
 @media (min-width: 961px) {
     .aa-main-navigation .wp-block-navigation-item.has-child {
         position: relative;
