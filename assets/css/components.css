@@ -153,6 +153,10 @@
 	box-sizing: border-box;
 }
 
+.aa-card-notices {
+	align-items: flex-start;
+}
+
 .aa-card.is-layout-flow > * + *,
 .aa-card.is-layout-constrained > * + * {
 	margin-block-start: var(--wp--style--block-gap);
