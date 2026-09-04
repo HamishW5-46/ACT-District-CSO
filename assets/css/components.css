@@ -143,7 +143,6 @@
 	--wp--style--block-gap: 16px;
 	display: flex;
 	flex-direction: column;
-	align-items: center;
 	background: var(--aa-color-surface, #f8fafc);
 	border: 1px solid var(--aa-color-border, #e5e7eb);
 	border-radius: 14px;
@@ -153,8 +152,9 @@
 	box-sizing: border-box;
 }
 
-.aa-card-notices {
-	align-items: flex-start;
+.aa-card-center {
+	align-items: center;
+	text-align: center;
 }
 
 .aa-card.is-layout-flow > * + *,
