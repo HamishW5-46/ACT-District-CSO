@@ -41,6 +41,10 @@
     });
   };
 
+  const keepMenuOpen = (container) => {
+    container.classList.add("has-modal-open", "is-menu-open", "is-aa-submenu-open");
+  };
+
   const closeSubmenu = (container, item) => {
     if (!container || !item) {
       return;
@@ -99,13 +103,17 @@
     closeDescendantSubmenus(container, item);
     closeSiblingSubmenus(container, item);
     markBackgroundItems(item);
+    keepMenuOpen(container);
 
     item.classList.add("is-aa-submenu-active");
     panel.classList.add("is-aa-submenu-panel-open");
     panel.setAttribute("aria-hidden", "false");
     panel.style.zIndex = String(8 + submenuDepth(item));
     toggle.setAttribute("aria-expanded", "true");
-    container.classList.add("is-aa-submenu-open");
+
+    window.requestAnimationFrame(() => keepMenuOpen(container));
+    window.setTimeout(() => keepMenuOpen(container), 0);
+    window.setTimeout(() => keepMenuOpen(container), 120);
   };
 
   const addSubmenuHeader = (panel, label) => {
@@ -211,7 +219,7 @@
     openSubmenu(container, item, panel, toggle);
   };
 
-  document.addEventListener("click", handleNavigationClick, true);
+  window.addEventListener("click", handleNavigationClick, true);
 
   document.addEventListener("keydown", (event) => {
     if (event.key !== "Escape") {
