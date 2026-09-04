@@ -76,9 +76,13 @@ function act_district_cso_versioned_asset_src( $src, $handle ) {
 		'ACT-District-CSO-style'                     => '/style.css',
 		'ACT-District-CSO-components'                => '/assets/css/components.css',
 		'ACT-District-CSO-navigation'                => '/assets/js/navigation.js',
+		'ACT-District-CSO-shop-filters'              => '/assets/js/shop-filters.js',
 		'ACT-District-CSO-editor'                    => '/assets/css/editor.css',
 		'ACT-District-CSO-page-form-contact-contact' => '/assets/css/contact.css',
 		'ACT-District-CSO-page-information-about-aa' => '/assets/css/about-aa.css',
+		'ACT-District-CSO-woocommerce-base'          => '/assets/css/woocommerce/base.css',
+		'ACT-District-CSO-woocommerce-shop-filters'  => '/assets/css/woocommerce/shop-filters.css',
+		'ACT-District-CSO-woocommerce-account-auth'  => '/assets/css/woocommerce/account-auth.css',
 	);
 
 	if ( ! isset( $assets[ $handle ] ) ) {
@@ -104,6 +108,9 @@ function act_district_cso_style_loader_tag( $html, $handle, $href, $media ) {
 		'ACT-District-CSO-editor',
 		'ACT-District-CSO-page-form-contact-contact',
 		'ACT-District-CSO-page-information-about-aa',
+		'ACT-District-CSO-woocommerce-base',
+		'ACT-District-CSO-woocommerce-shop-filters',
+		'ACT-District-CSO-woocommerce-account-auth',
 	);
 
 	if ( ! in_array( $handle, $handles, true ) || false !== strpos( $html, 'data-no-optimize=' ) ) {
@@ -150,6 +157,17 @@ function act_district_cso_is_woocommerce_context() {
 }
 
 /**
+ * Determine whether the current request is a product archive with shop filters.
+ */
+function act_district_cso_is_shop_filter_context() {
+	return (
+		( function_exists( 'is_shop' ) && is_shop() ) ||
+		is_post_type_archive( 'product' ) ||
+		is_tax( array( 'product_cat', 'product_tag' ) )
+	);
+}
+
+/**
  * Enqueue standalone theme styles and scripts.
  */
 function act_district_cso_enqueue_styles() {
@@ -186,6 +204,50 @@ function act_district_cso_enqueue_styles() {
 		}
 	}
 
+	if ( act_district_cso_is_woocommerce_context() ) {
+		wp_enqueue_style(
+			'ACT-District-CSO-woocommerce-base',
+			get_stylesheet_directory_uri() . '/assets/css/woocommerce/base.css',
+			array( $components_handle ),
+			act_district_cso_asset_version( '/assets/css/woocommerce/base.css' )
+		);
+	}
+
+	if ( act_district_cso_is_shop_filter_context() ) {
+		wp_enqueue_style(
+			'ACT-District-CSO-woocommerce-shop-filters',
+			get_stylesheet_directory_uri() . '/assets/css/woocommerce/shop-filters.css',
+			array( 'ACT-District-CSO-woocommerce-base' ),
+			act_district_cso_asset_version( '/assets/css/woocommerce/shop-filters.css' )
+		);
+
+		wp_enqueue_script(
+			'ACT-District-CSO-shop-filters',
+			get_stylesheet_directory_uri() . '/assets/js/shop-filters.js',
+			array( 'jquery' ),
+			act_district_cso_asset_version( '/assets/js/shop-filters.js' ),
+			true
+		);
+
+		wp_localize_script(
+			'ACT-District-CSO-shop-filters',
+			'aacShopFilters',
+			array(
+				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
+				'nonce'   => wp_create_nonce( 'aac_shop_filters' ),
+			)
+		);
+	}
+
+	if ( function_exists( 'is_account_page' ) && is_account_page() && ! is_user_logged_in() ) {
+		wp_enqueue_style(
+			'ACT-District-CSO-woocommerce-account-auth',
+			get_stylesheet_directory_uri() . '/assets/css/woocommerce/account-auth.css',
+			array( 'ACT-District-CSO-woocommerce-base' ),
+			act_district_cso_asset_version( '/assets/css/woocommerce/account-auth.css' )
+		);
+	}
+
 	wp_enqueue_script(
 		'ACT-District-CSO-navigation',
 		get_stylesheet_directory_uri() . '/assets/js/navigation.js',
@@ -200,7 +262,12 @@ add_action( 'wp_enqueue_scripts', 'act_district_cso_enqueue_styles', 15 );
  * Keep the mobile navigation controller available before the first menu tap.
  */
 function act_district_cso_navigation_script_loader_tag( $tag, $handle, $src ) {
-	if ( 'ACT-District-CSO-navigation' !== $handle ) {
+	$handles = array(
+		'ACT-District-CSO-navigation',
+		'ACT-District-CSO-shop-filters',
+	);
+
+	if ( ! in_array( $handle, $handles, true ) ) {
 		return $tag;
 	}
 
