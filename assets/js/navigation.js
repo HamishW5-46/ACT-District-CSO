@@ -45,12 +45,18 @@
 
     if (!container.querySelector(".is-aa-submenu-panel-open")) {
       container.classList.remove("is-aa-submenu-open");
+      container.querySelectorAll(".is-aa-submenu-background-item").forEach((backgroundItem) => {
+        backgroundItem.classList.remove("is-aa-submenu-background-item");
+      });
     }
   };
 
   const closeAllSubmenus = (container) => {
     activeSubmenuItems(container).reverse().forEach((item) => closeSubmenu(container, item));
     container.classList.remove("is-aa-submenu-open");
+    container.querySelectorAll(".is-aa-submenu-background-item").forEach((backgroundItem) => {
+      backgroundItem.classList.remove("is-aa-submenu-background-item");
+    });
   };
 
   const closeDescendantSubmenus = (container, item) => {
@@ -79,6 +85,9 @@
   const openSubmenu = (container, item, panel, toggle) => {
     closeDescendantSubmenus(container, item);
     closeSiblingSubmenus(container, item);
+    Array.from(item.parentElement?.children || []).forEach((sibling) => {
+      sibling.classList.toggle("is-aa-submenu-background-item", sibling !== item);
+    });
     item.classList.add("is-aa-submenu-active");
     panel.classList.add("is-aa-submenu-panel-open");
     panel.setAttribute("aria-hidden", "false");
