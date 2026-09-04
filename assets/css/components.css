@@ -201,11 +201,6 @@
     max-width: 70ch;
 }
 
-.aa-card > .wp-block-paragraph {
-	text-align: left;
-	align-self: flex-start;
-}
-
 /* ------------------------------------------------------------
    Grids
 ------------------------------------------------------------ */
@@ -226,6 +221,7 @@
     flex-direction: column;
 	align-items: center;
     height: 100%;
+	width: 100%;
 }
 
 .aa-grid-3 {
