@@ -95,6 +95,26 @@ add_filter( 'style_loader_src', 'act_district_cso_child_versioned_asset_src', 99
 add_filter( 'script_loader_src', 'act_district_cso_child_versioned_asset_src', 9999, 2 );
 
 /**
+ * Keep theme stylesheets out of CSS optimization so filemtime cache busting is visible.
+ */
+function act_district_cso_child_style_loader_tag( $html, $handle, $href, $media ) {
+	$handles = array(
+		'ACT-District-CSO-Child-style',
+		'ACT-District-CSO-Child-components',
+		'ACT-District-CSO-Child-editor',
+		'ACT-District-CSO-Child-page-form-contact-contact',
+		'ACT-District-CSO-Child-page-information-about-aa',
+	);
+
+	if ( ! in_array( $handle, $handles, true ) || false !== strpos( $html, 'data-no-optimize=' ) ) {
+		return $html;
+	}
+
+	return str_replace( '<link ', '<link data-no-optimize="1" ', $html );
+}
+add_filter( 'style_loader_tag', 'act_district_cso_child_style_loader_tag', 10, 4 );
+
+/**
  * Return the active page template slug for classic or block templates.
  */
 function act_district_cso_child_current_page_template_slug() {
