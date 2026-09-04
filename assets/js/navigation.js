@@ -189,7 +189,8 @@
     const backButton = target.closest(".aa-mobile-submenu-back");
     if (backButton) {
       const container = closestOpenContainer(backButton);
-      const item = backButton.closest(submenuSelector);
+      const panel = backButton.closest(panelSelector);
+      const item = panel?.parentElement?.closest(submenuSelector);
 
       if (!mobileQuery.matches || !container || !item) {
         return;
