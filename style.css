@@ -1239,7 +1239,7 @@ body.post-type-archive-tsml_meeting #tsml-ui {
 }
 
 .aa-footer-logo {
-  max-width: 140px;
+  max-width: 140px !important;
   padding: 10px;
   margin-bottom: 15px;
   opacity: 0.9;
