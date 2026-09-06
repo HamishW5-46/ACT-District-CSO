@@ -141,8 +141,8 @@
 
 .aa-card {
 	--wp--style--block-gap: 16px;
-	display: flex;
-	flex-direction: column;
+	display: grid;
+	grid-template-rows: auto;
 	background: var(--aa-color-surface, #f8fafc);
 	border: 1px solid var(--aa-color-border, #e5e7eb);
 	border-radius: 14px;
@@ -483,6 +483,7 @@
 	padding: 11px 22px;
 	font-weight: 800;
 	line-height: 1.2;
+	align-self: center;
 	text-align: center;
 	text-decoration: none;
 	cursor: pointer;

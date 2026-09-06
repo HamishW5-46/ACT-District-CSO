@@ -201,6 +201,10 @@
 	transform: none;
 }
 
+.contact-page-button {
+	margin: 0 auto;
+}
+
 .aa-form-button--primary,
 .aa-contact-card > .aa-form-button {
 	background: #1d5f91;
