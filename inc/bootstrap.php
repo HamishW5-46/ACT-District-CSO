@@ -72,11 +72,18 @@ function act_district_cso_asset_version( $relative_path ) {
  * Add a late cache-busting query arg for theme-owned assets.
  */
 function act_district_cso_versioned_asset_src( $src, $handle ) {
+	if ( 'aac-shop-filters' === $handle && false !== strpos( $src, '/assets/js/shop-filters.js' ) ) {
+		return add_query_arg(
+			'aacv',
+			act_district_cso_asset_version( '/assets/js/shop-filters.js' ),
+			remove_query_arg( array( 'ver', 'aacv' ), $src )
+		);
+	}
+
 	$assets = array(
 		'ACT-District-CSO-style'                     => '/style.css',
 		'ACT-District-CSO-components'                => '/assets/css/components.css',
 		'ACT-District-CSO-navigation'                => '/assets/js/navigation.js',
-		'ACT-District-CSO-shop-filters'              => '/assets/js/shop-filters.js',
 		'ACT-District-CSO-editor'                    => '/assets/css/editor.css',
 		'ACT-District-CSO-page-form-contact-contact' => '/assets/css/contact.css',
 		'ACT-District-CSO-page-information-about-aa' => '/assets/css/about-aa.css',
@@ -220,23 +227,6 @@ function act_district_cso_enqueue_styles() {
 			array( 'ACT-District-CSO-woocommerce-base' ),
 			act_district_cso_asset_version( '/assets/css/woocommerce/shop-filters.css' )
 		);
-
-		wp_enqueue_script(
-			'ACT-District-CSO-shop-filters',
-			get_stylesheet_directory_uri() . '/assets/js/shop-filters.js',
-			array( 'jquery' ),
-			act_district_cso_asset_version( '/assets/js/shop-filters.js' ),
-			true
-		);
-
-		wp_localize_script(
-			'ACT-District-CSO-shop-filters',
-			'aacShopFilters',
-			array(
-				'ajaxUrl' => admin_url( 'admin-ajax.php' ),
-				'nonce'   => wp_create_nonce( 'aac_shop_filters' ),
-			)
-		);
 	}
 
 	if ( function_exists( 'is_account_page' ) && is_account_page() && ! is_user_logged_in() ) {
@@ -264,11 +254,25 @@ add_action( 'wp_enqueue_scripts', 'act_district_cso_enqueue_styles', 15 );
 function act_district_cso_navigation_script_loader_tag( $tag, $handle, $src ) {
 	$handles = array(
 		'ACT-District-CSO-navigation',
-		'ACT-District-CSO-shop-filters',
+		'aac-shop-filters',
+		'jquery-core',
+		'jquery-migrate',
 	);
 
 	if ( ! in_array( $handle, $handles, true ) ) {
 		return $tag;
+	}
+
+	if ( 'aac-shop-filters' === $handle && false === strpos( $tag, 'data-aac-ajax-url=' ) ) {
+		$tag = str_replace(
+			'<script ',
+			sprintf(
+				'<script data-aac-ajax-url="%s" data-aac-nonce="%s" ',
+				esc_url( admin_url( 'admin-ajax.php' ) ),
+				esc_attr( wp_create_nonce( 'aac_shop_filter_nonce' ) )
+			),
+			$tag
+		);
 	}
 
 	if ( false !== strpos( $tag, 'data-no-optimize=' ) ) {

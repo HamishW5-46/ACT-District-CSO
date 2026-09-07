@@ -1,4 +1,31 @@
-jQuery(function ($) {
+(function initShopFilters(attempts) {
+    function getSettings() {
+        const fallbackScript = document.getElementById('aac-shop-filters-js');
+
+        if (window.aacShopFilters) {
+            return window.aacShopFilters;
+        }
+
+        if (!fallbackScript) {
+            return {};
+        }
+
+        return {
+            ajaxUrl: fallbackScript.dataset.aacAjaxUrl || '',
+            nonce: fallbackScript.dataset.aacNonce || ''
+        };
+    }
+
+    const settings = getSettings();
+
+    if (!window.jQuery || !settings.ajaxUrl || !settings.nonce) {
+        window.setTimeout(function () {
+            initShopFilters(attempts + 1);
+        }, attempts < 100 ? 50 : 250);
+        return;
+    }
+
+    window.jQuery(function ($) {
     const mobileMedia = window.matchMedia('(max-width: 768px)');
     const $openButton = $('.aac-mobile-filter-toggle');
     const $drawer = $('.aac-mobile-filter-drawer');
@@ -7,6 +34,7 @@ jQuery(function ($) {
     const $forms = $('.aac-shop-filter-form');
     const $desktopForm = $('.aac-shop-filter-form--desktop');
     const $mobileForm = $('.aac-shop-filter-form--mobile');
+    const productsPerPage = Math.max(1, $('.woocommerce ul.products li.product').length || 0);
 
     function getActiveForm() {
         if ($('body').hasClass('aac-filter-drawer-open') && $mobileForm.length) {
@@ -91,12 +119,17 @@ jQuery(function ($) {
 
         data.push({
             name: 'nonce',
-            value: aacShopFilters.nonce
+            value: settings.nonce
         });
 
         data.push({
             name: 'paged',
             value: page
+        });
+
+        data.push({
+            name: 'per_page',
+            value: productsPerPage
         });
 
         const orderby = $('.woocommerce-ordering select[name="orderby"]').val();
@@ -158,7 +191,7 @@ jQuery(function ($) {
 
     function applyFilters(page = 1, $form = getActiveForm()) {
         $.ajax({
-            url: aacShopFilters.ajaxUrl,
+            url: settings.ajaxUrl,
             type: 'POST',
             data: getFilters(page, $form),
 
@@ -232,6 +265,18 @@ jQuery(function ($) {
         applyFilters(1, $(this));
     });
 
+    $(document).on(
+        'change',
+        '.aac-shop-filter-form input[type="checkbox"], .aac-shop-filter-form input[type="radio"], .aac-shop-filter-form input[type="number"]',
+        function () {
+            const $form = $(this).closest('.aac-shop-filter-form');
+
+            if ($form.length) {
+                applyFilters(1, $form);
+            }
+        }
+    );
+
     $(document).on('click', '.aac-filter-clear', function () {
         const $form = $(this).closest('.aac-shop-filter-form');
 
@@ -268,4 +313,5 @@ jQuery(function ($) {
 
         applyFilters(page, getActiveForm());
     });
-});
+    });
+})(0);
