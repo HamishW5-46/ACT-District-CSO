@@ -6,94 +6,210 @@
  * sizing and template layout gaps that do not have frontend body classes.
  */
 
-body.post-type-page.editor-styles-wrapper .is-root-container.wp-block-post-content {
-	--wp--style--global--content-size: 1120px;
-	--wp--style--global--wide-size: 1400px;
-	box-sizing: border-box;
-	width: min(1120px, calc(100% - 40px));
-	max-width: 1120px;
-	margin: 0 auto;
-	padding: 18px 0 48px;
+body.post-type-page.editor-styles-wrapper
+  .is-root-container.wp-block-post-content {
+  --wp--style--global--content-size: 1120px;
+  --wp--style--global--wide-size: 1400px;
+  box-sizing: border-box;
+  width: min(1120px, calc(100% - 40px));
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 18px 0 48px;
 }
 
-body.post-type-page.editor-styles-wrapper .wp-block-post-title.editor-post-title {
-	box-sizing: border-box;
-	width: min(1120px, calc(100% - 40px));
-	max-width: 1120px;
-	margin-right: auto;
-	margin-left: auto;
+body.post-type-page.editor-styles-wrapper
+  .wp-block-post-title.editor-post-title {
+  box-sizing: border-box;
+  width: min(1120px, calc(100% - 40px));
+  max-width: 1120px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
-body.post-type-page.editor-styles-wrapper .is-root-container.wp-block-post-content > .wp-block {
-	max-width: 100%;
+body.post-type-page.editor-styles-wrapper
+  .is-root-container.wp-block-post-content
+  > .wp-block {
+  max-width: 100%;
 }
 
-body.post-type-page.editor-styles-wrapper .is-root-container.wp-block-post-content > .wp-block + .wp-block {
-	margin-block-start: 24px;
+body.post-type-page.editor-styles-wrapper
+  .is-root-container.wp-block-post-content
+  > .wp-block
+  + .wp-block {
+  margin-block-start: 24px;
 }
 
-body.post-type-page.editor-styles-wrapper .is-root-container.wp-block-post-content > .aa-section {
-	margin: 0 0 24px;
+body.post-type-page.editor-styles-wrapper
+  .is-root-container.wp-block-post-content
+  > .aa-section {
+  margin: 0 0 24px;
 }
 
-body.post-type-page.editor-styles-wrapper .is-root-container.wp-block-post-content > .aa-grid {
-	margin: 0 0 28px;
+body.post-type-page.editor-styles-wrapper
+  .is-root-container.wp-block-post-content
+  > .aa-grid {
+  margin: 0 0 28px;
 }
 
-body.post-type-page.editor-styles-wrapper .is-root-container.wp-block-post-content > .aa-card {
-	margin: 0 0 28px;
+body.post-type-page.editor-styles-wrapper
+  .is-root-container.wp-block-post-content
+  > .aa-card {
+  margin: 0 0 28px;
 }
 
 .editor-styles-wrapper .aa-template-home,
 body .aa-template-home {
-	display: flex;
-	align-items: stretch;
-	width: min(1400px, 100%);
-	max-width: 1400px;
-	margin-right: auto;
-	margin-left: auto;
+  display: flex;
+  align-items: stretch;
+  width: min(1400px, 100%);
+  max-width: 1400px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
 .editor-styles-wrapper .aa-template-home > .hero-overlay,
 body .aa-template-home > .hero-overlay {
-	flex: 0 0 52%;
-	max-width: none;
-	margin: 0;
-	border-radius: 0;
-	box-shadow: none;
+  flex: 0 0 52%;
+  max-width: none;
+  margin: 0;
+  border-radius: 0;
+  box-shadow: none;
 }
 
 .editor-styles-wrapper .aa-template-home > .home-content,
 body .aa-template-home > .home-content {
-	flex: 1 1 48%;
-	width: auto;
-	max-width: none;
-	margin: 0;
-	padding: 20px;
+  flex: 1 1 48%;
+  width: auto;
+  max-width: none;
+  margin: 0;
+  padding: 20px;
 }
 
-@media (max-width: 960px), (orientation: landscape) and (max-height: 540px) and (pointer: coarse) {
-	.editor-styles-wrapper .aa-template-home,
-	body .aa-template-home {
-		display: block;
-		width: 100%;
-		max-width: none;
-	}
+@media (max-width: 960px),
+  (orientation: landscape) and (max-height: 540px) and (pointer: coarse) {
+  .editor-styles-wrapper .aa-template-home,
+  body .aa-template-home {
+    display: block;
+    width: 100%;
+    max-width: none;
+  }
 
-	.editor-styles-wrapper .aa-template-home > .hero-overlay,
-	body .aa-template-home > .hero-overlay {
-		width: 100%;
-		max-width: none;
-		margin-top: 0;
-		padding-top: 10px;
-		border-radius: 0;
-	}
+  .editor-styles-wrapper .aa-template-home > .hero-overlay,
+  body .aa-template-home > .hero-overlay {
+    width: 100%;
+    max-width: none;
+    margin-top: 0;
+    padding-top: 10px;
+    border-radius: 0;
+  }
 
-	.editor-styles-wrapper .aa-template-home > .home-content,
-	body .aa-template-home > .home-content {
-		width: min(100% - 32px, 1100px);
-		max-width: 1100px;
-		margin: 8px auto;
-		padding: 8px;
-	}
+  .editor-styles-wrapper .aa-template-home > .home-content,
+  body .aa-template-home > .home-content {
+    width: min(100% - 32px, 1100px);
+    max-width: 1100px;
+    margin: 8px auto;
+    padding: 8px;
+  }
+}
+
+/* Front page desktop layout in the Site Editor. */
+.editor-styles-wrapper .aa-template-home {
+  display: grid;
+  grid-template-columns: minmax(0, 52%) minmax(0, 48%);
+  grid-template-rows: auto 1fr;
+  align-items: start;
+  width: 100%;
+}
+
+/* Hero: top left. */
+.editor-styles-wrapper .aa-template-home > .hero-overlay {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+}
+
+/* Upcoming meetings: directly below hero. */
+.editor-styles-wrapper .aa-template-home > .home-upcoming-meetings {
+  grid-column: 1;
+  grid-row: 2;
+  box-sizing: border-box;
+  margin: 20px;
+  min-width: 0;
+}
+
+/* Existing homepage content: entire right column. */
+.editor-styles-wrapper .aa-template-home > .home-content {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  box-sizing: border-box;
+  min-width: 0;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 20px;
+}
+
+.editor-styles-wrapper .aa-header-nav__inner {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  width: min(1120px, calc(100% - 32px));
+  max-width: 1120px;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 0.75rem 0;
+}
+
+/* Restore desktop branding proportions inside the editor. */
+.editor-styles-wrapper .aa-site-branding {
+  flex: 0 1 auto;
+  max-width: none;
+  overflow: visible;
+  min-width: 0;
+}
+
+.editor-styles-wrapper .aa-site-branding.wp-block-group {
+  gap: 12px;
+}
+
+.editor-styles-wrapper .aa-site-branding .wp-block-image {
+  flex: 0 0 70px;
+}
+
+.editor-styles-wrapper .aa-site-branding .wp-block-image,
+.editor-styles-wrapper .aa-site-branding .wp-block-image img {
+  width: 70px;
+  height: 70px;
+}
+
+.editor-styles-wrapper .aa-site-branding .aa-logo-text {
+  flex: 0 1 auto;
+  min-width: 0;
+  max-width: none;
+  overflow: visible;
+  font-size: 18px;
+  line-height: 1.05;
+  white-space: nowrap;
+}
+
+/* Keep navigation in its normal desktop position. */
+.editor-styles-wrapper .aa-main-navigation.wp-block-navigation {
+  position: static;
+  display: flex;
+  flex: 1 1 auto;
+  width: auto;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.editor-styles-wrapper .aa-main-navigation .wp-block-navigation__container {
+  gap: 1rem;
+  justify-content: flex-end;
+  width: 100%;
 }

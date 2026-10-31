@@ -1,24 +1,24 @@
 .aa-guide-page {
-	--wp--style--block-gap: 28px;
-	width: min(1040px, calc(100% - 40px));
-	margin: 0 auto;
-	padding: 36px 0 36px;
+  --wp--style--block-gap: 28px;
+  width: min(1040px, calc(100% - 40px));
+  margin: 0 auto;
+  padding: 36px 0 36px;
 }
 
 .aa-guide-page.is-layout-flow > * + *,
 .aa-guide-page.is-layout-constrained > * + * {
-	margin-block-start: var(--wp--style--block-gap);
+  margin-block-start: var(--wp--style--block-gap);
 }
 
 .aa-guide-page h1,
 .aa-guide-page h2,
 .aa-guide-page h3 {
-	color: #111827;
+  color: #111827;
 }
 
 @media (max-width: 720px) {
-	.aa-guide-page {
-		width: min(100% - 24px, 820px);
-		padding-top: 28px;
-	}
+  .aa-guide-page {
+    width: min(100% - 24px, 820px);
+    padding-top: 28px;
+  }
 }

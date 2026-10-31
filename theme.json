@@ -5,65 +5,47 @@
     {
       "name": "page-home",
       "title": "Home",
-      "postTypes": [
-        "page"
-      ]
+      "postTypes": ["page"]
     },
     {
       "name": "page-form-contact",
       "title": "CSO Contact Page",
-      "postTypes": [
-        "page"
-      ]
+      "postTypes": ["page"]
     },
     {
       "name": "page-form-beginners",
       "title": "Beginners Sign-Up Form",
-      "postTypes": [
-        "page"
-      ]
+      "postTypes": ["page"]
     },
     {
       "name": "page-form-pipa",
       "title": "PIPA Form",
-      "postTypes": [
-        "page"
-      ]
+      "postTypes": ["page"]
     },
     {
       "name": "page-directory",
       "title": "AA Card Directory",
-      "postTypes": [
-        "page"
-      ]
+      "postTypes": ["page"]
     },
     {
       "name": "page-information",
       "title": "AA Information Page",
-      "postTypes": [
-        "page"
-      ]
+      "postTypes": ["page"]
     },
     {
       "name": "page-resources",
       "title": "AA Resources Page",
-      "postTypes": [
-        "page"
-      ]
+      "postTypes": ["page"]
     },
     {
       "name": "page-simple",
       "title": "AA Simple Page",
-      "postTypes": [
-        "page"
-      ]
+      "postTypes": ["page"]
     },
     {
       "name": "page-blank",
       "title": "AA Blank Canvas",
-      "postTypes": [
-        "page"
-      ]
+      "postTypes": ["page"]
     }
   ],
   "templateParts": [

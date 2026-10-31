@@ -11,11 +11,16 @@
       return null;
     }
 
-    return Array.from(element.children).find((child) => child.matches(selector)) || null;
+    return (
+      Array.from(element.children).find((child) => child.matches(selector)) ||
+      null
+    );
   };
 
-  const topLevelItems = (item) => Array.from(item.parentElement?.children || []);
-  const activeSubmenuItems = (container) => Array.from(container.querySelectorAll(".is-aa-submenu-active"));
+  const topLevelItems = (item) =>
+    Array.from(item.parentElement?.children || []);
+  const activeSubmenuItems = (container) =>
+    Array.from(container.querySelectorAll(".is-aa-submenu-active"));
 
   const submenuDepth = (item) => {
     let depth = 0;
@@ -30,19 +35,28 @@
   };
 
   const clearBackgroundItems = (container) => {
-    container.querySelectorAll(".is-aa-submenu-background-item").forEach((item) => {
-      item.classList.remove("is-aa-submenu-background-item");
-    });
+    container
+      .querySelectorAll(".is-aa-submenu-background-item")
+      .forEach((item) => {
+        item.classList.remove("is-aa-submenu-background-item");
+      });
   };
 
   const markBackgroundItems = (item) => {
     topLevelItems(item).forEach((sibling) => {
-      sibling.classList.toggle("is-aa-submenu-background-item", sibling !== item);
+      sibling.classList.toggle(
+        "is-aa-submenu-background-item",
+        sibling !== item,
+      );
     });
   };
 
   const keepMenuOpen = (container) => {
-    container.classList.add("has-modal-open", "is-menu-open", "is-aa-submenu-open");
+    container.classList.add(
+      "has-modal-open",
+      "is-menu-open",
+      "is-aa-submenu-open",
+    );
   };
 
   const closeSubmenu = (container, item) => {
@@ -76,7 +90,9 @@
       return;
     }
 
-    activeSubmenuItems(container).reverse().forEach((item) => closeSubmenu(container, item));
+    activeSubmenuItems(container)
+      .reverse()
+      .forEach((item) => closeSubmenu(container, item));
     container.classList.remove("is-aa-submenu-open");
     clearBackgroundItems(container);
   };
@@ -91,7 +107,11 @@
     activeSubmenuItems(container)
       .reverse()
       .forEach((activeItem) => {
-        if (activeItem === item || activeItem.contains(item) || item.contains(activeItem)) {
+        if (
+          activeItem === item ||
+          activeItem.contains(item) ||
+          item.contains(activeItem)
+        ) {
           return;
         }
 
@@ -148,7 +168,10 @@
     container.querySelectorAll(submenuSelector).forEach((item) => {
       const panel = directChild(item, panelSelector);
       const toggle = directChild(item, toggleSelector);
-      const labelElement = directChild(item, ".wp-block-navigation-item__content");
+      const labelElement = directChild(
+        item,
+        ".wp-block-navigation-item__content",
+      );
       const label = labelElement ? labelElement.textContent.trim() : "Submenu";
 
       if (!panel || !toggle) {
@@ -165,7 +188,8 @@
     document.querySelectorAll(containerSelector).forEach(prepareContainer);
   };
 
-  const closestOpenContainer = (element) => element?.closest(openContainerSelector);
+  const closestOpenContainer = (element) =>
+    element?.closest(openContainerSelector);
 
   const handleNavigationClick = (event) => {
     const target = event.target instanceof Element ? event.target : null;
@@ -174,13 +198,17 @@
       return;
     }
 
-    const openButton = target.closest(".wp-block-navigation__responsive-container-open");
+    const openButton = target.closest(
+      ".wp-block-navigation__responsive-container-open",
+    );
     if (openButton) {
       window.requestAnimationFrame(prepareContainers);
       return;
     }
 
-    const closeButton = target.closest(".wp-block-navigation__responsive-container-close");
+    const closeButton = target.closest(
+      ".wp-block-navigation__responsive-container-close",
+    );
     if (closeButton) {
       closeAllSubmenus(document.querySelector(openContainerSelector));
       return;
@@ -227,7 +255,9 @@
       return;
     }
 
-    const container = document.querySelector(`${openContainerSelector}.is-aa-submenu-open`);
+    const container = document.querySelector(
+      `${openContainerSelector}.is-aa-submenu-open`,
+    );
     const activeItems = container ? activeSubmenuItems(container) : [];
 
     if (container && activeItems.length) {
@@ -237,7 +267,9 @@
   });
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", prepareContainers, { once: true });
+    document.addEventListener("DOMContentLoaded", prepareContainers, {
+      once: true,
+    });
   } else {
     prepareContainers();
   }

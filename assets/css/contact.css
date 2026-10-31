@@ -6,57 +6,57 @@
 /* Contact detail blocks */
 
 .aa-template-contact .aa-section {
-	margin: 32px 0 24px;
+  margin: 32px 0 24px;
 }
 
 .aa-template-contact .aa-grid {
-	margin-top: 0;
+  margin-top: 0;
 }
 
 .cso-contact-item {
-	margin: 0 0 26px;
+  margin: 0 0 26px;
 }
 
 .cso-contact-item span {
-	display: block;
-	margin-bottom: 6px;
-	font-weight: 800;
-	color: #111827;
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 800;
+  color: #111827;
 }
 
 .cso-contact-item a {
-	display: inline-block;
-	font-size: 1.08rem;
-	font-weight: 800;
-	text-decoration-thickness: 1px;
-	text-underline-offset: 3px;
+  display: inline-block;
+  font-size: 1.08rem;
+  font-weight: 800;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
 .cso-contact-badge {
-	display: inline-block;
-	margin-top: 8px;
-	padding: 4px 10px;
-	border-radius: 999px;
-	background: #eef6ff;
-	color: var(--aa-color-link, #2f6fa3);
-	font-size: 0.8rem;
-	font-weight: 800;
-	line-height: 1.2;
+  display: inline-block;
+  margin-top: 8px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #eef6ff;
+  color: var(--aa-color-link, #2f6fa3);
+  font-size: 0.8rem;
+  font-weight: 800;
+  line-height: 1.2;
 }
 
 /* Divider used inside the contact details card */
 
 .aa-divider {
-	width: 100%;
-	height: 1px;
-	margin: 28px 0;
-	background: var(--aa-color-border, #e5e7eb);
+  width: 100%;
+  height: 1px;
+  margin: 28px 0;
+  background: var(--aa-color-border, #e5e7eb);
 }
 
 /* Responsive */
 
 @media (max-width: 900px) {
-	.cso-contact-item {
-		margin-bottom: 22px;
-	}
+  .cso-contact-item {
+    margin-bottom: 22px;
+  }
 }
