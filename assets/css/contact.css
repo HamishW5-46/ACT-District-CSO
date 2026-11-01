@@ -21,7 +21,7 @@
   display: block;
   margin-bottom: 6px;
   font-weight: 800;
-  color: #111827;
+  color: var(--aa-color-text-strong);
 }
 
 .cso-contact-item a {
@@ -37,7 +37,7 @@
   margin-top: 8px;
   padding: 4px 10px;
   border-radius: 999px;
-  background: #eef6ff;
+  background: var(--aa-color-surface-hover);
   color: var(--aa-color-link, #2f6fa3);
   font-size: 0.8rem;
   font-weight: 800;

@@ -66,22 +66,22 @@
     "color": {
       "palette": [
         {
-          "color": "#222222",
+          "color": "var(--aa-color-text)",
           "name": "Text",
           "slug": "text"
         },
         {
-          "color": "#1f2937",
+          "color": "var(--aa-color-heading)",
           "name": "Heading",
           "slug": "heading"
         },
         {
-          "color": "#2f6fa3",
+          "color": "var(--aa-color-link)",
           "name": "Link",
           "slug": "link"
         },
         {
-          "color": "#f8fafc",
+          "color": "var(--aa-color-surface)",
           "name": "Surface",
           "slug": "surface"
         },
@@ -89,6 +89,11 @@
           "color": "#ffffff",
           "name": "White",
           "slug": "white"
+        },
+        {
+          "color": "var(--aa-color-background)",
+          "name": "Page Background",
+          "slug": "background"
         }
       ]
     },
@@ -124,14 +129,14 @@
     },
 
     "color": {
-      "background": "#ffffff",
-      "text": "#222222"
+      "background": "var(--aa-color-background)",
+      "text": "var(--aa-color-text)"
     },
 
     "elements": {
       "link": {
         "color": {
-          "text": "#2f6fa3"
+          "text": "var(--aa-color-link)"
         }
       }
     }

@@ -13,7 +13,7 @@
 .aa-guide-page h1,
 .aa-guide-page h2,
 .aa-guide-page h3 {
-  color: #111827;
+  color: var(--aa-color-text-strong);
 }
 
 @media (max-width: 720px) {

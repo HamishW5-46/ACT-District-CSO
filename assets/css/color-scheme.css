@@ -1,0 +1,202 @@
+/* Frontend only. The shared light palette remains the default and editor palette. */
+:root {
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color-scheme: dark;
+    /* Adaptive semantic colour overrides. Fixed white, navy/gold, hero and
+       on-dark roles retain their intentional foreground/background pairs. */
+    --aa-color-skip-link-text: #eef2f7;
+    --aa-color-background: #101722;
+    --aa-color-text: #e2e8f0;
+    --aa-color-heading: #f1f5f9;
+    --aa-color-text-strong: #f1f5f9;
+    --aa-color-muted: #b0bdce;
+    --aa-color-text-secondary: #cbd5e1;
+    --aa-color-link: #8cc8f5;
+    --aa-color-link-hover: #b9dfff;
+    --aa-color-border: #46566b;
+    --aa-color-border-subtle: #354459;
+    --aa-color-border-strong: #8293aa;
+    --aa-color-surface: #182230;
+    --aa-color-surface-strong: #1c2838;
+    --aa-color-surface-muted: #243244;
+    --aa-color-surface-hover: #263c52;
+    --aa-color-input-background: #111c2b;
+    --aa-color-input-text: #e2e8f0;
+    --aa-color-input-border: #8293aa;
+    --aa-color-muted-subtle: #a4b2c5;
+    --aa-color-focus: #8cc8f5;
+    --aa-color-focus-ring: rgba(140, 200, 245, 0.45);
+    --aa-color-overlay: rgba(0, 0, 0, 0.72);
+    --aa-color-shop-overlay: rgba(0, 0, 0, 0.72);
+    --aa-color-button-background: #285d86;
+    --aa-color-button-hover: #326d99;
+    --aa-color-button-secondary-background: #243244;
+    --aa-color-button-secondary-text: #f1f5f9;
+    --aa-color-brand-text: #f1f5f9;
+    --aa-color-footer-muted: #999999;
+    --aa-color-resource-heading: #b9dfff;
+    --aa-color-preview-background: #182230;
+    --aa-color-preview-border: #46566b;
+    --aa-color-preview-border-subtle: #354459;
+    --aa-color-preview-link: #8cc8f5;
+    --aa-color-preview-link-hover: #b9dfff;
+    --aa-color-nav-border: #46566b;
+    --aa-color-nav-control-border: #8293aa;
+    --aa-color-nav-hover-border: #8cc8f5;
+    --aa-color-nav-surface: #243244;
+    --aa-color-nav-active: #263c52;
+    --aa-color-form-accent: #326d99;
+    --aa-color-form-secondary: #243244;
+    --aa-color-auth-input-border: #8293aa;
+    --aa-color-error: #ff9eac;
+    --aa-color-error-background: #3a202b;
+    --aa-color-error-text: #ffd1d8;
+    --aa-color-success: #78dcb2;
+    --aa-color-success-background: #16382e;
+    --aa-color-info: #8cc8f5;
+    --aa-color-form-success-background: #16382e;
+    --aa-color-form-success-text: #a4edcc;
+    --aa-color-form-error-background: #3a202b;
+    --aa-color-form-error-text: #ffd1d8;
+    --aa-color-shop-text: #e2e8f0;
+    --aa-color-shop-muted: #b0bdce;
+    --aa-color-shop-border: #46566b;
+    --aa-color-shop-border-subtle: #354459;
+    --aa-color-shop-warm: #302a22;
+    --aa-color-shop-input-border: #8293aa;
+    --aa-color-shop-hover-border: #8cc8f5;
+    --aa-color-filter-text: #e2e8f0;
+    --aa-color-filter-label: #cbd5e1;
+    --aa-color-filter-focus: #8cc8f5;
+    --aa-color-filter-secondary: #243244;
+    --aa-color-shadow-cool-rgb: 0, 0, 0;
+    --aa-color-accent-rgb: 140, 200, 245;
+    --aa-color-accent-deep-rgb: 185, 223, 255;
+    --aa-color-surface-blue-rgb: 38, 60, 82;
+    --aa-color-surface-rgb: 24, 34, 48;
+    --aa-color-panel-rgb: 28, 40, 56;
+    --aa-color-warm-rgb: 48, 42, 34;
+    --aa-color-shop-border-rgb: 70, 86, 107;
+    --aa-color-form-focus-rgb: 50, 109, 153;
+    --aa-color-filter-focus-rgb: 140, 200, 245;
+  }
+
+  /* TSML UI injects :root defaults at runtime. Scope its documented-in-bundle
+     properties to the actual mount so late injection cannot reset appearance. */
+  #tsml-ui {
+    --background: var(--aa-color-background);
+    --text: var(--aa-color-text);
+    --link: var(--aa-color-link);
+    --focus: var(--aa-color-focus-ring);
+    --medium: var(--aa-color-border-strong);
+    --alert-background: var(--aa-color-shop-warm);
+    --alert-text: #f2d69b;
+    --in-person: var(--aa-color-success);
+    --inactive: var(--aa-color-error);
+    --online: var(--aa-color-link);
+  }
+
+  /* Core navigation ships its own white submenu and modal defaults. */
+  .aa-main-navigation .wp-block-navigation__submenu-container,
+  .aa-main-navigation .wp-block-navigation__responsive-container.is-menu-open {
+    background: var(--aa-color-surface-strong);
+    color: var(--aa-color-text);
+  }
+
+  /* Paint the canvas before content arrives; no script or preference state. */
+  html {
+    background-color: var(--aa-color-background);
+  }
+
+  .aa-header-nav,
+  .section-preview {
+    background: var(--aa-color-surface-strong);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .aa-logo-mark img {
+      background: transparent;
+      filter: brightness(0) invert(1);
+    }
+  }
+
+  /* These gradients carry fixed white text, so they cannot use bright links. */
+  .aac-woocommerce-page .aa-page-hero {
+    background: linear-gradient(135deg, #17233c, #1d557f 68%, #2f6fa3);
+  }
+
+  .aac-mobile-filter-toggle {
+    background: linear-gradient(135deg, #17233c, #1d557f);
+  }
+
+  .woocommerce-account .woocommerce-MyAccount-navigation .is-active a,
+  .woocommerce-account .woocommerce-MyAccount-navigation a:hover,
+  .woocommerce-account .woocommerce-MyAccount-navigation a:focus {
+    background: var(--aa-color-button-background);
+  }
+
+  .woocommerce span.onsale,
+  .woocommerce ul.products li.product .onsale {
+    background: #9f2440;
+  }
+
+  /* Form accent also supplies a white-on-blue modal header; focus needs a
+     separate, brighter indicator on the dark input surface. */
+  :where(
+    input,
+    select,
+    textarea,
+    button,
+    a,
+    summary,
+    [tabindex]
+  ):focus-visible {
+    outline: 2px solid var(--aa-color-focus) !important;
+    outline-offset: 3px;
+  }
+
+  :where(input, textarea)::placeholder {
+    color: var(--aa-color-muted);
+    opacity: 1;
+  }
+
+  .aac-woocommerce-page
+    .wc-block-components-notice-banner:is(.is-info, .is-success) {
+    background: var(--aa-color-surface-hover);
+    border-color: var(--aa-color-info);
+    color: var(--aa-color-text);
+  }
+
+  .aac-woocommerce-page .wc-block-components-validation-error,
+  .woocommerce form .form-row.woocommerce-invalid label,
+  .woocommerce form .required {
+    color: var(--aa-color-error);
+  }
+
+  .woocommerce form .form-row.woocommerce-invalid :is(input, select, textarea) {
+    border-color: var(--aa-color-error);
+  }
+
+  /* SelectWoo appends its dropdown to body, outside the shop alias scope. */
+  .select2-container--open .select2-dropdown,
+  .select2-container--open .select2-search__field {
+    background: var(--aa-color-input-background);
+    color: var(--aa-color-input-text);
+    border-color: var(--aa-color-input-border);
+  }
+
+  .select2-container--default .select2-results__option[aria-selected="true"] {
+    background: var(--aa-color-surface-hover);
+    color: var(--aa-color-text);
+  }
+
+  .select2-container--default
+    .select2-results__option--highlighted[aria-selected] {
+    background: var(--aa-color-button-background);
+    color: var(--aa-color-on-dark);
+  }
+}

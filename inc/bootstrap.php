@@ -82,6 +82,7 @@ function act_district_cso_versioned_asset_src( $src, $handle ) {
 
 	$assets = array(
 		'ACT-District-CSO-style'                     => '/style.css',
+		'ACT-District-CSO-color-scheme'              => '/assets/css/color-scheme.css',
 		'ACT-District-CSO-components'                => '/assets/css/components.css',
 		'ACT-District-CSO-navigation'                => '/assets/js/navigation.js',
 		'ACT-District-CSO-editor'                    => '/assets/css/editor.css',
@@ -112,6 +113,7 @@ function act_district_cso_style_loader_tag( $html, $handle, $href, $media ) {
 	$handles = array(
 		'ACT-District-CSO-style',
 		'ACT-District-CSO-components',
+		'ACT-District-CSO-color-scheme',
 		'ACT-District-CSO-editor',
 		'ACT-District-CSO-page-form-contact-contact',
 		'ACT-District-CSO-page-information-about-aa',
@@ -237,6 +239,21 @@ function act_district_cso_enqueue_styles() {
 			act_district_cso_asset_version( '/assets/css/woocommerce/account-auth.css' )
 		);
 	}
+
+	// Frontend only: depend on every active theme stylesheet so scoped repairs
+	// follow component rules. Never include this in editor styles or admin hooks.
+	$appearance_dependencies = array( $child_handle, $components_handle );
+	foreach ( wp_styles()->queue as $handle ) {
+		if ( 0 === strpos( $handle, 'ACT-District-CSO-' ) ) {
+			$appearance_dependencies[] = $handle;
+		}
+	}
+	wp_enqueue_style(
+		'ACT-District-CSO-color-scheme',
+		get_stylesheet_directory_uri() . '/assets/css/color-scheme.css',
+		array_values( array_unique( $appearance_dependencies ) ),
+		act_district_cso_asset_version( '/assets/css/color-scheme.css' )
+	);
 
 	wp_enqueue_script(
 		'ACT-District-CSO-navigation',
