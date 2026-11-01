@@ -16,8 +16,5 @@
       "text": "Use plain English. Do not use emojis, em dashes, promotional language, or claims that tests passed."
     }
   ],
-  "editor.formatOnSave": true,
-  "[astro]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  "editor.formatOnSave": false,
 }

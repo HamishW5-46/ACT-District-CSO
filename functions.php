@@ -4,19 +4,27 @@
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+	exit;
 }
 
 /**
  * Load theme bootstrap and includes.
  */
 $act_district_cso_includes = array(
-    '/inc/bootstrap.php',
-    '/inc/site-branding.php',
+	'/inc/bootstrap.php',
+	'/inc/site-branding.php',
+	'/inc/login-page.php',
 );
 
 foreach ( $act_district_cso_includes as $act_district_cso_include ) {
-    require_once get_stylesheet_directory() . $act_district_cso_include;
+	require_once get_stylesheet_directory() . $act_district_cso_include;
+}
+
+/**
+ * Load Woocommerce bootstrap.
+ */
+if (class_exists('WooCommerce')) {
+	require_once get_stylesheet_directory() . '/woocommerce/bootstrap.php';
 }
 
 /**
