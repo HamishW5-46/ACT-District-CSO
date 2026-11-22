@@ -1,5 +1,4 @@
 (function () {
-  const mobileQuery = window.matchMedia("(max-width: 960px)");
   const containerSelector = ".wp-block-navigation__responsive-container";
   const openContainerSelector = `${containerSelector}.is-menu-open`;
   const submenuSelector = ".wp-block-navigation-submenu";
@@ -131,9 +130,15 @@
     panel.style.zIndex = String(8 + submenuDepth(item));
     toggle.setAttribute("aria-expanded", "true");
 
-    window.requestAnimationFrame(() => keepMenuOpen(container));
-    window.setTimeout(() => keepMenuOpen(container), 0);
-    window.setTimeout(() => keepMenuOpen(container), 120);
+    const keepSubmenuOpen = () => {
+      if (item.classList.contains("is-aa-submenu-active")) {
+        keepMenuOpen(container);
+      }
+    };
+
+    window.requestAnimationFrame(keepSubmenuOpen);
+    window.setTimeout(keepSubmenuOpen, 0);
+    window.setTimeout(keepSubmenuOpen, 120);
   };
 
   const addSubmenuHeader = (panel, label) => {
@@ -184,8 +189,63 @@
     });
   };
 
-  const prepareContainers = () => {
-    document.querySelectorAll(containerSelector).forEach(prepareContainer);
+  const configureHeaderNavigation = () => {
+    const header = document.querySelector(".aa-header-nav");
+    const row = header?.querySelector(".aa-header-nav__inner");
+    const branding = row?.querySelector(".aa-site-branding");
+    const navigation = row?.querySelector(".aa-main-navigation");
+    const menu = navigation?.querySelector(containerSelector);
+
+    if (!branding || !menu) {
+      return;
+    }
+
+    const updateLayout = () => {
+      if (menu.matches(openContainerSelector)) {
+        return;
+      }
+
+      // Measure the unwrapped menu and branding in the inline layout.
+      header.classList.add("is-aa-inline-nav");
+      const styles = getComputedStyle(row);
+      const availableWidth =
+        row.clientWidth - parseFloat(styles.paddingLeft) - parseFloat(styles.paddingRight);
+      const requiredWidth =
+        branding.getBoundingClientRect().width +
+        navigation.getBoundingClientRect().width +
+        parseFloat(styles.columnGap);
+
+      const fits = requiredWidth <= availableWidth;
+      header.classList.toggle("is-aa-inline-nav", fits);
+
+      if (fits && menu.dataset.aaMobileMenuReady === "true") {
+        closeAllSubmenus(menu);
+        menu.querySelectorAll(panelSelector).forEach((panel) => {
+          panel.removeAttribute("aria-hidden");
+        });
+        delete menu.dataset.aaMobileMenuReady;
+      }
+    };
+
+    const resizeObserver = new ResizeObserver(updateLayout);
+    resizeObserver.observe(row);
+    new MutationObserver((records) => {
+      const wasOpen = records.some(({ oldValue }) =>
+        oldValue?.split(/\s+/).includes("is-menu-open"),
+      );
+
+      if (wasOpen && !menu.matches(openContainerSelector)) {
+        closeAllSubmenus(menu);
+        updateLayout();
+      }
+    }).observe(menu, {
+      attributes: true,
+      attributeFilter: ["class"],
+      attributeOldValue: true,
+    });
+
+    document.fonts.ready.then(updateLayout);
+    updateLayout();
   };
 
   const closestOpenContainer = (element) =>
@@ -202,7 +262,8 @@
       ".wp-block-navigation__responsive-container-open",
     );
     if (openButton) {
-      window.requestAnimationFrame(prepareContainers);
+      const menu = openButton.closest(".aa-main-navigation")?.querySelector(containerSelector);
+      prepareContainer(menu);
       return;
     }
 
@@ -220,7 +281,7 @@
       const panel = backButton.closest(panelSelector);
       const item = panel?.parentElement?.closest(submenuSelector);
 
-      if (!mobileQuery.matches || !container || !item) {
+      if (!container || !item) {
         return;
       }
 
@@ -239,7 +300,7 @@
     const item = toggle.closest(submenuSelector);
     const panel = directChild(item, panelSelector);
 
-    if (!mobileQuery.matches || !container || !item || !panel) {
+    if (!container || !item || !panel) {
       return;
     }
 
@@ -267,10 +328,10 @@
   });
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", prepareContainers, {
+    document.addEventListener("DOMContentLoaded", configureHeaderNavigation, {
       once: true,
     });
   } else {
-    prepareContainers();
+    configureHeaderNavigation();
   }
 })();

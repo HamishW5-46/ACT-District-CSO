@@ -915,6 +915,32 @@ body.woocommerce-account.aac-woocommerce-page
   margin: 0 0 22px;
 }
 
+.woocommerce div.product form.variations_form {
+  display: block;
+}
+
+.woocommerce div.product form.cart .variations th.label {
+  width: 1%;
+  padding-inline-end: 12px;
+  vertical-align: top;
+}
+
+.woocommerce div.product form.cart .variations th.label label {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.woocommerce div.product form.cart .variations td.value {
+  vertical-align: top;
+}
+
+.woocommerce div.product form.cart .variations select {
+  max-width: 100%;
+  min-width: 0;
+  margin: 0;
+}
+
 .woocommerce div.product form.cart div.quantity {
   float: none;
   margin: 0;
@@ -1275,8 +1301,6 @@ body:not(.woocommerce-checkout) .woocommerce .col2-set {
 
 .woocommerce-checkout #order_review {
   grid-area: order;
-  position: sticky;
-  top: 96px;
   margin-top: 58px;
   padding: 22px;
   border: 1px solid var(--aac-shop-border);
@@ -1359,9 +1383,14 @@ body:not(.woocommerce-checkout) .woocommerce .col2-set {
   box-sizing: border-box;
 }
 
-.aac-woocommerce-page .wc-block-components-sidebar {
+.woocommerce-cart.aac-woocommerce-page .wc-block-components-sidebar {
   position: sticky;
   top: 96px;
+}
+
+.woocommerce-checkout.aac-woocommerce-page .wc-block-checkout__sidebar,
+.woocommerce-checkout.aac-woocommerce-page .wc-block-components-sidebar {
+  position: static;
 }
 
 .aac-woocommerce-page .wc-block-components-main,
@@ -1950,8 +1979,7 @@ body.woocommerce-account:not(.aac-account-auth-page)
     box-sizing: border-box;
   }
 
-  .woocommerce div.product div.summary,
-  .woocommerce-checkout #order_review {
+  .woocommerce div.product div.summary {
     position: static;
   }
 
@@ -2195,13 +2223,16 @@ body.woocommerce-account:not(.aac-account-auth-page)
     grid-template-columns: 1fr;
   }
 
-  .woocommerce div.product form.cart {
+  .woocommerce div.product form.cart,
+  .woocommerce div.product form.cart .woocommerce-variation-add-to-cart {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
   }
 
   .woocommerce div.product form.cart .button,
-  .woocommerce .quantity .qty {
+  .woocommerce div.product form.cart div.quantity,
+  .woocommerce div.product form.cart .quantity .qty {
     width: 100%;
   }
 
