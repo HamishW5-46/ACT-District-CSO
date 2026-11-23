@@ -196,7 +196,11 @@
     const navigation = row?.querySelector(".aa-main-navigation");
     const menu = navigation?.querySelector(containerSelector);
 
-    if (!branding || !menu) {
+    const menuItems = menu?.querySelector(
+      ".wp-block-navigation__responsive-container-content > .wp-block-navigation__container",
+    );
+
+    if (!branding || !menuItems) {
       return;
     }
 
@@ -205,17 +209,21 @@
         return;
       }
 
-      // Measure the unwrapped menu and branding in the inline layout.
+      // Measure the full branding and menu before allowing an inline layout.
       header.classList.add("is-aa-inline-nav");
       const styles = getComputedStyle(row);
       const availableWidth =
-        row.clientWidth - parseFloat(styles.paddingLeft) - parseFloat(styles.paddingRight);
+        Math.min(row.clientWidth, document.documentElement.clientWidth) -
+        parseFloat(styles.paddingLeft) -
+        parseFloat(styles.paddingRight);
       const requiredWidth =
         branding.getBoundingClientRect().width +
-        navigation.getBoundingClientRect().width +
-        parseFloat(styles.columnGap);
+        Math.max(menuItems.getBoundingClientRect().width, menuItems.scrollWidth) +
+        (parseFloat(styles.columnGap) || 0);
 
-      const fits = requiredWidth <= availableWidth;
+      const fits =
+        menuItems.getBoundingClientRect().width > 0 &&
+        Math.ceil(requiredWidth) <= availableWidth;
       header.classList.toggle("is-aa-inline-nav", fits);
 
       if (fits && menu.dataset.aaMobileMenuReady === "true") {
@@ -229,6 +237,7 @@
 
     const resizeObserver = new ResizeObserver(updateLayout);
     resizeObserver.observe(row);
+    window.addEventListener("resize", updateLayout);
     new MutationObserver((records) => {
       const wasOpen = records.some(({ oldValue }) =>
         oldValue?.split(/\s+/).includes("is-menu-open"),
